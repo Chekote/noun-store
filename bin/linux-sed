@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../" && pwd )"
+
+. "$ROOT"/docker/lib/images.sh
+. "$ROOT"/bin/lib/tty.sh
+
+docker run --env-file "$ROOT"/docker/.env -i${TTY} --rm ${SED_REPO}:${SED_TAG} sed "$@"
