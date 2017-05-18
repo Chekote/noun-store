@@ -1,4 +1,9 @@
 {
+    "name": "chekote/noun-store",
+    "description": "Private STD Testing Services.",
+    "keywords": ["noun", "testing"],
+    "license": "MIT",
+    "type": "library",
     "require-dev": {
         "phpunit/phpunit": "^5.7"
     },
