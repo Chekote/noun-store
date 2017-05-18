@@ -33,3 +33,11 @@ Build the Docker images:
 ```bash
 docker/build_images.sh
 ```
+
+### Executing tests
+
+Tests are written using [phpunit](https://phpunit.de/). You can execute them via the command line:
+
+```bash
+phpunit
+```
