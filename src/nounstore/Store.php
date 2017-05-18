@@ -12,15 +12,18 @@ class Store {
   /**
    * Ensures that a value has been stored for the specified key.
    *
-   * @param   string  $key  The key to check.
+   * @param   string  $key  The key to check. @see self::get() for formatting options.
    * @param   int     $nth  The nth value for the key to check. If not specified, the method will
    *                        ensure that at least one item is stored for the specified key.
    * @throws  Exception     If a value has not been stored for the specified key.
+   * @return  mixed         The value.
    */
   public function assertHas($key, $nth = null) {
     if (!$this->has($key, $nth)) {
       throw new Exception("Entry $nth for $key was not found in the store.");
     }
+
+    return $this->get($key, $nth);
   }
 
   /**
