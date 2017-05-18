@@ -2,6 +2,7 @@
 
 use Exception;
 use InvalidArgumentException;
+use OutOfBoundsException;
 
 class Store {
 
@@ -72,6 +73,21 @@ class Store {
     }
 
     return $nth ? $this->nouns[$key][$nth - 1] : end($this->nouns[$key]);
+  }
+
+  /**
+   * Retrieves all values for the specified key.
+   *
+   * @param  string $key The key to retrieve the values for.
+   * @throws OutOfBoundsException if the specified $key does not exist in the store.
+   * @return array       The values.
+   */
+  public function getAll($key) {
+    if (!isset($this->nouns[$key])) {
+      throw new OutOfBoundsException("'$key' does not exist in the store");
+    }
+
+    return $this->nouns[$key];
   }
 
   /**
