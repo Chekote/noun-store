@@ -27,6 +27,15 @@ class Store {
   }
 
   /**
+   * Removes all entries from the store.
+   *
+   * @return void
+   */
+  public function reset() {
+    $this->nouns = [];
+  }
+
+  /**
    * Retrieves a value for the specified key.
    *
    * Each key is actually a collection. If you do not specify which item in the collection you want,
