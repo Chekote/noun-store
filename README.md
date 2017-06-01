@@ -25,7 +25,7 @@ Clone the repository:
 
 ```bash
 git clone git@github.com:Chekote/noun-store.git
-cd noun=store
+cd noun-store
 ```
 
 Build the Docker images:
