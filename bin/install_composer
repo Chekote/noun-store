@@ -5,10 +5,18 @@ ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../" && pwd )"
 . "$ROOT"/bin/lib/exitCheck.sh
 . "$ROOT"/bin/lib/settings.sh
 
+if [ `uname` == 'Darwin' ]; then
+  # We're on Mac OS  X. We're virtualized using xhyve, and will have a UID of 1000.
+  SED=linux-sed
+else
+  # We're on Linux. There's no virtualization, so we use our own UID.
+  SED=sed
+fi
+
 # Check for existing installation
 if [ -e "$ROOT"/bin/composer ]; then
     echo "Checking Composer version..."
-    FOUND_VERSION=`composer --version | tail -1 | awk '{print $3}' | linux-sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g"`
+    FOUND_VERSION=`composer --version | tail -1 | awk '{print $3}' | ${SED} -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g"`
 
     # Check version of installed composer
     if [ "$FOUND_VERSION" == "$COMPOSER_VERSION" ]; then
