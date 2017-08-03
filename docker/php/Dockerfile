@@ -1,4 +1,4 @@
-# chekote/php:5.6.30-nounstore
+# chekote/noun-store
 FROM chekote/php:5.6.30-c
 
 RUN apt-get update && \
