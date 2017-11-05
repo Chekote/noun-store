@@ -1,6 +1,6 @@
 {
     "name": "chekote/noun-store",
-    "description": "Private STD Testing Services.",
+    "description": "Store and work with Nouns",
     "keywords": ["noun", "testing"],
     "license": "MIT",
     "type": "library",
