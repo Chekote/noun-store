@@ -12,13 +12,16 @@ class Store {
   /**
    * Ensures that a value has been stored for the specified key.
    *
-   * @param   string  $key  The key to check. @see self::get() for formatting options.
-   * @param   int     $nth  The nth (zero indexed) value for the key to check. If not specified, the method will
-   *                        ensure that at least one item is stored for the specified key.
-   * @throws  Exception     If a value has not been stored for the specified key.
-   * @return  mixed         The value.
+   * @param  string  $key  The key to check. @see self::get() for formatting options.
+   * @param  int     $nth  The nth (zero indexed) value for the key to check. If not specified, the method will
+   *                       ensure that at least one item is stored for the specified key.
+   * @throws Exception     If a value has not been stored for the specified key.
+   * @throws InvalidArgumentException $nth parameter is provided and $key contains an nth value, but they do not match.
+   * @return mixed         The value.
    */
   public function assertHas($key, $nth = null) {
+    list($key, $nth) = $this->parseKey($key, $nth);
+
     if (!$this->has($key, $nth)) {
       throw new Exception("Entry $nth for $key was not found in the store.");
     }
@@ -68,16 +71,7 @@ class Store {
    * @return mixed       The value, or null if no value exists for the specified key/nth combination.
    */
   public function get($key, $nth = null) {
-    if (preg_match('/^([1-9][0-9]*)(?:st|nd|rd|th) (.+)$/', $key, $matches)) {
-      if ($nth && $nth != $matches[1] - 1) {
-        throw new InvalidArgumentException(
-            '$nth parameter was provided when $key contains an nth value, and they do not match'
-        );
-      }
-
-      $nth = $matches[1] - 1;
-      $key = $matches[2];
-    }
+    list($key, $nth) = $this->parseKey($key, $nth);
 
     if (!$this->has($key, $nth)) {
       return null;
@@ -104,12 +98,15 @@ class Store {
   /**
    * Determines if a value has been stored for the specified key.
    *
-   * @param   string  $key  The key to check.
-   * @param   int     $nth  The nth (zero indexed) value for the key to check. If not specified, the method will
+   * @param  string  $key  The key to check.
+   * @param  int     $nth  The nth (zero indexed) value for the key to check. If not specified, the method will
    *                        ensure that at least one item is stored for the specified key.
-   * @return  bool    True if the a value has been stored, false if not.
+   * @throws InvalidArgumentException $nth parameter is provided and $key contains an nth value, but they do not match.
+   * @return bool    True if the a value has been stored, false if not.
    */
   public function has($key, $nth = null) {
+    list($key, $nth) = $this->parseKey($key, $nth);
+
     return $nth !== null ? isset($this->nouns[$key][$nth]) : isset($this->nouns[$key]);
   }
 
@@ -121,5 +118,34 @@ class Store {
    */
   public function set($key, $value) {
     $this->nouns[$key][] = $value;
+  }
+
+  /**
+   * Parses a key into the separate key and nth value.
+   *
+   * @example parseKey("Item"): ["Item", null]
+   * @example parseKey("Item", 1): ["Item", 1]
+   * @example parseKey("1st Item"): ["Item", 0]
+   * @example parseKey("2nd Item"): ["Item", 1]
+   * @example parseKey("3rd Item"): ["Item", 2]
+   *
+   * @param  string $key the key to parse.
+   * @param  int    $nth the nth to return if the key does not contain one.
+   * @throws InvalidArgumentException $nth parameter is provided and $key contains an nth value, but they do not match.
+   * @return array  a tuple, the first being the key with the nth removed, and the second being the nth.
+   */
+  protected function parseKey($key, $nth = null) {
+    if (preg_match('/^([1-9][0-9]*)(?:st|nd|rd|th) (.+)$/', $key, $matches)) {
+      if ($nth && $nth != $matches[1] - 1) {
+        throw new InvalidArgumentException(
+            '$nth parameter was provided when $key contains an nth value, and they do not match'
+        );
+      }
+
+      $nth = $matches[1] - 1;
+      $key = $matches[2];
+    }
+
+    return [$key, $nth];
   }
 }
