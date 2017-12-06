@@ -3,6 +3,7 @@
 use Exception;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 /**
  * @covers Store
@@ -185,5 +186,40 @@ class StoreTest extends TestCase {
   // Store::set tests
   //--------------------------
 
-  // @todo write tests for Store::set
+  /**
+   * Tests that calling store::set once stores the value correctly
+   */
+  public function testSetOnceStoresValue() {
+    $key = 'My Key';
+    $value = 'My Value';
+
+    $class = new ReflectionClass(Store::class);
+    $nouns = $class->getProperty('nouns');
+    $nouns->setAccessible(true);
+
+    $this->store->set($key, $value);
+
+    $this->assertCount(1, $nouns->getValue($this->store)[$key]);
+    $this->assertEquals($value, $nouns->getValue($this->store)[$key][0]);
+  }
+
+  /**
+   * Tests that calling store::set twice for the same key stores both values correctly
+   */
+  public function testSetTwiceForSameKeyStoresMultipleValues() {
+    $key = 'My Key';
+    $value1 = 'My Value';
+    $value2 = 'My Second Value';
+
+    $class = new ReflectionClass(Store::class);
+    $nouns = $class->getProperty('nouns');
+    $nouns->setAccessible(true);
+
+    $this->store->set($key, $value1);
+    $this->store->set($key, $value2);
+
+    $this->assertCount(2, $nouns->getValue($this->store)[$key]);
+    $this->assertEquals($value1, $nouns->getValue($this->store)[$key][0]);
+    $this->assertEquals($value2, $nouns->getValue($this->store)[$key][1]);
+  }
 }
