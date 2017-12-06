@@ -11,11 +11,17 @@ class StoreTest extends TestCase {
   /** @var Store */
   protected $store;
 
+  const KEY = 'Some Key';
+  const FIRST_VALUE = 'The First Value';
+  const SECOND_VALUE = 'The Second Value';
+
   /**
    * Sets up the environment before each test.
    */
   public function setUp() {
     $this->store = new Store();
+    $this->store->set(self::KEY, self::FIRST_VALUE);
+    $this->store->set(self::KEY, self::SECOND_VALUE);
   }
 
   /**
@@ -49,42 +55,21 @@ class StoreTest extends TestCase {
    * Tests that Store::get returns the item at the end of the stack.
    */
   public function testGetReturnsItemAtEndOfStack() {
-    $key = 'Some Key';
-    $firstValue = 'The First Value';
-    $secondValue = 'The Second Value';
-
-    $this->store->set($key, $firstValue);
-    $this->store->set($key, $secondValue);
-
-    $this->assertEquals($secondValue, $this->store->get($key));
+    $this->assertEquals(self::SECOND_VALUE, $this->store->get(self::KEY));
   }
 
   /**
    * Tests that Store::get returns the nth item at of the stack when the $key contains nth.
    */
   public function testGetWithNthKeyReturnsNthItem() {
-    $key = 'Some Key';
-    $firstValue = 'The First Value';
-    $secondValue = 'The Second Value';
-
-    $this->store->set($key, $firstValue);
-    $this->store->set($key, $secondValue);
-
-    $this->assertEquals($firstValue, $this->store->get('1st ' . $key));
+    $this->assertEquals(self::FIRST_VALUE, $this->store->get('1st ' . self::KEY));
   }
 
   /**
    * Tests that Store::get returns the nth item at of the stack when $nth parameter is provided.
    */
   public function testGetWithNthParameterReturnsNthItem() {
-    $key = 'Some Key';
-    $firstValue = 'The First Value';
-    $secondValue = 'The Second Value';
-
-    $this->store->set($key, $firstValue);
-    $this->store->set($key, $secondValue);
-
-    $this->assertEquals($firstValue, $this->store->get($key, 1));
+    $this->assertEquals(self::FIRST_VALUE, $this->store->get(self::KEY, 1));
   }
 
   /**
@@ -98,24 +83,14 @@ class StoreTest extends TestCase {
    * Tests that Store::get returns null when the specified nth $key does not exist.
    */
   public function testGetReturnsNullWhenNthKeyDoesNotExist() {
-    $key = 'Some Key';
-    $firstValue = 'The First Value';
-
-    $this->store->set($key, $firstValue);
-
-    $this->assertEquals(null, $this->store->get('2nd ' . $key));
+    $this->assertEquals(null, $this->store->get('3rd ' . self::KEY));
   }
 
   /**
    * Tests that Store::get returns null when the specified $nth param does not exist.
    */
   public function testGetReturnsNullWhenNthDoesNotExist() {
-    $key = 'Some Key';
-    $firstValue = 'The First Value';
-
-    $this->store->set($key, $firstValue);
-
-    $this->assertEquals(null, $this->store->get($key, 2));
+    $this->assertEquals(null, $this->store->get(self::KEY, 3));
   }
 
   //--------------------------
