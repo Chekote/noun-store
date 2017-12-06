@@ -43,6 +43,7 @@ class StoreTest extends TestCase {
   public function testAssertHasThrowsInvalidArgumentExceptionWithMismatchedNthInKeyAndParam() {
     $this->expectException(InvalidArgumentException::class);
 
+    /** @noinspection PhpUnhandledExceptionInspection */
     $this->store->assertHas('1st Thing', 1);
   }
 
@@ -50,6 +51,7 @@ class StoreTest extends TestCase {
    * Tests that store::assertHas returns value if nth value in key is found in store
    */
   public function testAssertHasWithExistingNthKeyReturnsValue() {
+    /** @noinspection PhpUnhandledExceptionInspection */
     $this->assertEquals(self::FIRST_VALUE, $this->store->assertHas('1st ' . self::KEY));
   }
 
@@ -58,6 +60,8 @@ class StoreTest extends TestCase {
    */
   public function testAssertHasWithMissingNthKeyThrowsException() {
     $this->expectException(Exception::class);
+
+    /** @noinspection PhpUnhandledExceptionInspection */
     $this->store->assertHas('3rd ' . self::KEY);
   }
 
@@ -65,6 +69,7 @@ class StoreTest extends TestCase {
    * Tests that store::assertHas returns value if nth param value is found in store
    */
   public function testAssertHasWithExistingNthParameterReturnsValue() {
+    /** @noinspection PhpUnhandledExceptionInspection */
     $this->assertEquals(self::FIRST_VALUE, $this->store->assertHas(self::KEY, 0));
   }
 
@@ -73,6 +78,8 @@ class StoreTest extends TestCase {
    */
   public function testAssertHasWithMissingNthParameterThrowsException() {
     $this->expectException(Exception::class);
+
+    /** @noinspection PhpUnhandledExceptionInspection */
     $this->store->assertHas(self::KEY, 2);
   }
 
