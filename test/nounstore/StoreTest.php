@@ -1,5 +1,6 @@
 <?php namespace nounstore;
 
+use Exception;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
@@ -35,14 +36,52 @@ class StoreTest extends TestCase {
   // Store::assertHas tests
   //--------------------------
 
-  // @todo write tests for Store::assertHas
+  /**
+   * Tests that InvalidArgumentException is thrown if Store::assertHas is called with the nth parameter
+   * and the key also contains an nth value, but they do not match.
+   */
+  public function testAssertHasThrowsInvalidArgumentExceptionWithMismatchedNthInKeyAndParam() {
+    $this->expectException(InvalidArgumentException::class);
+
+    $this->store->assertHas('1st Thing', 1);
+  }
+
+  /**
+   * Tests that store::assertHas returns value if nth value in key is found in store
+   */
+  public function testAssertHasWithExistingNthKeyReturnsValue() {
+    $this->assertEquals(self::FIRST_VALUE, $this->store->assertHas('1st ' . self::KEY));
+  }
+
+  /**
+   * Tests that store::assertHas throws an Exception if nth value in key is not found in store
+   */
+  public function testAssertHasWithMissingNthKeyThrowsException() {
+    $this->expectException(Exception::class);
+    $this->store->assertHas('3rd ' . self::KEY);
+  }
+
+  /**
+   * Tests that store::assertHas returns value if nth param value is found in store
+   */
+  public function testAssertHasWithExistingNthParameterReturnsValue() {
+    $this->assertEquals(self::FIRST_VALUE, $this->store->assertHas(self::KEY, 0));
+  }
+
+  /**
+   * Tests that store::assertHas throws an Exception if nth param value is not found in store
+   */
+  public function testAssertHasWithMissingNthParameterThrowsException() {
+    $this->expectException(Exception::class);
+    $this->store->assertHas(self::KEY, 2);
+  }
 
   //--------------------------
   // Store::get tests
   //--------------------------
 
   /**
-   * Tests that InvalidArgumentException is thrown if Store::has is called with the nth parameter
+   * Tests that InvalidArgumentException is thrown if Store::get is called with the nth parameter
    * and the key also contains an nth value, but they do not match.
    */
   public function testGetThrowsInvalidArgumentExceptionWithMismatchedNthInKeyAndParam() {
