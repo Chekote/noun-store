@@ -48,7 +48,7 @@ class StoreTest extends TestCase {
   public function testGetThrowsInvalidArgumentExceptionWithMismatchedNthInKeyAndParam() {
     $this->expectException(InvalidArgumentException::class);
 
-    $this->store->get('1st Thing', 2);
+    $this->store->get('1st Thing', 1);
   }
 
   /**
@@ -69,7 +69,7 @@ class StoreTest extends TestCase {
    * Tests that Store::get returns the nth item at of the stack when $nth parameter is provided.
    */
   public function testGetWithNthParameterReturnsNthItem() {
-    $this->assertEquals(self::FIRST_VALUE, $this->store->get(self::KEY, 1));
+    $this->assertEquals(self::FIRST_VALUE, $this->store->get(self::KEY, 0));
   }
 
   /**
@@ -90,7 +90,7 @@ class StoreTest extends TestCase {
    * Tests that Store::get returns null when the specified $nth param does not exist.
    */
   public function testGetReturnsNullWhenNthDoesNotExist() {
-    $this->assertEquals(null, $this->store->get(self::KEY, 3));
+    $this->assertEquals(null, $this->store->get(self::KEY, 2));
   }
 
   //--------------------------
