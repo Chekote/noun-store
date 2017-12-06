@@ -1,4 +1,4 @@
-<?php namespace nounstore;
+<?php namespace Chekote\NounStore;
 
 use Exception;
 use InvalidArgumentException;
