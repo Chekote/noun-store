@@ -138,7 +138,7 @@ class Store {
     if (preg_match('/^([1-9][0-9]*)(?:st|nd|rd|th) (.+)$/', $key, $matches)) {
       if ($nth !== null && $nth != $matches[1] - 1) {
         throw new InvalidArgumentException(
-            '$nth parameter was provided when $key contains an nth value, and they do not match'
+            "$nth was provided for nth param when key '$key' contains an nth value, but they do not match"
         );
       }
 

@@ -273,7 +273,9 @@ class StoreTest extends TestCase {
    */
   public function testParseKeyThrowsExceptionIfKeyAndNthMismatch($key, $nth) {
     $this->expectException(InvalidArgumentException::class);
-    $this->expectExceptionMessage('$nth parameter was provided when $key contains an nth value, and they do not match');
+    $this->expectExceptionMessage(
+        "$nth was provided for nth param when key '$key' contains an nth value, but they do not match"
+    );
 
     $parseKey = (new ReflectionClass(Store::class))->getMethod('parseKey');
     $parseKey->setAccessible(true);
