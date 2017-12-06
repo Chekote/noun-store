@@ -136,7 +136,7 @@ class Store {
    */
   protected function parseKey($key, $nth = null) {
     if (preg_match('/^([1-9][0-9]*)(?:st|nd|rd|th) (.+)$/', $key, $matches)) {
-      if ($nth && $nth != $matches[1] - 1) {
+      if ($nth !== null && $nth != $matches[1] - 1) {
         throw new InvalidArgumentException(
             '$nth parameter was provided when $key contains an nth value, and they do not match'
         );
