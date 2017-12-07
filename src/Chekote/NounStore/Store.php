@@ -8,8 +8,13 @@ class Store
     /** @var array */
     protected $nouns;
 
+    const FIRST_ORDINAL = 'st';
+    const SECOND_ORDINAL = 'nd';
+    const THIRD_ORDINAL = 'rd';
+    const FOURTH_THROUGH_NINTH_ORDINAL = 'th';
+
     /**
-     * Ensures that a value has been stored for the specified key.
+     * Asserts that a value has been stored for the specified key.
      *
      * @param  string                   $key The key to check. @see self::get() for formatting options.
      * @param  int                      $nth The nth (zero indexed) value for the key to check. If not specified, the
@@ -23,7 +28,7 @@ class Store
         list($key, $nth) = $this->parseKey($key, $nth);
 
         if (!$this->has($key, $nth)) {
-            throw new OutOfBoundsException("Entry $nth for $key was not found in the store.");
+            throw new OutOfBoundsException("Entry '{$this->buildKey($key, $nth)}' was not found in the store.");
         }
 
         return $this->get($key, $nth);
@@ -153,5 +158,52 @@ class Store
         }
 
         return [$key, $nth];
+    }
+
+    /**
+     * Builds a key from it's separate key and index values.
+     *
+     * @example buildKey("Item", null): "Item"
+     * @example buildKey("Item", 0): "1st Item"
+     * @example buildKey("Item", 1): "2nd Item"
+     * @example buildKey("Item", 2): "3rd Item"
+     *
+     * @param  string $key   The key to check.
+     * @param  int    $index The index (zero indexed) value for the key. If not specified, the method will not add an
+     *                           nth notation to the key.
+     * @throws InvalidArgumentException if $key is not a string.
+     * @throws InvalidArgumentException if $index is not an int.
+     * @return string the key with the nth, or just the key if index is null.
+     */
+    public function buildKey($key, $index) {
+        if (!is_string($key)) {
+            throw new InvalidArgumentException('$key must be a string');
+        };
+
+        if (!is_null($index) && !is_int($index)) {
+            throw new InvalidArgumentException('$index must be null or an int');
+        }
+
+        if ($index === null) {
+            return $key;
+        }
+
+        $nth = $index + 1;
+        switch(substr($nth, -1)) {
+            case 1:
+                $ordinal = self::FIRST_ORDINAL;
+                break;
+            case 2:
+                $ordinal = self::SECOND_ORDINAL;
+                break;
+            case 3:
+                $ordinal = self::THIRD_ORDINAL;
+                break;
+            default:
+                $ordinal = self::FOURTH_THROUGH_NINTH_ORDINAL;
+                break;
+        }
+
+        return $nth . $ordinal . ' ' . $key;
     }
 }
