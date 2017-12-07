@@ -1,3 +1,5 @@
+[![StyleCI](https://styleci.io/repos/63828286/shield?style=plastic)](https://styleci.io/repos/63828286) 
+
 # noun-store
 
 Store and work with Nouns.
