@@ -2,6 +2,6 @@
 
 ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../" && pwd )"
 
-. "$ROOT"/bin/lib/tty.sh
+. "$ROOT"/docker/lib/tty.sh
 
-docker run --env-file "$ROOT"/docker/.env -i${TTY} --rm alpine:edge sed "$@"
+docker run --env-file "$ROOT"/docker/.env -i ${TTY} --rm alpine:edge sed "$@"
