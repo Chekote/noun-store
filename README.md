@@ -107,12 +107,6 @@ git clone git@github.com:Chekote/noun-store.git
 cd noun-store
 ```
 
-Build the Docker images:
-
-```bash
-docker/build_images.sh
-```
-
 ### Executing tests
 
 Tests are written using [phpunit](https://phpunit.de/). You can execute them via the command line:
