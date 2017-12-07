@@ -5,11 +5,12 @@ ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../" && pwd )"
 . "$ROOT"/bin/lib/exitCheck.sh
 . "$ROOT"/bin/lib/settings.sh
 
+# Determine which sed to use to extract the composer version
 if [ `uname` == 'Darwin' ]; then
-  # We're on Mac OS  X. We're virtualized using xhyve, and will have a UID of 1000.
+  # We're on Mac OS  X, so we need to use linux-sed
   SED=linux-sed
 else
-  # We're on Linux. There's no virtualization, so we use our own UID.
+  # We're on Linux, so we can use the native sed
   SED=sed
 fi
 
