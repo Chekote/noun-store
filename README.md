@@ -11,7 +11,79 @@ Store and work with Nouns.
 
 ## Usage
 
-todo
+1. Add it to your requirements
+
+```bash
+composer require chekote/noun-store
+```
+
+### Make a store
+
+```php
+$store = new \Chekote\NounStore\Store();
+```
+
+### Store something
+
+```php
+$john = new Person();
+$john->firstName = 'John';
+$john->lastName = 'Smith';
+
+$store->set('best friend', $john);
+```
+
+### Check if we have something
+
+```php
+$store->has('best friend');
+```
+
+### Retrieve something
+
+```php
+$store->get('best friend');
+```
+
+### Store something else in the same key
+
+```php
+$chris = new Person();
+$chris->firstName = 'Chris';
+$chris->lastName = 'Pratt';
+
+$store->set('best friend', $chris);
+```
+
+### Retrieve the new thing
+
+```php
+$store->get('best friend');
+
+or
+
+$store->get('2nd best friend');
+
+or
+
+$store->get('best friend', 1);
+```
+
+### Retrieve the old thing
+
+```php
+$store->get('1st best friend');
+
+or
+
+$store->get('best friend', 0);
+```
+
+### Empty the store
+
+```php
+$store->reset();
+```
 
 ## Development
 
