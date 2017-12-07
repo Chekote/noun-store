@@ -62,11 +62,12 @@ class StoreTest extends TestCase
     }
 
     /**
-     * Tests that store::assertHas throws an Exception if nth value in key is not found in store.
+     * Tests that store::assertHas throws an OutOfBoundsException if nth value in key is not found in store.
      */
     public function testAssertHasWithMissingNthKeyThrowsException()
     {
-        $this->expectException(Exception::class);
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage('Entry 2 for ' . self::KEY . ' was not found in the store.');
 
         /* @noinspection PhpUnhandledExceptionInspection */
         $this->store->assertHas('3rd ' . self::KEY);

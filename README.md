@@ -39,6 +39,12 @@ $store->set('best friend', $john);
 $store->has('best friend');
 ```
 
+### Assert if we have something
+
+```php
+$store->assertHas('best friend');
+```
+
 ### Retrieve something
 
 ```php

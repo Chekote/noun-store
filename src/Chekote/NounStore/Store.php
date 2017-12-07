@@ -1,6 +1,5 @@
 <?php namespace Chekote\NounStore;
 
-use Exception;
 use InvalidArgumentException;
 use OutOfBoundsException;
 
@@ -15,7 +14,7 @@ class Store
      * @param  string                   $key The key to check. @see self::get() for formatting options.
      * @param  int                      $nth The nth (zero indexed) value for the key to check. If not specified, the
      *                                       method will ensure that at least one item is stored for the specified key.
-     * @throws Exception                If a value has not been stored for the specified key.
+     * @throws OutOfBoundsException     If a value has not been stored for the specified key.
      * @throws InvalidArgumentException $nth parameter is provided and $key contains an nth value, but they don't match.
      * @return mixed                    The value.
      */
@@ -24,7 +23,7 @@ class Store
         list($key, $nth) = $this->parseKey($key, $nth);
 
         if (!$this->has($key, $nth)) {
-            throw new Exception("Entry $nth for $key was not found in the store.");
+            throw new OutOfBoundsException("Entry $nth for $key was not found in the store.");
         }
 
         return $this->get($key, $nth);
