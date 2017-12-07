@@ -13,5 +13,4 @@ docker run \
     ${TTY} \
     -v $(pwd):/workdir \
     -v ~/.composer:/home/user/.composer \
-    ${PHP_ACCOUNT}/${PHP_REPO}:${PHP_TAG} \
-    php "$@"
+    chekote/php:7.1.11-phpunit-a php "$@"
