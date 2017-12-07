@@ -3,7 +3,6 @@
 ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../" && pwd )"
 
 . "$ROOT"/docker/lib/docker_host_user_id.sh
-. "$ROOT"/docker/lib/images.sh
 . "$ROOT"/docker/lib/tty.sh
 
 docker run \
