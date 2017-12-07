@@ -1,4 +1,7 @@
-[![StyleCI](https://styleci.io/repos/63828286/shield?style=plastic)](https://styleci.io/repos/63828286) 
+[![Packagist Latest Stable Version](https://poser.pugx.org/chekote/noun-store/version.svg)](https://packagist.org/packages/chekote/noun-store)
+[![Packagist Latest Unstable Version](https://poser.pugx.org/chekote/noun-store/v/unstable.svg)](https://packagist.org/packages/chekote/noun-store)
+[![Packagist Total Downloads](https://poser.pugx.org/chekote/noun-store/downloads.svg)](https://packagist.org/packages/chekote/noun-store)
+[![StyleCI](https://styleci.io/repos/63828286/shield?style=plastic)](https://styleci.io/repos/63828286)
 
 # noun-store
 
