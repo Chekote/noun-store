@@ -175,7 +175,7 @@ class Store
      * @throws InvalidArgumentException if $index is not an int.
      * @return string                   the key with the nth, or just the key if index is null.
      */
-    public function buildKey($key, $index)
+    protected function buildKey($key, $index)
     {
         if (!is_string($key)) {
             throw new InvalidArgumentException('$key must be a string');
@@ -190,6 +190,18 @@ class Store
         }
 
         $nth = $index + 1;
+
+        return $nth . $this->getOrdinal($nth) . ' ' . $key;
+    }
+
+    /**
+     * Provides the ordinal notation for the specified nth number.
+     *
+     * @param  int    $nth the number to determine the ordinal for
+     * @return string the ordinal
+     */
+    protected function getOrdinal($nth)
+    {
         switch (substr($nth, -1)) {
             case 1:
                 $ordinal = self::FIRST_ORDINAL;
@@ -205,6 +217,6 @@ class Store
                 break;
         }
 
-        return $nth . $ordinal . ' ' . $key;
+        return $ordinal;
     }
 }
