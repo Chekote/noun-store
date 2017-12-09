@@ -36,7 +36,7 @@ $store->set('best friend', $john);
 ### Check if we have something
 
 ```php
-$store->has('best friend');
+$store->keyExists('best friend');
 ```
 
 ### Assert if we have something

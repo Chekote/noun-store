@@ -27,7 +27,7 @@ class Store
     {
         list($key, $nth) = $this->parseKey($key, $nth);
 
-        if (!$this->has($key, $nth)) {
+        if (!$this->keyExists($key, $nth)) {
             throw new OutOfBoundsException("Entry '{$this->buildKey($key, $nth)}' was not found in the store.");
         }
 
@@ -80,7 +80,7 @@ class Store
     {
         list($key, $nth) = $this->parseKey($key, $nth);
 
-        if (!$this->has($key, $nth)) {
+        if (!$this->keyExists($key, $nth)) {
             return;
         }
 
@@ -112,7 +112,7 @@ class Store
      * @throws InvalidArgumentException $nth parameter is provided and $key contains an nth value, but they don't match.
      * @return bool                     True if the a value has been stored, false if not.
      */
-    public function has($key, $nth = null)
+    public function keyExists($key, $nth = null)
     {
         list($key, $nth) = $this->parseKey($key, $nth);
 
