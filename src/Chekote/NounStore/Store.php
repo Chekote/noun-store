@@ -23,7 +23,7 @@ class Store
      * @throws InvalidArgumentException $nth parameter is provided and $key contains an nth value, but they don't match.
      * @return mixed                    The value.
      */
-    public function assertHas($key, $nth = null)
+    public function assertKeyExists($key, $nth = null)
     {
         list($key, $nth) = $this->parseKey($key, $nth);
 
