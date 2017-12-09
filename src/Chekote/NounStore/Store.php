@@ -177,14 +177,6 @@ class Store
      */
     protected function buildKey($key, $index)
     {
-        if (!is_string($key)) {
-            throw new InvalidArgumentException('$key must be a string');
-        }
-
-        if (!is_null($index) && !is_int($index)) {
-            throw new InvalidArgumentException('$index must be null or an int');
-        }
-
         if ($index === null) {
             return $key;
         }

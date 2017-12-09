@@ -1,59 +1,13 @@
 <?php namespace Chekote\NounStore\Store;
 
 use Chekote\NounStore\Store;
-use InvalidArgumentException;
 use ReflectionClass;
-use stdClass;
 
 /**
  * @covers Store::buildKey()
  */
 class BuildKeyTest extends StoreTest
 {
-    /**
-     * Provides examples of all single argument data types.
-     *
-     * @param  string[] $exclude a list of data types to exclude
-     * @return array
-     */
-    public function dataTypesDataProvider($exclude = [])
-    {
-        $types = [
-            ['Hello World!'],
-            [12345],
-            [12.45],
-            [true],
-            [[]],
-            [new stdClass()],
-            [null],
-            [stream_context_create()],
-        ];
-
-        return array_filter($types, function ($value) use ($exclude) {
-            return !in_array(gettype($value[0]), $exclude);
-        });
-    }
-
-    /**
-     * Provides examples of all single argument data types excluding null or integer.
-     *
-     * @return array
-     */
-    public function nonNullOrIntDataTypesProvider()
-    {
-        return $this->dataTypesDataProvider(['NULL', 'integer']);
-    }
-
-    /**
-     * Provides examples of all single argument data types excluding string.
-     *
-     * @return array
-     */
-    public function nonStringDataTypesProvider()
-    {
-        return $this->dataTypesDataProvider(['string']);
-    }
-
     /**
      * Tests that calling Store::buildKey with valid key and index combinations works correctly.
      *
@@ -70,40 +24,6 @@ class BuildKeyTest extends StoreTest
         $actual = $buildKey->invoke($this->store, $key, $index);
 
         $this->assertEquals($expected, $actual);
-    }
-
-    /**
-     * Tests that Store::buildKey enforces that $key must be a string.
-     *
-     * @dataProvider nonStringDataTypesProvider
-     * @param mixed $key the key value to send to buildKey()
-     */
-    public function testBuildKeyThrowsExceptionWhenKeyIsNotAString($key)
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('$key must be a string');
-
-        $buildKey = (new ReflectionClass(Store::class))->getMethod('buildKey');
-        $buildKey->setAccessible(true);
-
-        $buildKey->invoke($this->store, $key, null);
-    }
-
-    /**
-     * Tests that Store::buildKey enforces that $index must be null or int.
-     *
-     * @dataProvider nonNullOrIntDataTypesProvider
-     * @param mixed $index the index value to send to buildKey()
-     */
-    public function testBuildKeyThrowsExceptionWhenIndexIsNotNullOrInt($index)
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('$index must be null or an int');
-
-        $buildKey = (new ReflectionClass(Store::class))->getMethod('buildKey');
-        $buildKey->setAccessible(true);
-
-        $buildKey->invoke($this->store, 'Valid Key', $index);
     }
 
     /**
