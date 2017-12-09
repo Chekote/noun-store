@@ -168,17 +168,18 @@ class Store
      * @example buildKey("Item", 1): "2nd Item"
      * @example buildKey("Item", 2): "3rd Item"
      *
-     * @param  string $key   The key to check.
-     * @param  int    $index The index (zero indexed) value for the key. If not specified, the method will not add an
-     *                           nth notation to the key.
+     * @param  string                   $key   The key to check.
+     * @param  int                      $index The index (zero indexed) value for the key. If not specified, the method
+     *                                         will not add an nth notation to the key.
      * @throws InvalidArgumentException if $key is not a string.
      * @throws InvalidArgumentException if $index is not an int.
-     * @return string the key with the nth, or just the key if index is null.
+     * @return string                   the key with the nth, or just the key if index is null.
      */
-    public function buildKey($key, $index) {
+    public function buildKey($key, $index)
+    {
         if (!is_string($key)) {
             throw new InvalidArgumentException('$key must be a string');
-        };
+        }
 
         if (!is_null($index) && !is_int($index)) {
             throw new InvalidArgumentException('$index must be null or an int');
@@ -189,7 +190,7 @@ class Store
         }
 
         $nth = $index + 1;
-        switch(substr($nth, -1)) {
+        switch (substr($nth, -1)) {
             case 1:
                 $ordinal = self::FIRST_ORDINAL;
                 break;
