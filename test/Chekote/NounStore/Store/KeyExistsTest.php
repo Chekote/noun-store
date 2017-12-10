@@ -7,7 +7,7 @@ use InvalidArgumentException;
  */
 class KeyExistsTest extends StoreTest
 {
-    public function testMismatchedNthInKeyAndParamThrowsInvalidArgumentException()
+    public function testMismatchedNthAndIndexThrowsInvalidArgumentException()
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -24,12 +24,12 @@ class KeyExistsTest extends StoreTest
         $this->assertFalse($this->store->keyExists('3rd ' . self::KEY));
     }
 
-    public function testExistingNthParameterReturnsTrue()
+    public function testExistingIndexParameterReturnsTrue()
     {
         $this->assertTrue($this->store->keyExists(self::KEY, 0));
     }
 
-    public function testMissingNthParameterReturnFalse()
+    public function testMissingIndexParameterReturnFalse()
     {
         $this->assertFalse($this->store->keyExists(self::KEY, 2));
     }

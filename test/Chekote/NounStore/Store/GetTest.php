@@ -8,10 +8,10 @@ use InvalidArgumentException;
 class GetTest extends StoreTest
 {
     /**
-     * Tests that InvalidArgumentException is thrown if Store::get is called with the nth parameter
+     * Tests that InvalidArgumentException is thrown if Store::get is called with the index parameter
      * and the key also contains an nth value, but they do not match.
      */
-    public function testGetThrowsInvalidArgumentExceptionWithMismatchedNthInKeyAndParam()
+    public function testGetThrowsInvalidArgumentExceptionWithMismatchedNthAndIndex()
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -35,9 +35,9 @@ class GetTest extends StoreTest
     }
 
     /**
-     * Tests that Store::get returns the nth item at of the stack when $nth parameter is provided.
+     * Tests that Store::get returns the index item at of the stack when index parameter is provided.
      */
-    public function testGetWithNthParameterReturnsNthItem()
+    public function testGetWithIndexParameterReturnsIndexItem()
     {
         $this->assertEquals(self::FIRST_VALUE, $this->store->get(self::KEY, 0));
     }
@@ -59,9 +59,9 @@ class GetTest extends StoreTest
     }
 
     /**
-     * Tests that Store::get returns null when the specified $nth param does not exist.
+     * Tests that Store::get returns null when the specified $index param does not exist.
      */
-    public function testGetReturnsNullWhenNthDoesNotExist()
+    public function testGetReturnsNullWhenIndexDoesNotExist()
     {
         $this->assertEquals(null, $this->store->get(self::KEY, 2));
     }

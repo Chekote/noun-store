@@ -10,52 +10,52 @@ use ReflectionClass;
 class ParseKeyTest extends StoreTest
 {
     /**
-     * Provides examples of valid key and nth pairs with expected parse results.
+     * Provides examples of valid key and index pairs with expected parse results.
      *
      * @return array
      */
-    public function validKeyAndNthCombinationsDataProvider()
+    public function validKeyAndIndexCombinationsDataProvider()
     {
         return [
-        //   key             nth   parseKey parseNth
-            ['Thing',       null, 'Thing',     null], // no nth in key or nth param
-            ['1st Thing',   null, 'Thing',        0], // 1st in key with no nth param
-            ['1st Thing',      0, 'Thing',        0], // nth in key with matching nth param
-            ['2nd Thing',   null, 'Thing',        1], // 2nd in key with no nth param
-            ['3rd Thing',   null, 'Thing',        2], // 3rd in key with no nth param
-            ['4th Thing',   null, 'Thing',        3], // 3th in key with no nth param
-            ['478th Thing', null, 'Thing',      477], // high nth in key with no nth param
-            ['Thing',          0, 'Thing',        0], // no nth in key with 0 nth param
-            ['Thing',         49, 'Thing',       49], // no nth in key with high nth param
+        //   key           index   parseKey parseIndex
+            ['Thing',       null, 'Thing',     null], // no nth in key or index param
+            ['1st Thing',   null, 'Thing',        0], // 1st in key with no index param
+            ['1st Thing',      0, 'Thing',        0], // nth in key with matching index param
+            ['2nd Thing',   null, 'Thing',        1], // 2nd in key with no index param
+            ['3rd Thing',   null, 'Thing',        2], // 3rd in key with no index param
+            ['4th Thing',   null, 'Thing',        3], // 3th in key with no index param
+            ['478th Thing', null, 'Thing',      477], // high nth in key with no index param
+            ['Thing',          0, 'Thing',        0], // no nth in key with 0 index param
+            ['Thing',         49, 'Thing',       49], // no nth in key with high index param
         ];
     }
 
     /**
-     * Tests that calling Store::parseKey with valid key and nth combinations works correctly.
+     * Tests that calling Store::parseKey with valid key and index combinations works correctly.
      *
-     * @dataProvider validKeyAndNthCombinationsDataProvider
-     * @param string $key       the key to parse
-     * @param int    $nth       the nth to pass along with the key
-     * @param string $parsedKey the expected resulting parsed key
-     * @param int    $parsedNth the expected resulting parsed nth
+     * @dataProvider validKeyAndIndexCombinationsDataProvider
+     * @param string $key         the key to parse
+     * @param int    $index       the index to pass along with the key
+     * @param string $parsedKey   the expected resulting parsed key
+     * @param int    $parsedIndex the expected resulting parsed index
      */
-    public function testParseKeyParsesValidKeysAndNthCombinations($key, $nth, $parsedKey, $parsedNth)
+    public function testParseKeyParsesValidKeysAndNthCombinations($key, $index, $parsedKey, $parsedIndex)
     {
         $parseKey = (new ReflectionClass(Store::class))->getMethod('parseKey');
         $parseKey->setAccessible(true);
 
-        list($actualKey, $actualNth) = $parseKey->invoke($this->store, $key, $nth);
+        list($actualKey, $actualIndex) = $parseKey->invoke($this->store, $key, $index);
 
         $this->assertEquals($parsedKey, $actualKey);
-        $this->assertEquals($parsedNth, $actualNth);
+        $this->assertEquals($parsedIndex, $actualIndex);
     }
 
     /**
-     * Provides examples of mismatched key & nth pairs.
+     * Provides examples of mismatched key & index pairs.
      *
      * @return array
      */
-    public function mismatchedKeyAndNthDataProvider()
+    public function mismatchedKeyAndIndexDataProvider()
     {
         return [
             ['1st Thing', 1],
@@ -67,22 +67,22 @@ class ParseKeyTest extends StoreTest
     }
 
     /**
-     * Tests that calling Store::parseKey with mismatched key and nth param throws an exception.
+     * Tests that calling Store::parseKey with mismatched key and index param throws an exception.
      *
-     * @dataProvider mismatchedKeyAndNthDataProvider
-     * @param string $key the key to parse
-     * @param string $nth the mismatched nth to pass along with the key
+     * @dataProvider mismatchedKeyAndIndexDataProvider
+     * @param string $key   the key to parse
+     * @param string $index the mismatched index to pass along with the key
      */
-    public function testParseKeyThrowsExceptionIfKeyAndNthMismatch($key, $nth)
+    public function testParseKeyThrowsExceptionIfKeyAndIndexMismatch($key, $index)
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            "$nth was provided for nth param when key '$key' contains an nth value, but they do not match"
+            "$index was provided for index param when key '$key' contains an nth value, but they do not match"
         );
 
         $parseKey = (new ReflectionClass(Store::class))->getMethod('parseKey');
         $parseKey->setAccessible(true);
 
-        $parseKey->invoke($this->store, $key, $nth);
+        $parseKey->invoke($this->store, $key, $index);
     }
 }
