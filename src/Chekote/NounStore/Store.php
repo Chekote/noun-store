@@ -16,22 +16,23 @@ class Store
     /**
      * Asserts that a value has been stored for the specified key.
      *
-     * @param  string                   $key The key to check. @see self::get() for formatting options.
-     * @param  int                      $nth The nth (zero indexed) value for the key to check. If not specified, the
-     *                                       method will ensure that at least one item is stored for the specified key.
-     * @throws OutOfBoundsException     If a value has not been stored for the specified key.
-     * @throws InvalidArgumentException $nth parameter is provided and $key contains an nth value, but they don't match.
+     * @param  string                   $key   The key to check. @see self::get() for formatting options.
+     * @param  int                      $index [optional] The index of the key entry to check. If not specified, the
+     *                                         method will ensure that at least one item is stored for the key.
+     * @throws OutOfBoundsException     if a value has not been stored for the specified key.
+     * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
+     *                                        that does not match the index.
      * @return mixed                    The value.
      */
-    public function assertKeyExists($key, $nth = null)
+    public function assertKeyExists($key, $index = null)
     {
-        list($key, $nth) = $this->parseKey($key, $nth);
+        list($key, $index) = $this->parseKey($key, $index);
 
-        if (!$this->keyExists($key, $nth)) {
-            throw new OutOfBoundsException("Entry '{$this->buildKey($key, $nth)}' was not found in the store.");
+        if (!$this->keyExists($key, $index)) {
+            throw new OutOfBoundsException("Entry '{$this->buildKey($key, $index)}' was not found in the store.");
         }
 
-        return $this->get($key, $nth);
+        return $this->get($key, $index);
     }
 
     /**
@@ -50,7 +51,7 @@ class Store
      * Each key is actually a collection. If you do not specify which item in the collection you want,
      * the method will return the most recent entry. You can specify the entry you want by either
      * using the plain english 1st, 2nd, 3rd etc in the $key param, or by specifying 0, 1, 2 etc in
-     * the $nth param. For example:
+     * the $index param. For example:
      *
      * Retrieve the most recent entry "Thing" collection:
      *   retrieve("Thing")
@@ -63,28 +64,30 @@ class Store
      *   retrieve("3rd Thing")
      *   retrieve("Thing", 2)
      *
-     * Please note: The nth value in the string key is indexed from 1. In that 1st is the very first item stored.
-     * The nth value in the nth parameter is indexed from 0. In that 0 is the first item stored.
+     * Please note: The nth value in the string key is indexed from 1. In that "1st" is the first item stored.
+     * The index parameter is indexed from 0. In that 0 is the first item stored.
      *
-     * Please Note: You should not specify both an $nth *and* a plain english nth via the $key. If you
-     * do, the method will throw an InvalidArgumentException. e.g:
+     * Please Note: If you specify both an $index param and an nth in the $key, they must both reference the same index.
+     * If they do not, the method will throw an InvalidArgumentException.
      *
      * retrieve("1st Thing", 1);
      *
-     * @param  string                   $key The key to retrieve the value for. Can be prefixed with an nth descriptor.
-     * @param  int                      $nth [optional] The nth (zero indexed) value for the key to retrieve.
-     * @throws InvalidArgumentException $nth parameter is provided and $key contains an nth value, but they don't match.
-     * @return mixed                    The value, or null if no value exists for the specified key/nth combination.
+     * @param  string                   $key   The key to retrieve the value for. Can be prefixed with an nth descriptor.
+     * @param  int                      $index [optional] The index of the key entry to retrieve. If not specified, the
+     *                                         method will return the most recent value stored under the key.
+     * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
+     *                                        that does not match the index.
+     * @return mixed                    The value, or null if no value exists for the specified key/index combination.
      */
-    public function get($key, $nth = null)
+    public function get($key, $index = null)
     {
-        list($key, $nth) = $this->parseKey($key, $nth);
+        list($key, $index) = $this->parseKey($key, $index);
 
-        if (!$this->keyExists($key, $nth)) {
+        if (!$this->keyExists($key, $index)) {
             return;
         }
 
-        return $nth !== null ? $this->nouns[$key][$nth] : end($this->nouns[$key]);
+        return $index !== null ? $this->nouns[$key][$index] : end($this->nouns[$key]);
     }
 
     /**
@@ -106,17 +109,18 @@ class Store
     /**
      * Determines if a value has been stored for the specified key.
      *
-     * @param  string                   $key The key to check.
-     * @param  int                      $nth The nth (zero indexed) value for the key to check. If not specified, the
-     *                                       method will ensure that at least one item is stored for the specified key.
-     * @throws InvalidArgumentException $nth parameter is provided and $key contains an nth value, but they don't match.
+     * @param  string                   $key   The key to check.
+     * @param  int                      $index [optional] The index of the key entry to check. If not specified, the
+     *                                         method will ensure that at least one item is stored for the key.
+     * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
+     *                                        that does not match the index.
      * @return bool                     True if the a value has been stored, false if not.
      */
-    public function keyExists($key, $nth = null)
+    public function keyExists($key, $index = null)
     {
-        list($key, $nth) = $this->parseKey($key, $nth);
+        list($key, $index) = $this->parseKey($key, $index);
 
-        return $nth !== null ? isset($this->nouns[$key][$nth]) : isset($this->nouns[$key]);
+        return $index !== null ? isset($this->nouns[$key][$index]) : isset($this->nouns[$key]);
     }
 
     /**
@@ -131,7 +135,7 @@ class Store
     }
 
     /**
-     * Parses a key into the separate key and nth value.
+     * Parses a key into the separate key and index value.
      *
      * @example parseKey("Item"): ["Item", null]
      * @example parseKey("Item", 1): ["Item", 1]
@@ -139,25 +143,27 @@ class Store
      * @example parseKey("2nd Item"): ["Item", 1]
      * @example parseKey("3rd Item"): ["Item", 2]
      *
-     * @param  string                   $key the key to parse.
-     * @param  int                      $nth the nth to return if the key does not contain one.
-     * @throws InvalidArgumentException $nth parameter is provided and $key contains an nth value, but they don't match.
-     * @return array                    a tuple, the 1st being the key with the nth removed, and the 2nd being the nth.
+     * @param  string                   $key   the key to parse.
+     * @param  int                      $index [optional] the index to return if the key does not contain one.
+     * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
+     *                                        that does not match the index.
+     * @return array                    a tuple, the 1st being the key with the nth removed, and the 2nd being the
+     *                                        index.
      */
-    protected function parseKey($key, $nth = null)
+    protected function parseKey($key, $index = null)
     {
         if (preg_match('/^([1-9][0-9]*)(?:st|nd|rd|th) (.+)$/', $key, $matches)) {
-            if ($nth !== null && $nth != $matches[1] - 1) {
+            if ($index !== null && $index != $matches[1] - 1) {
                 throw new InvalidArgumentException(
-            "$nth was provided for nth param when key '$key' contains an nth value, but they do not match"
-        );
+                    "$index was provided for index param when key '$key' contains an nth value, but they do not match"
+                );
             }
 
-            $nth = $matches[1] - 1;
+            $index = $matches[1] - 1;
             $key = $matches[2];
         }
 
-        return [$key, $nth];
+        return [$key, $index];
     }
 
     /**
@@ -170,10 +176,10 @@ class Store
      *
      * @param  string                   $key   The key to check.
      * @param  int                      $index The index (zero indexed) value for the key. If not specified, the method
-     *                                         will not add an nth notation to the key.
+     *                                         will not add an index notation to the key.
      * @throws InvalidArgumentException if $key is not a string.
      * @throws InvalidArgumentException if $index is not an int.
-     * @return string                   the key with the nth, or just the key if index is null.
+     * @return string                   the key with the index, or just the key if index is null.
      */
     protected function buildKey($key, $index)
     {
