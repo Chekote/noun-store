@@ -8,7 +8,7 @@ use OutOfBoundsException;
  */
 class AssertKeyExistsTest extends StoreTest
 {
-    public function testMismatchedNthInKeyAndParamAreRejected()
+    public function testMismatchedNthAndIndexAreRejected()
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -31,13 +31,13 @@ class AssertKeyExistsTest extends StoreTest
         $this->store->assertKeyExists('3rd ' . self::KEY);
     }
 
-    public function testExistingNthParameterReturnsValue()
+    public function testExistingIndexReturnsValue()
     {
         /* @noinspection PhpUnhandledExceptionInspection */
         $this->assertEquals(self::FIRST_VALUE, $this->store->assertKeyExists(self::KEY, 0));
     }
 
-    public function testNonExistentNthParameterThrowsException()
+    public function testNonExistentIndexThrowsException()
     {
         $this->expectException(OutOfBoundsException::class);
         $this->expectExceptionMessage("Entry '3rd " . self::KEY . "' was not found in the store.");
