@@ -24,7 +24,7 @@ class AssertKeyValueIsTest extends StoreTest
     public function failureScenariosDataProvider()
     {
         return [
-        //  key                  value               index  exception class                  exception message
+        //  key                  value               index exception class                  exception message
             ['1st ' . self::KEY, null,                  1, InvalidArgumentException::class, "1 was provided for index param when key '1st " . self::KEY . "' contains an nth value, but they do not match"],
             ['1st ' . self::KEY, self::SECOND_VALUE, null, RuntimeException::class,         "Entry '1st " . self::KEY . "' does not match '" . self::SECOND_VALUE . "'"                                   ],
             ['2nd ' . self::KEY, self::FIRST_VALUE,  null, RuntimeException::class,         "Entry '2nd " . self::KEY . "' does not match '" . self::FIRST_VALUE . "'"                                    ],
@@ -41,7 +41,7 @@ class AssertKeyValueIsTest extends StoreTest
      * @param mixed  $value the value to pass to the method.
      * @param int    $index the index to pass to the method.
      */
-    public function testSuccessScenarios($key, $value, $index = null)
+    public function testSuccessScenario($key, $value, $index = null)
     {
         $this->store->assertKeyValueIs($key, $value, $index);
     }
@@ -56,7 +56,7 @@ class AssertKeyValueIsTest extends StoreTest
      * @param string $exceptionClass   the expected class of the exception.
      * @param string $exceptionMessage the expected message of the exception.
      */
-    public function testFailureScenarios($key, $value, $index, $exceptionClass, $exceptionMessage)
+    public function testFailureScenario($key, $value, $index, $exceptionClass, $exceptionMessage)
     {
         $this->expectException($exceptionClass);
         $this->expectExceptionMessage($exceptionMessage);
