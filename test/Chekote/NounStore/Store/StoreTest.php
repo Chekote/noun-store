@@ -18,6 +18,8 @@ abstract class StoreTest extends TestCase
     const FIRST_VALUE = 'The First Value';
     const SECOND_VALUE = 'The Second Value';
 
+    const MOST_RECENT_VALUE = self::SECOND_VALUE;
+
     /**
      * Sets up the environment before each test.
      */

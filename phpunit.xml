@@ -5,7 +5,7 @@
          backupStaticAttributes="false"
          beStrictAboutCoversAnnotation="true"
          beStrictAboutOutputDuringTests="true"
-         beStrictAboutTestsThatDoNotTestAnything="true"
+         beStrictAboutTestsThatDoNotTestAnything="false"
          beStrictAboutTodoAnnotatedTests="true"
          bootstrap="vendor/autoload.php"
          colors="true"

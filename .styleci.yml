@@ -6,6 +6,7 @@ disabled:
   - phpdoc_separation
   - post_increment
   - single_blank_line_before_namespace
+  - trim_array_spaces
 
 enabled:
   - pre_increment
