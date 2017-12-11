@@ -2,9 +2,6 @@
 
 use OutOfBoundsException;
 
-/**
- * @covers Store::getAll()
- */
 class GetAllTest extends StoreTest
 {
     /**

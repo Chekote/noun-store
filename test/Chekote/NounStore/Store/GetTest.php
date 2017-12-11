@@ -2,9 +2,6 @@
 
 use InvalidArgumentException;
 
-/**
- * @covers Store::get()
- */
 class GetTest extends StoreTest
 {
     /**
