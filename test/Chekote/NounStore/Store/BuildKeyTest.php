@@ -1,7 +1,6 @@
 <?php namespace Chekote\NounStore\Store;
 
 use Chekote\NounStore\Store;
-use ReflectionClass;
 
 /**
  * @covers Store::buildKey()
@@ -18,8 +17,7 @@ class BuildKeyTest extends StoreTest
      */
     public function testBuildKeyBuildsValidKeyAndIndexCombinations($key, $index, $expected)
     {
-        $buildKey = (new ReflectionClass(Store::class))->getMethod('buildKey');
-        $buildKey->setAccessible(true);
+        $buildKey = $this->makeMethodAccessible('buildKey');
 
         $actual = $buildKey->invoke($this->store, $key, $index);
 
