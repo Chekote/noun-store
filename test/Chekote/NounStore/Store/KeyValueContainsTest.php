@@ -2,9 +2,6 @@
 
 use InvalidArgumentException;
 
-/**
- * @covers Store::keyValueContains()
- */
 class KeyValueContainsTest extends StoreTest
 {
     public function successScenariosDataProvider()

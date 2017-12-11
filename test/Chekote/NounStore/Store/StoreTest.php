@@ -6,9 +6,6 @@ use ReflectionClass;
 use ReflectionMethod;
 use ReflectionProperty;
 
-/**
- * @covers Store
- */
 abstract class StoreTest extends TestCase
 {
     /** @var Store */
