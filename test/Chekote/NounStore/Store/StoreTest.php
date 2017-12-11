@@ -2,6 +2,9 @@
 
 use Chekote\NounStore\Store;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
+use ReflectionMethod;
+use ReflectionProperty;
 
 /**
  * @covers Store
@@ -31,5 +34,33 @@ abstract class StoreTest extends TestCase
     public function tearDown()
     {
         $this->store = null;
+    }
+
+    /**
+     * Ensures that the specified method on Store is accessible.
+     *
+     * @param  string           $name the method to make accessible.
+     * @return ReflectionMethod the method.
+     */
+    protected function makeMethodAccessible($name)
+    {
+        $method = (new ReflectionClass(Store::class))->getMethod($name);
+        $method->setAccessible(true);
+
+        return $method;
+    }
+
+    /**
+     * Ensures that the specified property on Store is accessible.
+     *
+     * @param  string             $name the property to make accessible.
+     * @return ReflectionProperty the property.
+     */
+    protected function makePropertyAccessible($name)
+    {
+        $property = (new ReflectionClass(Store::class))->getProperty($name);
+        $property->setAccessible(true);
+
+        return $property;
     }
 }

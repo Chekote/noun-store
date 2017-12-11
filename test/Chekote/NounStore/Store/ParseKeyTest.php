@@ -2,7 +2,6 @@
 
 use Chekote\NounStore\Store;
 use InvalidArgumentException;
-use ReflectionClass;
 
 /**
  * @covers Store::parseKey()
@@ -41,8 +40,7 @@ class ParseKeyTest extends StoreTest
      */
     public function testParseKeyParsesValidKeysAndNthCombinations($key, $index, $parsedKey, $parsedIndex)
     {
-        $parseKey = (new ReflectionClass(Store::class))->getMethod('parseKey');
-        $parseKey->setAccessible(true);
+        $parseKey = $this->makeMethodAccessible('parseKey');
 
         list($actualKey, $actualIndex) = $parseKey->invoke($this->store, $key, $index);
 
@@ -80,8 +78,7 @@ class ParseKeyTest extends StoreTest
             "$index was provided for index param when key '$key' contains an nth value, but they do not match"
         );
 
-        $parseKey = (new ReflectionClass(Store::class))->getMethod('parseKey');
-        $parseKey->setAccessible(true);
+        $parseKey = $this->makeMethodAccessible('parseKey');
 
         $parseKey->invoke($this->store, $key, $index);
     }
