@@ -37,7 +37,7 @@ class Store
     }
 
     /**
-     * Asserts that the keys value matches the specified value.
+     * Asserts that the key's value matches the specified value.
      *
      * @param  string                   $key   The key to check. @see self::get() for formatting options.
      * @param  mixed                    $value The expected value.
