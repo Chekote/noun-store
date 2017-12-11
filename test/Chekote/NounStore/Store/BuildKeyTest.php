@@ -1,10 +1,5 @@
 <?php namespace Chekote\NounStore\Store;
 
-use Chekote\NounStore\Store;
-
-/**
- * @covers Store::buildKey()
- */
 class BuildKeyTest extends StoreTest
 {
     /**

@@ -1,3 +1,5 @@
 .idea/
 bin/composer
+bin/ocular.phar
+coverage.clover
 vendor/

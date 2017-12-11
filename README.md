@@ -2,6 +2,7 @@
 [![Packagist Latest Unstable Version](https://poser.pugx.org/chekote/noun-store/v/unstable.svg)](https://packagist.org/packages/chekote/noun-store)
 [![Packagist Total Downloads](https://poser.pugx.org/chekote/noun-store/downloads.svg)](https://packagist.org/packages/chekote/noun-store)
 [![CircleCI](https://circleci.com/gh/Chekote/noun-store.svg?style=shield)](https://circleci.com/gh/Chekote/noun-store)
+[![Scrutinizer Code Coverage](https://scrutinizer-ci.com/g/Chekote/noun-store/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Chekote/noun-store/?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Chekote/noun-store/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Chekote/noun-store/?branch=master)
 [![StyleCI](https://styleci.io/repos/63828286/shield?style=plastic)](https://styleci.io/repos/63828286)
 

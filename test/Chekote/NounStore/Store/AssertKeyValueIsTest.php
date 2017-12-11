@@ -4,9 +4,6 @@ use InvalidArgumentException;
 use OutOfBoundsException;
 use RuntimeException;
 
-/**
- * @covers Store::assertKeyValueIs()
- */
 class AssertKeyValueIsTest extends StoreTest
 {
     public function successScenariosDataProvider()

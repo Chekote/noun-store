@@ -2,9 +2,6 @@
 
 use InvalidArgumentException;
 
-/**
- * @covers Store::keyExists()
- */
 class KeyExistsTest extends StoreTest
 {
     public function testMismatchedNthAndIndexThrowsInvalidArgumentException()

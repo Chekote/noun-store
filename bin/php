@@ -12,4 +12,4 @@ docker run \
     ${TTY} \
     -v $(pwd):/workdir \
     -v ~/.composer:/home/user/.composer \
-    chekote/php:7.1.11-phpunit-a php "$@"
+    chekote/noun-store-php:2017-12-11 php "$@"

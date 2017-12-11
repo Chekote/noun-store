@@ -3,9 +3,6 @@
 use Chekote\NounStore\Store;
 use ReflectionClass;
 
-/**
- * @covers Store::set()
- */
 class SetTest extends StoreTest
 {
     /**

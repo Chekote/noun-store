@@ -1,11 +1,7 @@
 <?php namespace Chekote\NounStore\Store;
 
-use Chekote\NounStore\Store;
 use InvalidArgumentException;
 
-/**
- * @covers Store::parseKey()
- */
 class ParseKeyTest extends StoreTest
 {
     /**

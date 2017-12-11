@@ -3,9 +3,6 @@
 use InvalidArgumentException;
 use OutOfBoundsException;
 
-/**
- * @covers Store::assertKeyExists()
- */
 class AssertKeyExistsTest extends StoreTest
 {
     public function testMismatchedNthAndIndexAreRejected()
