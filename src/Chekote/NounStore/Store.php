@@ -14,6 +14,12 @@ class Store
     const ORDINAL_RD = 'rd';
     const ORDINAL_TH = 'th';
 
+    protected static $ordinals = [
+        1 => self::ORDINAL_ST,
+        2 => self::ORDINAL_ND,
+        3 => self::ORDINAL_RD,
+    ];
+
     /**
      * Asserts that a value has been stored for the specified key.
      *
@@ -276,20 +282,11 @@ class Store
         if ($nth > 9 && $nth < 20) {
             $ordinal = self::ORDINAL_TH;
         } else {
-            switch (substr($nth, -1)) {
-                case 1:
-                    $ordinal = self::ORDINAL_ST;
-                    break;
-                case 2:
-                    $ordinal = self::ORDINAL_ND;
-                    break;
-                case 3:
-                    $ordinal = self::ORDINAL_RD;
-                    break;
-                default:
-                    $ordinal = self::ORDINAL_TH;
-                    break;
-            }
+            $lastDigit = substr($nth, -1);
+
+            return array_key_exists($lastDigit, self::$ordinals)
+                ? self::$ordinals[$lastDigit]
+                : self::ORDINAL_TH;
         }
 
         return $ordinal;
