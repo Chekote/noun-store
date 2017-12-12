@@ -269,6 +269,10 @@ class Store
      */
     protected function getOrdinal($nth)
     {
+        if ($nth < 0) {
+            throw new InvalidArgumentException('$nth must be a positive number');
+        }
+
         if ($nth > 9 && $nth < 20) {
             $ordinal = self::ORDINAL_TH;
         } else {
