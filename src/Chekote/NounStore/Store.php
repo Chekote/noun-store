@@ -15,9 +15,16 @@ class Store
     const ORDINAL_TH = 'th';
 
     protected static $ordinals = [
+        0 => self::ORDINAL_TH,
         1 => self::ORDINAL_ST,
         2 => self::ORDINAL_ND,
         3 => self::ORDINAL_RD,
+        4 => self::ORDINAL_TH,
+        5 => self::ORDINAL_TH,
+        6 => self::ORDINAL_TH,
+        7 => self::ORDINAL_TH,
+        8 => self::ORDINAL_TH,
+        9 => self::ORDINAL_TH,
     ];
 
     /**
@@ -279,16 +286,6 @@ class Store
             throw new InvalidArgumentException('$nth must be a positive number');
         }
 
-        if ($nth > 9 && $nth < 20) {
-            $ordinal = self::ORDINAL_TH;
-        } else {
-            $lastDigit = substr($nth, -1);
-
-            return array_key_exists($lastDigit, self::$ordinals)
-                ? self::$ordinals[$lastDigit]
-                : self::ORDINAL_TH;
-        }
-
-        return $ordinal;
+        return $nth > 9 && $nth < 20 ? self::ORDINAL_TH : self::$ordinals[substr($nth, -1)];
     }
 }
