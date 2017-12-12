@@ -9,10 +9,10 @@ class Store
     /** @var array */
     protected $nouns;
 
-    const FIRST_ORDINAL = 'st';
-    const SECOND_ORDINAL = 'nd';
-    const THIRD_ORDINAL = 'rd';
-    const FOURTH_THROUGH_NINTH_ORDINAL = 'th';
+    const ORDINAL_ST = 'st';
+    const ORDINAL_ND = 'nd';
+    const ORDINAL_RD = 'rd';
+    const ORDINAL_TH = 'th';
 
     /**
      * Asserts that a value has been stored for the specified key.
@@ -269,19 +269,23 @@ class Store
      */
     protected function getOrdinal($nth)
     {
-        switch (substr($nth, -1)) {
-            case 1:
-                $ordinal = self::FIRST_ORDINAL;
-                break;
-            case 2:
-                $ordinal = self::SECOND_ORDINAL;
-                break;
-            case 3:
-                $ordinal = self::THIRD_ORDINAL;
-                break;
-            default:
-                $ordinal = self::FOURTH_THROUGH_NINTH_ORDINAL;
-                break;
+        if ($nth > 9 && $nth < 20) {
+            $ordinal = self::ORDINAL_TH;
+        } else {
+            switch (substr($nth, -1)) {
+                case 1:
+                    $ordinal = self::ORDINAL_ST;
+                    break;
+                case 2:
+                    $ordinal = self::ORDINAL_ND;
+                    break;
+                case 3:
+                    $ordinal = self::ORDINAL_RD;
+                    break;
+                default:
+                    $ordinal = self::ORDINAL_TH;
+                    break;
+            }
         }
 
         return $ordinal;
