@@ -30,7 +30,7 @@ class Store
      */
     public function assertKeyExists($key, $index = null)
     {
-        list($key, $index) = $this->parseKey($key, $index);
+        list($key, $index) = $this->keyService->parse($key, $index);
 
         if (!$this->keyExists($key, $index)) {
             throw new OutOfBoundsException("Entry '{$this->buildKey($key, $index)}' was not found in the store.");
@@ -52,7 +52,7 @@ class Store
      */
     public function assertKeyValueIs($key, $value, $index = null)
     {
-        list($key, $index) = $this->parseKey($key, $index);
+        list($key, $index) = $this->keyService->parse($key, $index);
 
         $this->assertKeyExists($key, $index);
 
@@ -76,7 +76,7 @@ class Store
      */
     public function assertKeyValueContains($key, $value, $index = null)
     {
-        list($key, $index) = $this->parseKey($key, $index);
+        list($key, $index) = $this->keyService->parse($key, $index);
 
         $this->assertKeyExists($key, $index);
 
@@ -133,7 +133,7 @@ class Store
      */
     public function get($key, $index = null)
     {
-        list($key, $index) = $this->parseKey($key, $index);
+        list($key, $index) = $this->keyService->parse($key, $index);
 
         if (!$this->keyExists($key, $index)) {
             return;
@@ -170,7 +170,7 @@ class Store
      */
     public function keyExists($key, $index = null)
     {
-        list($key, $index) = $this->parseKey($key, $index);
+        list($key, $index) = $this->keyService->parse($key, $index);
 
         return $index !== null ? isset($this->nouns[$key][$index]) : isset($this->nouns[$key]);
     }
@@ -188,7 +188,7 @@ class Store
      */
     public function keyValueContains($key, $value, $index = null)
     {
-        list($key, $index) = $this->parseKey($key, $index);
+        list($key, $index) = $this->keyService->parse($key, $index);
 
         $actual = $this->get($key, $index);
 
@@ -204,38 +204,6 @@ class Store
     public function set($key, $value)
     {
         $this->nouns[$key][] = $value;
-    }
-
-    /**
-     * Parses a key into the separate key and index value.
-     *
-     * @example parseKey("Item"): ["Item", null]
-     * @example parseKey("Item", 1): ["Item", 1]
-     * @example parseKey("1st Item"): ["Item", 0]
-     * @example parseKey("2nd Item"): ["Item", 1]
-     * @example parseKey("3rd Item"): ["Item", 2]
-     *
-     * @param  string                   $key   the key to parse.
-     * @param  int                      $index [optional] the index to return if the key does not contain one.
-     * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
-     *                                        that does not match the index.
-     * @return array                    a tuple, the 1st being the key with the nth removed, and the 2nd being the
-     *                                        index.
-     */
-    protected function parseKey($key, $index = null)
-    {
-        if (preg_match('/^([1-9][0-9]*)(?:st|nd|rd|th) (.+)$/', $key, $matches)) {
-            if ($index !== null && $index != $matches[1] - 1) {
-                throw new InvalidArgumentException(
-                    "$index was provided for index param when key '$key' contains an nth value, but they do not match"
-                );
-            }
-
-            $index = $matches[1] - 1;
-            $key = $matches[2];
-        }
-
-        return [$key, $index];
     }
 
     /**
