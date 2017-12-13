@@ -33,7 +33,9 @@ class Store
         list($key, $index) = $this->keyService->parse($key, $index);
 
         if (!$this->keyExists($key, $index)) {
-            throw new OutOfBoundsException("Entry '{$this->buildKey($key, $index)}' was not found in the store.");
+            throw new OutOfBoundsException(
+                "Entry '" . $this->keyService->build($key, $index) . "' was not found in the store."
+            );
         }
 
         return $this->get($key, $index);
@@ -58,7 +60,7 @@ class Store
 
         if ($this->get($key, $index) != $value) {
             throw new RuntimeException(
-                "Entry '{$this->buildKey($key, $index)}' does not match '" . print_r($value, true) . "'"
+                "Entry '" . $this->keyService->build($key, $index) . "' does not match '" . print_r($value, true) . "'"
             );
         }
     }
@@ -82,7 +84,7 @@ class Store
 
         if (!$this->keyValueContains($key, $value, $index)) {
             throw new RuntimeException(
-                "Entry '{$this->buildKey($key, $index)}' does not contain '$value'"
+                "Entry '" . $this->keyService->build($key, $index) . "' does not contain '$value'"
             );
         }
     }
@@ -204,31 +206,5 @@ class Store
     public function set($key, $value)
     {
         $this->nouns[$key][] = $value;
-    }
-
-    /**
-     * Builds a key from it's separate key and index values.
-     *
-     * @example buildKey("Item", null): "Item"
-     * @example buildKey("Item", 0): "1st Item"
-     * @example buildKey("Item", 1): "2nd Item"
-     * @example buildKey("Item", 2): "3rd Item"
-     *
-     * @param  string                   $key   The key to check.
-     * @param  int                      $index The index (zero indexed) value for the key. If not specified, the method
-     *                                         will not add an index notation to the key.
-     * @throws InvalidArgumentException if $key is not a string.
-     * @throws InvalidArgumentException if $index is not an int.
-     * @return string                   the key with the index, or just the key if index is null.
-     */
-    protected function buildKey($key, $index)
-    {
-        if ($index === null) {
-            return $key;
-        }
-
-        $nth = $index + 1;
-
-        return $nth . $this->keyService->getOrdinal($nth) . ' ' . $key;
     }
 }

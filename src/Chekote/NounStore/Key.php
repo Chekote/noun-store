@@ -25,6 +25,32 @@ class Key
     ];
 
     /**
+     * Builds a key from it's separate key and index values.
+     *
+     * @example buildKey("Item", null): "Item"
+     * @example buildKey("Item", 0): "1st Item"
+     * @example buildKey("Item", 1): "2nd Item"
+     * @example buildKey("Item", 2): "3rd Item"
+     *
+     * @param  string                   $key   The key to check.
+     * @param  int                      $index The index (zero indexed) value for the key. If not specified, the method
+     *                                         will not add an index notation to the key.
+     * @throws InvalidArgumentException if $key is not a string.
+     * @throws InvalidArgumentException if $index is not an int.
+     * @return string                   the key with the index, or just the key if index is null.
+     */
+    public function build($key, $index)
+    {
+        if ($index === null) {
+            return $key;
+        }
+
+        $nth = $index + 1;
+
+        return $nth . $this->getOrdinal($nth) . ' ' . $key;
+    }
+
+    /**
      * Provides the ordinal notation for the specified nth number.
      *
      * @param  int    $nth the number to determine the ordinal for
