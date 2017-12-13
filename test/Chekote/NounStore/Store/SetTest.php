@@ -32,8 +32,7 @@ class SetTest extends StoreTest
         $value1 = 'My Value';
         $value2 = 'My Second Value';
 
-        $class = new ReflectionClass(Store::class);
-        $nouns = $class->getProperty('nouns');
+        $nouns = $this->makePropertyAccessible('nouns');
         $nouns->setAccessible(true);
 
         $this->store->set($key, $value1);
