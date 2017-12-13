@@ -9,10 +9,23 @@ class Store
     /** @var array */
     protected $nouns;
 
-    const FIRST_ORDINAL = 'st';
-    const SECOND_ORDINAL = 'nd';
-    const THIRD_ORDINAL = 'rd';
-    const FOURTH_THROUGH_NINTH_ORDINAL = 'th';
+    const ORDINAL_ST = 'st';
+    const ORDINAL_ND = 'nd';
+    const ORDINAL_RD = 'rd';
+    const ORDINAL_TH = 'th';
+
+    protected static $ordinals = [
+        0 => self::ORDINAL_TH,
+        1 => self::ORDINAL_ST,
+        2 => self::ORDINAL_ND,
+        3 => self::ORDINAL_RD,
+        4 => self::ORDINAL_TH,
+        5 => self::ORDINAL_TH,
+        6 => self::ORDINAL_TH,
+        7 => self::ORDINAL_TH,
+        8 => self::ORDINAL_TH,
+        9 => self::ORDINAL_TH,
+    ];
 
     /**
      * Asserts that a value has been stored for the specified key.
@@ -269,21 +282,10 @@ class Store
      */
     protected function getOrdinal($nth)
     {
-        switch (substr($nth, -1)) {
-            case 1:
-                $ordinal = self::FIRST_ORDINAL;
-                break;
-            case 2:
-                $ordinal = self::SECOND_ORDINAL;
-                break;
-            case 3:
-                $ordinal = self::THIRD_ORDINAL;
-                break;
-            default:
-                $ordinal = self::FOURTH_THROUGH_NINTH_ORDINAL;
-                break;
+        if ($nth < 0) {
+            throw new InvalidArgumentException('$nth must be a positive number');
         }
 
-        return $ordinal;
+        return $nth > 9 && $nth < 20 ? self::ORDINAL_TH : self::$ordinals[substr($nth, -1)];
     }
 }
