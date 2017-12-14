@@ -6,6 +6,9 @@ use RuntimeException;
 
 class Store
 {
+    /** @var Assert */
+    protected $assert;
+
     /** @var Key */
     protected $keyService;
 
@@ -15,30 +18,9 @@ class Store
     public function __construct(Key $keyService = null)
     {
         $this->keyService = $keyService ?: Key::getInstance();
-    }
 
-    /**
-     * Asserts that a value has been stored for the specified key.
-     *
-     * @param  string                   $key   The key to check. @see self::get() for formatting options.
-     * @param  int                      $index [optional] The index of the key entry to check. If not specified, the
-     *                                         method will ensure that at least one item is stored for the key.
-     * @throws OutOfBoundsException     if a value has not been stored for the specified key.
-     * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
-     *                                        that does not match the index.
-     * @return mixed                    The value.
-     */
-    public function assertKeyExists($key, $index = null)
-    {
-        list($key, $index) = $this->keyService->parse($key, $index);
-
-        if (!$this->keyExists($key, $index)) {
-            throw new OutOfBoundsException(
-                "Entry '" . $this->keyService->build($key, $index) . "' was not found in the store."
-            );
-        }
-
-        return $this->get($key, $index);
+        // @todo this is temporary. remove once all assert methods are moved to Assert class
+        $this->assert = new Assert($this, $this->keyService);
     }
 
     /**
@@ -56,7 +38,7 @@ class Store
     {
         list($key, $index) = $this->keyService->parse($key, $index);
 
-        $this->assertKeyExists($key, $index);
+        $this->assert->keyExists($key, $index);
 
         if ($this->get($key, $index) != $value) {
             throw new RuntimeException(
@@ -80,7 +62,7 @@ class Store
     {
         list($key, $index) = $this->keyService->parse($key, $index);
 
-        $this->assertKeyExists($key, $index);
+        $this->assert->keyExists($key, $index);
 
         if (!$this->keyValueContains($key, $value, $index)) {
             throw new RuntimeException(
