@@ -4,7 +4,7 @@ use Chekote\NounStore\Store\StoreTest;
 use InvalidArgumentException;
 use OutOfBoundsException;
 
-class AssertKeyExistsTest extends AssertTest
+class KeyExistsTest extends AssertTest
 {
     public function testMismatchedNthAndIndexAreRejected()
     {
@@ -43,4 +43,4 @@ class AssertKeyExistsTest extends AssertTest
         /* @noinspection PhpUnhandledExceptionInspection */
         $this->assert->keyExists(StoreTest::KEY, 2);
     }
-} 
+}
