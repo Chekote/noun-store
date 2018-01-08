@@ -1,8 +1,8 @@
-<?php namespace Chekote\NounStore\Store;
+<?php namespace Chekote\NounStore\Key;
 
 use InvalidArgumentException;
 
-class GetOrdinalTest extends StoreTest
+class GetOrdinalTest extends KeyTest
 {
     public function successScenariosDataProvider()
     {
@@ -51,9 +51,7 @@ class GetOrdinalTest extends StoreTest
      */
     public function testSuccessScenario($nth, $expected)
     {
-        $getOrdinal = $this->makeMethodAccessible('getOrdinal');
-
-        $actual = $getOrdinal->invoke($this->store, $nth);
+        $actual = $this->key->getOrdinal($nth);
 
         $this->assertEquals($expected, $actual);
     }
@@ -71,8 +69,6 @@ class GetOrdinalTest extends StoreTest
         $this->expectException($exceptionClass);
         $this->expectExceptionMessage($exceptionMessage);
 
-        $getOrdinal = $this->makeMethodAccessible('getOrdinal');
-
-        $getOrdinal->invoke($this->store, $nth);
+        $this->key->getOrdinal($nth);
     }
 }

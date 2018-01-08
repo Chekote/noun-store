@@ -1,8 +1,12 @@
-<?php namespace Chekote\NounStore\Store;
+<?php namespace Chekote\NounStore\Key;
 
 use InvalidArgumentException;
 
-class ParseKeyTest extends StoreTest
+/**
+ * @covers \Chekote\NounStore\Key::parse()
+ * @covers \Chekote\NounStore\Singleton::getInstance()
+ */
+class ParseTest extends KeyTest
 {
     /**
      * Provides examples of valid key and index pairs with expected parse results.
@@ -12,7 +16,7 @@ class ParseKeyTest extends StoreTest
     public function validKeyAndIndexCombinationsDataProvider()
     {
         return [
-        //   key           index   parseKey parseIndex
+        //   key           index   parse parseIndex
             ['Thing',       null, 'Thing',     null], // no nth in key or index param
             ['1st Thing',   null, 'Thing',        0], // 1st in key with no index param
             ['1st Thing',      0, 'Thing',        0], // nth in key with matching index param
@@ -26,7 +30,7 @@ class ParseKeyTest extends StoreTest
     }
 
     /**
-     * Tests that calling Store::parseKey with valid key and index combinations works correctly.
+     * Tests that calling Key::parse with valid key and index combinations works correctly.
      *
      * @dataProvider validKeyAndIndexCombinationsDataProvider
      * @param string $key         the key to parse
@@ -36,9 +40,7 @@ class ParseKeyTest extends StoreTest
      */
     public function testParseKeyParsesValidKeysAndNthCombinations($key, $index, $parsedKey, $parsedIndex)
     {
-        $parseKey = $this->makeMethodAccessible('parseKey');
-
-        list($actualKey, $actualIndex) = $parseKey->invoke($this->store, $key, $index);
+        list($actualKey, $actualIndex) = $this->key->parse($key, $index);
 
         $this->assertEquals($parsedKey, $actualKey);
         $this->assertEquals($parsedIndex, $actualIndex);
@@ -61,7 +63,7 @@ class ParseKeyTest extends StoreTest
     }
 
     /**
-     * Tests that calling Store::parseKey with mismatched key and index param throws an exception.
+     * Tests that calling Key::parse with mismatched key and index param throws an exception.
      *
      * @dataProvider mismatchedKeyAndIndexDataProvider
      * @param string $key   the key to parse
@@ -74,8 +76,6 @@ class ParseKeyTest extends StoreTest
             "$index was provided for index param when key '$key' contains an nth value, but they do not match"
         );
 
-        $parseKey = $this->makeMethodAccessible('parseKey');
-
-        $parseKey->invoke($this->store, $key, $index);
+        $this->key->parse($key, $index);
     }
 }

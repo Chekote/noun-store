@@ -2,99 +2,18 @@
 
 use InvalidArgumentException;
 use OutOfBoundsException;
-use RuntimeException;
 
 class Store
 {
+    /** @var Key */
+    protected $keyService;
+
     /** @var array */
     protected $nouns;
 
-    const ORDINAL_ST = 'st';
-    const ORDINAL_ND = 'nd';
-    const ORDINAL_RD = 'rd';
-    const ORDINAL_TH = 'th';
-
-    protected static $ordinals = [
-        0 => self::ORDINAL_TH,
-        1 => self::ORDINAL_ST,
-        2 => self::ORDINAL_ND,
-        3 => self::ORDINAL_RD,
-        4 => self::ORDINAL_TH,
-        5 => self::ORDINAL_TH,
-        6 => self::ORDINAL_TH,
-        7 => self::ORDINAL_TH,
-        8 => self::ORDINAL_TH,
-        9 => self::ORDINAL_TH,
-    ];
-
-    /**
-     * Asserts that a value has been stored for the specified key.
-     *
-     * @param  string                   $key   The key to check. @see self::get() for formatting options.
-     * @param  int                      $index [optional] The index of the key entry to check. If not specified, the
-     *                                         method will ensure that at least one item is stored for the key.
-     * @throws OutOfBoundsException     if a value has not been stored for the specified key.
-     * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
-     *                                        that does not match the index.
-     * @return mixed                    The value.
-     */
-    public function assertKeyExists($key, $index = null)
+    public function __construct(Key $keyService = null)
     {
-        list($key, $index) = $this->parseKey($key, $index);
-
-        if (!$this->keyExists($key, $index)) {
-            throw new OutOfBoundsException("Entry '{$this->buildKey($key, $index)}' was not found in the store.");
-        }
-
-        return $this->get($key, $index);
-    }
-
-    /**
-     * Asserts that the key's value matches the specified value.
-     *
-     * @param  string                   $key   The key to check. @see self::get() for formatting options.
-     * @param  mixed                    $value The expected value.
-     * @param  int                      $index [optional] The index of the key entry to retrieve. If not specified, the
-     *                                         method will check the most recent value stored under the key.
-     * @throws OutOfBoundsException     If a value has not been stored for the specified key.
-     * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
-     *                                        that does not match the index.
-     */
-    public function assertKeyValueIs($key, $value, $index = null)
-    {
-        list($key, $index) = $this->parseKey($key, $index);
-
-        $this->assertKeyExists($key, $index);
-
-        if ($this->get($key, $index) != $value) {
-            throw new RuntimeException(
-                "Entry '{$this->buildKey($key, $index)}' does not match '" . print_r($value, true) . "'"
-            );
-        }
-    }
-
-    /**
-     * Asserts that the key's value contains the specified string.
-     *
-     * @param  string                   $key   The key to check. @see self::get() for formatting options.
-     * @param  string                   $value The value expected to be contained within the key's value.
-     * @param  int                      $index [optional] The index of the key entry to retrieve. If not specified, the
-     *                                         method will check the most recent value stored under the key.
-     * @throws OutOfBoundsException     If a value has not been stored for the specified key.
-     * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
-     *                                        that does not match the index.
-     */
-    public function assertKeyValueContains($key, $value, $index = null)
-    {
-        list($key, $index) = $this->parseKey($key, $index);
-
-        $this->assertKeyExists($key, $index);
-
-        if (!$this->keyValueContains($key, $value, $index)) {
-            throw new RuntimeException(
-                "Entry '{$this->buildKey($key, $index)}' does not contain '$value'"
-            );
-        }
+        $this->keyService = $keyService ?: Key::getInstance();
     }
 
     /**
@@ -143,7 +62,7 @@ class Store
      */
     public function get($key, $index = null)
     {
-        list($key, $index) = $this->parseKey($key, $index);
+        list($key, $index) = $this->keyService->parse($key, $index);
 
         if (!$this->keyExists($key, $index)) {
             return;
@@ -180,7 +99,7 @@ class Store
      */
     public function keyExists($key, $index = null)
     {
-        list($key, $index) = $this->parseKey($key, $index);
+        list($key, $index) = $this->keyService->parse($key, $index);
 
         return $index !== null ? isset($this->nouns[$key][$index]) : isset($this->nouns[$key]);
     }
@@ -198,7 +117,7 @@ class Store
      */
     public function keyValueContains($key, $value, $index = null)
     {
-        list($key, $index) = $this->parseKey($key, $index);
+        list($key, $index) = $this->keyService->parse($key, $index);
 
         $actual = $this->get($key, $index);
 
@@ -214,78 +133,5 @@ class Store
     public function set($key, $value)
     {
         $this->nouns[$key][] = $value;
-    }
-
-    /**
-     * Parses a key into the separate key and index value.
-     *
-     * @example parseKey("Item"): ["Item", null]
-     * @example parseKey("Item", 1): ["Item", 1]
-     * @example parseKey("1st Item"): ["Item", 0]
-     * @example parseKey("2nd Item"): ["Item", 1]
-     * @example parseKey("3rd Item"): ["Item", 2]
-     *
-     * @param  string                   $key   the key to parse.
-     * @param  int                      $index [optional] the index to return if the key does not contain one.
-     * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
-     *                                        that does not match the index.
-     * @return array                    a tuple, the 1st being the key with the nth removed, and the 2nd being the
-     *                                        index.
-     */
-    protected function parseKey($key, $index = null)
-    {
-        if (preg_match('/^([1-9][0-9]*)(?:st|nd|rd|th) (.+)$/', $key, $matches)) {
-            if ($index !== null && $index != $matches[1] - 1) {
-                throw new InvalidArgumentException(
-                    "$index was provided for index param when key '$key' contains an nth value, but they do not match"
-                );
-            }
-
-            $index = $matches[1] - 1;
-            $key = $matches[2];
-        }
-
-        return [$key, $index];
-    }
-
-    /**
-     * Builds a key from it's separate key and index values.
-     *
-     * @example buildKey("Item", null): "Item"
-     * @example buildKey("Item", 0): "1st Item"
-     * @example buildKey("Item", 1): "2nd Item"
-     * @example buildKey("Item", 2): "3rd Item"
-     *
-     * @param  string                   $key   The key to check.
-     * @param  int                      $index The index (zero indexed) value for the key. If not specified, the method
-     *                                         will not add an index notation to the key.
-     * @throws InvalidArgumentException if $key is not a string.
-     * @throws InvalidArgumentException if $index is not an int.
-     * @return string                   the key with the index, or just the key if index is null.
-     */
-    protected function buildKey($key, $index)
-    {
-        if ($index === null) {
-            return $key;
-        }
-
-        $nth = $index + 1;
-
-        return $nth . $this->getOrdinal($nth) . ' ' . $key;
-    }
-
-    /**
-     * Provides the ordinal notation for the specified nth number.
-     *
-     * @param  int    $nth the number to determine the ordinal for
-     * @return string the ordinal
-     */
-    protected function getOrdinal($nth)
-    {
-        if ($nth < 0) {
-            throw new InvalidArgumentException('$nth must be a positive number');
-        }
-
-        return $nth > 9 && $nth < 20 ? self::ORDINAL_TH : self::$ordinals[substr($nth, -1)];
     }
 }
