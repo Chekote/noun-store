@@ -1,9 +1,20 @@
 <?php namespace Chekote\NounStore\Key;
 
+use Chekote\Phake\Phake;
 use InvalidArgumentException;
 
+/**
+ * @covers \Chekote\NounStore\Key::getOrdinal()
+ */
 class GetOrdinalTest extends KeyTest
 {
+    public function setUp() {
+        parent::setUp();
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        Phake::when($this->key)->getOrdinal(Phake::anyParameters())->thenCallParent();
+    }
+
     public function successScenariosDataProvider()
     {
         return [
