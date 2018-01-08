@@ -1,9 +1,14 @@
-<?php namespace Chekote\NounStore\Store;
+<?php namespace Chekote\NounStore\Key;
 
-class BuildKeyTest extends StoreTest
+/**
+ * @covers \Chekote\NounStore\Key::build()
+ * @covers \Chekote\NounStore\Key::getOrdinal()
+ * @covers \Chekote\NounStore\Singleton::getInstance()
+ */
+class BuildTest extends KeyTest
 {
     /**
-     * Tests that calling Store::buildKey with valid key and index combinations works correctly.
+     * Tests that calling the method with valid key and index combinations works correctly.
      *
      * @dataProvider validKeyAndIndexCombinationsDataProvider
      * @param string $key      the key to use for the build
@@ -12,9 +17,7 @@ class BuildKeyTest extends StoreTest
      */
     public function testBuildKeyBuildsValidKeyAndIndexCombinations($key, $index, $expected)
     {
-        $buildKey = $this->makeMethodAccessible('buildKey');
-
-        $actual = $buildKey->invoke($this->store, $key, $index);
+        $actual = $this->key->build($key, $index);
 
         $this->assertEquals($expected, $actual);
     }
