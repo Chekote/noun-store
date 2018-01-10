@@ -1,9 +1,11 @@
 <?php namespace Chekote\Phake;
 
+use Chekote\Phake\Proxies\VisibilityProxy;
 use Chekote\Phake\Stubber\Answers\UnMockedResponseExceptionAnswer;
 use Phake as BasePhake;
 use Phake_CallRecorder_Recorder;
 use Phake_ClassGenerator_MockClass;
+use Phake_IMock;
 use Phake_Stubber_AnswerCollection;
 
 /**
@@ -15,6 +17,18 @@ use Phake_Stubber_AnswerCollection;
  */
 abstract class Phake extends BasePhake
 {
+
+    /**
+     * Increases allows calling private and protected instance methods on the given mock.
+     *
+     * @param  Phake_IMock $mock
+     * @return VisibilityProxy $mock
+     */
+    public static function makeVisible(Phake_IMock $mock)
+    {
+        return new VisibilityProxy($mock);
+    }
+
     /**
      * Creates a strict mock.
      *
