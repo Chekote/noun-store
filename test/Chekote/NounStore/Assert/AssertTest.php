@@ -4,17 +4,19 @@ use Chekote\NounStore\Assert;
 use Chekote\NounStore\Key;
 use Chekote\NounStore\Store;
 use Chekote\NounStore\Store\StoreTest;
+use Chekote\Phake\Phake;
+use Phake_IMock;
 use PHPUnit\Framework\TestCase;
 
 abstract class AssertTest extends TestCase
 {
-    /** @var Assert */
+    /** @var Assert|Phake_IMock */
     protected $assert;
 
-    /** @var Store */
+    /** @var Store|Phake_IMock */
     protected $store;
 
-    /** @var Key */
+    /** @var Key|Phake_IMock */
     protected $key;
 
     /**
@@ -22,11 +24,13 @@ abstract class AssertTest extends TestCase
      */
     public function setUp()
     {
-        $this->store = new Store();
-        $this->store->set(StoreTest::KEY, StoreTest::FIRST_VALUE);
-        $this->store->set(StoreTest::KEY, StoreTest::SECOND_VALUE);
+        $this->key = Phake::strictMock(Key::class);
+        $this->store = Phake::strictMockWithConstructor(Store::class, $this->key);
 
-        $this->assert = new Assert($this->store, Key::getInstance());
+        /* @noinspection PhpUndefinedFieldInspection */
+        Phake::makeVisible($this->store)->nouns = [StoreTest::KEY => [StoreTest::FIRST_VALUE, StoreTest::SECOND_VALUE]];
+
+        $this->assert = Phake::strictMockWithConstructor(Assert::class, $this->store, $this->key);
     }
 
     /**

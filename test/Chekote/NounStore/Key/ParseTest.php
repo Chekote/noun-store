@@ -1,13 +1,21 @@
 <?php namespace Chekote\NounStore\Key;
 
+use Chekote\Phake\Phake;
 use InvalidArgumentException;
 
 /**
  * @covers \Chekote\NounStore\Key::parse()
- * @covers \Chekote\NounStore\Singleton::getInstance()
  */
 class ParseTest extends KeyTest
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        /* @noinspection PhpUndefinedMethodInspection */
+        Phake::when($this->key)->parse(Phake::anyParameters())->thenCallParent();
+    }
+
     /**
      * Provides examples of valid key and index pairs with expected parse results.
      *

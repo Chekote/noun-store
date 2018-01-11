@@ -11,6 +11,10 @@ class Store
     /** @var array */
     protected $nouns;
 
+    /**
+     * @param Key $keyService the key service to use for parsing and building keys
+     * @codeCoverageIgnore
+     */
     public function __construct(Key $keyService = null)
     {
         $this->keyService = $keyService ?: Key::getInstance();
