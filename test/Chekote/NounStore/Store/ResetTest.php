@@ -1,16 +1,28 @@
 <?php namespace Chekote\NounStore\Store;
 
+use Chekote\Phake\Phake;
+
+/**
+ * @covers \Chekote\NounStore\Store::reset()
+ */
 class ResetTest extends StoreTest
 {
+    public function setUp() {
+        parent::setUp();
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        Phake::when($this->store)->reset()->thenCallParent();
+    }
+
     public function testResetSetsNounsToEmptyArray()
     {
-        $nouns = $this->makePropertyAccessible('nouns');
-        $nouns->setAccessible(true);
-        $nouns->setValue($this->store, ['Key' => []]);
-
         $this->store->reset();
 
-        $this->assertEquals('array', gettype($nouns->getValue($this->store)));
-        $this->assertCount(0, $nouns->getValue($this->store));
+        $store = Phake::makeVisible($this->store);
+        /** @noinspection PhpUndefinedFieldInspection */
+        {
+            $this->assertEquals('array', gettype($store->nouns));
+            $this->assertCount(0, $store->nouns);
+        }
     }
 }

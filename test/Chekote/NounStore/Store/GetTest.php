@@ -1,18 +1,35 @@
 <?php namespace Chekote\NounStore\Store;
 
+use Chekote\Phake\Phake;
 use InvalidArgumentException;
 
+/**
+ * @covers \Chekote\NounStore\Store::get()
+ */
 class GetTest extends StoreTest
 {
+    public function setUp() {
+        parent::setUp();
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        Phake::when($this->store)->get(Phake::anyParameters())->thenCallParent();
+    }
+
     /**
      * Tests that InvalidArgumentException is thrown if Store::get is called with the index parameter
      * and the key also contains an nth value, but they do not match.
      */
     public function testGetThrowsInvalidArgumentExceptionWithMismatchedNthAndIndex()
     {
+        $key = '1st Thing';
+        $index = 1;
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        Phake::when($this->key)->parse($key, $index)->thenThrow(new InvalidArgumentException());
+
         $this->expectException(InvalidArgumentException::class);
 
-        $this->store->get('1st Thing', 1);
+        $this->store->get($key, $index);
     }
 
     /**
@@ -20,6 +37,17 @@ class GetTest extends StoreTest
      */
     public function testGetReturnsItemAtEndOfStack()
     {
+        $key = self::KEY;
+        $index = null;
+        $parsedKey = self::KEY;
+        $parsedIndex = null;
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        {
+            Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
+            Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
+        }
+
         $this->assertEquals(self::SECOND_VALUE, $this->store->get(self::KEY));
     }
 
@@ -28,7 +56,18 @@ class GetTest extends StoreTest
      */
     public function testGetWithNthKeyReturnsNthItem()
     {
-        $this->assertEquals(self::FIRST_VALUE, $this->store->get('1st ' . self::KEY));
+        $key = '1st ' . self::KEY;
+        $index = null;
+        $parsedKey = self::KEY;
+        $parsedIndex = 0;
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        {
+            Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
+            Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
+        }
+
+        $this->assertEquals(self::FIRST_VALUE, $this->store->get($key));
     }
 
     /**
@@ -36,7 +75,18 @@ class GetTest extends StoreTest
      */
     public function testGetWithIndexParameterReturnsIndexItem()
     {
-        $this->assertEquals(self::FIRST_VALUE, $this->store->get(self::KEY, 0));
+        $key = self::KEY;
+        $index = 0;
+        $parsedKey = self::KEY;
+        $parsedIndex = 0;
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        {
+            Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
+            Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
+        }
+
+        $this->assertEquals(self::FIRST_VALUE, $this->store->get(self::KEY, $index));
     }
 
     /**
@@ -44,7 +94,18 @@ class GetTest extends StoreTest
      */
     public function testGetReturnsNullWhenKeyDoesNotExist()
     {
-        $this->assertEquals(null, $this->store->get('Thing'));
+        $key = 'Thing';
+        $index = null;
+        $parsedKey = 'Thing';
+        $parsedIndex = null;
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        {
+            Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
+            Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(false);
+        }
+
+        $this->assertEquals(null, $this->store->get($key));
     }
 
     /**
@@ -52,7 +113,18 @@ class GetTest extends StoreTest
      */
     public function testGetReturnsNullWhenNthKeyDoesNotExist()
     {
-        $this->assertEquals(null, $this->store->get('3rd ' . self::KEY));
+        $key = '3rd ' . self::KEY;
+        $index = null;
+        $parsedKey = self::KEY;
+        $parsedIndex = 2;
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        {
+            Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
+            Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(false);
+        }
+
+        $this->assertEquals(null, $this->store->get($key));
     }
 
     /**
@@ -60,6 +132,17 @@ class GetTest extends StoreTest
      */
     public function testGetReturnsNullWhenIndexDoesNotExist()
     {
-        $this->assertEquals(null, $this->store->get(self::KEY, 2));
+        $key = self::KEY;
+        $index = 2;
+        $parsedKey = self::KEY;
+        $parsedIndex = 2;
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        {
+            Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
+            Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(false);
+        }
+
+        $this->assertEquals(null, $this->store->get($key, $index));
     }
 }

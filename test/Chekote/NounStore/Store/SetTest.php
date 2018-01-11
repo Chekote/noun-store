@@ -1,10 +1,18 @@
 <?php namespace Chekote\NounStore\Store;
 
 use Chekote\NounStore\Store;
+use Chekote\Phake\Phake;
 use ReflectionClass;
 
 class SetTest extends StoreTest
 {
+    public function setUp() {
+        parent::setUp();
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        Phake::when($this->store)->set(Phake::anyParameters())->thenCallParent();
+    }
+
     /**
      * Tests that calling store::set once stores the value correctly.
      */
@@ -32,14 +40,15 @@ class SetTest extends StoreTest
         $value1 = 'My Value';
         $value2 = 'My Second Value';
 
-        $nouns = $this->makePropertyAccessible('nouns');
-        $nouns->setAccessible(true);
-
         $this->store->set($key, $value1);
         $this->store->set($key, $value2);
 
-        $this->assertCount(2, $nouns->getValue($this->store)[$key]);
-        $this->assertEquals($value1, $nouns->getValue($this->store)[$key][0]);
-        $this->assertEquals($value2, $nouns->getValue($this->store)[$key][1]);
+        $store = Phake::makeVisible($this->store);
+        /** @noinspection PhpUndefinedFieldInspection */
+        {
+            $this->assertCount(2, $store->nouns[$key]);
+            $this->assertEquals($value1, $store->nouns[$key][0]);
+            $this->assertEquals($value2, $store->nouns[$key][1]);
+        }
     }
 }

@@ -1,14 +1,16 @@
 <?php namespace Chekote\NounStore\Store;
 
+use Chekote\NounStore\Key;
 use Chekote\NounStore\Store;
+use Chekote\Phake\Phake;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
-use ReflectionMethod;
-use ReflectionProperty;
 
 abstract class StoreTest extends TestCase
 {
-    /** @var Store */
+    /** @var Key|\Phake_IMock */
+    protected $key;
+
+    /** @var Store|\Phake_IMock */
     protected $store;
 
     const KEY = 'Some Key';
@@ -22,9 +24,11 @@ abstract class StoreTest extends TestCase
      */
     public function setUp()
     {
-        $this->store = new Store();
-        $this->store->set(self::KEY, self::FIRST_VALUE);
-        $this->store->set(self::KEY, self::SECOND_VALUE);
+        $this->key = Phake::strictMock(Key::class);
+        $this->store = Phake::strictMockWithConstructor(Store::class, $this->key);
+
+        /** @noinspection PhpUndefinedFieldInspection */
+        Phake::makeVisible($this->store)->nouns = [StoreTest::KEY => [StoreTest::FIRST_VALUE, StoreTest::SECOND_VALUE]];
     }
 
     /**
@@ -32,34 +36,7 @@ abstract class StoreTest extends TestCase
      */
     public function tearDown()
     {
+        $this->key = null;
         $this->store = null;
-    }
-
-    /**
-     * Ensures that the specified method on Store is accessible.
-     *
-     * @param  string           $name the method to make accessible.
-     * @return ReflectionMethod the method.
-     */
-    protected function makeMethodAccessible($name)
-    {
-        $method = (new ReflectionClass(Store::class))->getMethod($name);
-        $method->setAccessible(true);
-
-        return $method;
-    }
-
-    /**
-     * Ensures that the specified property on Store is accessible.
-     *
-     * @param  string             $name the property to make accessible.
-     * @return ReflectionProperty the property.
-     */
-    protected function makePropertyAccessible($name)
-    {
-        $property = (new ReflectionClass(Store::class))->getProperty($name);
-        $property->setAccessible(true);
-
-        return $property;
     }
 }
