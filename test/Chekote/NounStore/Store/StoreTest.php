@@ -3,7 +3,7 @@
 use Chekote\NounStore\Key;
 use Chekote\NounStore\Store;
 use Chekote\Phake\Phake;
-use PHPUnit\Framework\TestCase;
+use Chekote\PHPUnit\Framework\TestCase;
 
 abstract class StoreTest extends TestCase
 {

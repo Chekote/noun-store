@@ -5,8 +5,8 @@ use Chekote\NounStore\Key;
 use Chekote\NounStore\Store;
 use Chekote\NounStore\Store\StoreTest;
 use Chekote\Phake\Phake;
+use Chekote\PHPUnit\Framework\TestCase;
 use Phake_IMock;
-use PHPUnit\Framework\TestCase;
 
 abstract class AssertTest extends TestCase
 {
