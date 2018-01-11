@@ -27,8 +27,8 @@ abstract class StoreTest extends TestCase
         $this->key = Phake::strictMock(Key::class);
         $this->store = Phake::strictMockWithConstructor(Store::class, $this->key);
 
-        /** @noinspection PhpUndefinedFieldInspection */
-        Phake::makeVisible($this->store)->nouns = [StoreTest::KEY => [StoreTest::FIRST_VALUE, StoreTest::SECOND_VALUE]];
+        /* @noinspection PhpUndefinedFieldInspection */
+        Phake::makeVisible($this->store)->nouns = [self::KEY => [self::FIRST_VALUE, self::SECOND_VALUE]];
     }
 
     /**

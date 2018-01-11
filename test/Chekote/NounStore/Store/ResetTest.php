@@ -7,10 +7,11 @@ use Chekote\Phake\Phake;
  */
 class ResetTest extends StoreTest
 {
-    public function setUp() {
+    public function setUp()
+    {
         parent::setUp();
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Phake::when($this->store)->reset()->thenCallParent();
     }
 
@@ -19,7 +20,7 @@ class ResetTest extends StoreTest
         $this->store->reset();
 
         $store = Phake::makeVisible($this->store);
-        /** @noinspection PhpUndefinedFieldInspection */
+        /* @noinspection PhpUndefinedFieldInspection */
         {
             $this->assertEquals('array', gettype($store->nouns));
             $this->assertCount(0, $store->nouns);

@@ -6,10 +6,11 @@ use ReflectionClass;
 
 class SetTest extends StoreTest
 {
-    public function setUp() {
+    public function setUp()
+    {
         parent::setUp();
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Phake::when($this->store)->set(Phake::anyParameters())->thenCallParent();
     }
 
@@ -44,7 +45,7 @@ class SetTest extends StoreTest
         $this->store->set($key, $value2);
 
         $store = Phake::makeVisible($this->store);
-        /** @noinspection PhpUndefinedFieldInspection */
+        /* @noinspection PhpUndefinedFieldInspection */
         {
             $this->assertCount(2, $store->nouns[$key]);
             $this->assertEquals($value1, $store->nouns[$key][0]);

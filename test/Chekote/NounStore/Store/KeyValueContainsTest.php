@@ -8,10 +8,11 @@ use InvalidArgumentException;
  */
 class KeyValueContainsTest extends StoreTest
 {
-    public function setUp() {
+    public function setUp()
+    {
         parent::setUp();
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Phake::when($this->store)->keyValueContains(Phake::anyParameters())->thenCallParent();
     }
 
@@ -59,7 +60,7 @@ class KeyValueContainsTest extends StoreTest
      */
     public function testSuccessScenario($key, $index, $parsedKey, $parsedIndex, $storedValue, $checkedValue)
     {
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
             Phake::when($this->store)->get($parsedKey, $parsedIndex)->thenReturn($storedValue);
@@ -81,7 +82,7 @@ class KeyValueContainsTest extends StoreTest
      */
     public function testFailureScenario($key, $index, $parsedKey, $parsedIndex, $storedValue, $checkedValue)
     {
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
             Phake::when($this->store)->get($parsedKey, $parsedIndex)->thenReturn($storedValue);
@@ -102,7 +103,7 @@ class KeyValueContainsTest extends StoreTest
      */
     public function testParseExceptionScenario($key, $value, $index, $exceptionClass, $exceptionMessage)
     {
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Phake::when($this->key)->parse($key, $index)->thenThrow(new $exceptionClass($exceptionMessage));
 
         $this->expectException($exceptionClass);

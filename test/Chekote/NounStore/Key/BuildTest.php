@@ -1,4 +1,5 @@
 <?php namespace Chekote\NounStore\Key;
+
 use Chekote\Phake\Phake;
 
 /**
@@ -6,10 +7,11 @@ use Chekote\Phake\Phake;
  */
 class BuildTest extends KeyTest
 {
-    public function setUp() {
+    public function setUp()
+    {
         parent::setUp();
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Phake::when($this->key)->build(Phake::anyParameters())->thenCallParent();
     }
 
@@ -25,7 +27,7 @@ class BuildTest extends KeyTest
      */
     public function testBuildKeyBuildsValidKeyAndIndexCombinations($key, $index, $nth, $ordinal, $expected)
     {
-        /** @noinspection PhpUndefinedFieldInspection */
+        /* @noinspection PhpUndefinedFieldInspection */
         Phake::when($this->key)->getOrdinal($nth)->thenReturn($ordinal);
 
         $actual = $this->key->build($key, $index);

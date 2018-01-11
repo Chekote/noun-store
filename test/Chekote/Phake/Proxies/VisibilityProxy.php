@@ -34,8 +34,8 @@ class VisibilityProxy extends Phake_Proxies_VisibilityProxy
     /**
      * Attempts to set the property name to the specified value.
      *
-     * @param  string $property the name of the property to set
-     * @param  mixed  $value    the value to set
+     * @param  string                   $property the name of the property to set
+     * @param  mixed                    $value    the value to set
      * @throws InvalidArgumentException if the specified property does not exist on the proxied class.
      */
     public function __set(string $property, $value): void

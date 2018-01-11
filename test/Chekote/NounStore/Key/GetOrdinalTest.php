@@ -8,10 +8,11 @@ use InvalidArgumentException;
  */
 class GetOrdinalTest extends KeyTest
 {
-    public function setUp() {
+    public function setUp()
+    {
         parent::setUp();
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Phake::when($this->key)->getOrdinal(Phake::anyParameters())->thenCallParent();
     }
 

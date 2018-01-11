@@ -8,10 +8,11 @@ use InvalidArgumentException;
  */
 class GetTest extends StoreTest
 {
-    public function setUp() {
+    public function setUp()
+    {
         parent::setUp();
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Phake::when($this->store)->get(Phake::anyParameters())->thenCallParent();
     }
 
@@ -24,7 +25,7 @@ class GetTest extends StoreTest
         $key = '1st Thing';
         $index = 1;
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Phake::when($this->key)->parse($key, $index)->thenThrow(new InvalidArgumentException());
 
         $this->expectException(InvalidArgumentException::class);
@@ -42,7 +43,7 @@ class GetTest extends StoreTest
         $parsedKey = self::KEY;
         $parsedIndex = null;
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
             Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
@@ -61,7 +62,7 @@ class GetTest extends StoreTest
         $parsedKey = self::KEY;
         $parsedIndex = 0;
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
             Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
@@ -80,7 +81,7 @@ class GetTest extends StoreTest
         $parsedKey = self::KEY;
         $parsedIndex = 0;
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
             Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
@@ -99,7 +100,7 @@ class GetTest extends StoreTest
         $parsedKey = 'Thing';
         $parsedIndex = null;
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
             Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(false);
@@ -118,7 +119,7 @@ class GetTest extends StoreTest
         $parsedKey = self::KEY;
         $parsedIndex = 2;
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
             Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(false);
@@ -137,7 +138,7 @@ class GetTest extends StoreTest
         $parsedKey = self::KEY;
         $parsedIndex = 2;
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
             Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(false);

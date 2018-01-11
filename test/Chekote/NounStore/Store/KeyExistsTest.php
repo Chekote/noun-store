@@ -8,10 +8,11 @@ use InvalidArgumentException;
  */
 class KeyExistsTest extends StoreTest
 {
-    public function setUp() {
+    public function setUp()
+    {
         parent::setUp();
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Phake::when($this->store)->keyExists(Phake::anyParameters())->thenCallParent();
     }
 
@@ -20,7 +21,7 @@ class KeyExistsTest extends StoreTest
         $key = '1st Thing';
         $index = 1;
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Phake::when($this->key)->parse($key, $index)->thenThrow(new InvalidArgumentException());
 
         $this->expectException(InvalidArgumentException::class);
@@ -35,7 +36,7 @@ class KeyExistsTest extends StoreTest
         $parsedKey = self::KEY;
         $parsedIndex = 0;
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
 
         $this->assertTrue($this->store->keyExists($key));
@@ -48,7 +49,7 @@ class KeyExistsTest extends StoreTest
         $parsedKey = self::KEY;
         $parsedIndex = 2;
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
 
         $this->assertFalse($this->store->keyExists($key));
@@ -61,7 +62,7 @@ class KeyExistsTest extends StoreTest
         $parsedKey = self::KEY;
         $parsedIndex = 0;
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
 
         $this->assertTrue($this->store->keyExists($key, $index));
@@ -74,7 +75,7 @@ class KeyExistsTest extends StoreTest
         $parsedKey = self::KEY;
         $parsedIndex = 2;
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
 
         $this->assertFalse($this->store->keyExists($key, $index));

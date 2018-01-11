@@ -8,10 +8,11 @@ use OutOfBoundsException;
  */
 class GetAllTest extends StoreTest
 {
-    public function setUp() {
+    public function setUp()
+    {
         parent::setUp();
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Phake::when($this->store)->getAll(Phake::anyParameters())->thenCallParent();
     }
 

@@ -17,11 +17,10 @@ use Phake_Stubber_AnswerCollection;
  */
 abstract class Phake extends BasePhake
 {
-
     /**
      * Increases allows calling private and protected instance methods on the given mock.
      *
-     * @param  Phake_IMock $mock
+     * @param  Phake_IMock     $mock
      * @return VisibilityProxy $mock
      */
     public static function makeVisible(Phake_IMock $mock)
@@ -37,7 +36,7 @@ abstract class Phake extends BasePhake
      */
     public static function strictMock(string $className)
     {
-        return Phake::mock($className, new Phake_Stubber_AnswerCollection(new UnMockedResponseExceptionAnswer()));
+        return self::mock($className, new Phake_Stubber_AnswerCollection(new UnMockedResponseExceptionAnswer()));
     }
 
     /**
@@ -54,9 +53,9 @@ abstract class Phake extends BasePhake
      */
     public static function strictMockWithConstructor(string $className, ...$args)
     {
-        return Phake::getPhake()->mock(
+        return self::getPhake()->mock(
             $className,
-            new Phake_ClassGenerator_MockClass(Phake::getMockLoader()),
+            new Phake_ClassGenerator_MockClass(self::getMockLoader()),
             new Phake_CallRecorder_Recorder(),
             new UnMockedResponseExceptionAnswer(),
             $args

@@ -10,10 +10,11 @@ use OutOfBoundsException;
  */
 class KeyExistsTest extends AssertTest
 {
-    public function setUp() {
+    public function setUp()
+    {
         parent::setUp();
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Phake::when($this->assert)->keyExists(Phake::anyParameters())->thenCallParent();
     }
 
@@ -22,7 +23,7 @@ class KeyExistsTest extends AssertTest
         $key = '1st Thing';
         $index = 1;
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Phake::when($this->key)->parse($key, $index)->thenThrow(new InvalidArgumentException());
 
         $this->expectException(InvalidArgumentException::class);
@@ -37,7 +38,7 @@ class KeyExistsTest extends AssertTest
         $parsedKey = StoreTest::KEY;
         $parsedIndex = 0;
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::when($this->key)->parse($key, null)->thenReturn([$parsedKey, $parsedIndex]);
             Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
@@ -54,7 +55,7 @@ class KeyExistsTest extends AssertTest
         $parsedKey = StoreTest::KEY;
         $parsedIndex = 2;
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::when($this->key)->parse($key, null)->thenReturn([$parsedKey, $parsedIndex]);
             Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(false);
@@ -75,7 +76,7 @@ class KeyExistsTest extends AssertTest
         $parsedKey = StoreTest::KEY;
         $parsedIndex = 0;
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::when($this->key)->parse($key, null)->thenReturn([$parsedKey, $parsedIndex]);
             Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
@@ -94,7 +95,7 @@ class KeyExistsTest extends AssertTest
         $parsedIndex = 2;
         $builtKey = '3rd ' . $parsedKey;
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
             Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(false);
