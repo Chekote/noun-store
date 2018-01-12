@@ -35,8 +35,8 @@ class Key
      * @param  string                   $key   The key to check.
      * @param  int|null                 $index The index (zero indexed) value for the key. If not specified, the method
      *                                         will not add an index notation to the key.
-     * @throws InvalidArgumentException if $key is not a string.
-     * @throws InvalidArgumentException if $index is not an int.
+     * @throws InvalidArgumentException if $index is less than -1. Note: It should really be zero or higher, but this
+     *                                        method does not assert that. The error is bubbling up from getOrdinal()
      * @return string                   the key with the index, or just the key if index is null.
      */
     public function build($key, $index)
@@ -53,8 +53,9 @@ class Key
     /**
      * Provides the ordinal notation for the specified nth number.
      *
-     * @param  int    $nth the number to determine the ordinal for
-     * @return string the ordinal
+     * @param  int                      $nth the number to determine the ordinal for
+     * @throws InvalidArgumentException if $nth is not a positive number.
+     * @return string                   the ordinal
      */
     public function getOrdinal($nth)
     {
