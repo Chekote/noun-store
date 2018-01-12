@@ -1,5 +1,25 @@
+build:
+  nodes:
+    analysis:
+      environment:
+        php:
+          version: 7.1.12
+      project_setup:
+        override:
+          - 'true'
+      tests:
+        override:
+          - php-scrutinizer-run
+          -
+            command: phpcs-run
+            use_website_config: true
 checks:
   php: true
+coding_style:
+  php:
+    spaces:
+      around_operators:
+        concatenation: true
 tools:
   external_code_coverage:
     timeout: 600
