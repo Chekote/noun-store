@@ -35,8 +35,6 @@ class Key
      * @param  string                   $key   The key to check.
      * @param  int                      $index The index (zero indexed) value for the key. If not specified, the method
      *                                         will not add an index notation to the key.
-     * @throws InvalidArgumentException if $key is not a string.
-     * @throws InvalidArgumentException if $index is not an int.
      * @return string                   the key with the index, or just the key if index is null.
      */
     public function build($key, $index)
