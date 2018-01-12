@@ -53,8 +53,9 @@ class Key
     /**
      * Provides the ordinal notation for the specified nth number.
      *
-     * @param  int    $nth the number to determine the ordinal for
-     * @return string the ordinal
+     * @param  int                      $nth the number to determine the ordinal for
+     * @throws InvalidArgumentException if $nth is not a positive number.
+     * @return string                   the ordinal
      */
     public function getOrdinal($nth)
     {
