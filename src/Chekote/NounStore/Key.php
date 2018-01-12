@@ -35,6 +35,8 @@ class Key
      * @param  string                   $key   The key to check.
      * @param  int                      $index The index (zero indexed) value for the key. If not specified, the method
      *                                         will not add an index notation to the key.
+     * @throws InvalidArgumentException if $index is less than -1. Note: It should really be zero or higher, but this
+     *                                        method does not assert that. The error is bubbling up from getOrdinal()
      * @return string                   the key with the index, or just the key if index is null.
      */
     public function build($key, $index)
