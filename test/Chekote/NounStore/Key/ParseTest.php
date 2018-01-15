@@ -46,7 +46,7 @@ class ParseTest extends KeyTest
      * @param string $parsedKey   the expected resulting parsed key
      * @param int    $parsedIndex the expected resulting parsed index
      */
-    public function testParseKeyParsesValidKeysAndNthCombinations($key, $index, $parsedKey, $parsedIndex)
+    public function testSuccessScenario($key, $index, $parsedKey, $parsedIndex)
     {
         $this->assertEquals([$parsedKey, $parsedIndex], $this->key->parse($key, $index));
     }
