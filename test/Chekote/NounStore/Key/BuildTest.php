@@ -29,12 +29,12 @@ class BuildTest extends KeyTest
         $index = 9;
         $nth = $index + 1;
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Phake::when($this->key)->getOrdinal($nth)->thenReturn('th');
 
         $this->assertEquals('10th Thing', $this->key->build($key, $index));
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Phake::verify($this->key)->getOrdinal($nth);
     }
 
@@ -46,14 +46,14 @@ class BuildTest extends KeyTest
 
         $exception = new InvalidArgumentException('$nth must be a positive number');
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Phake::when($this->key)->getOrdinal($nth)->thenThrow($exception);
 
         $this->assertException($exception, function () use ($key, $index) {
             $this->key->build($key, $index);
         });
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Phake::verify($this->key)->getOrdinal($nth);
     }
 }

@@ -26,7 +26,7 @@ class KeyValueIsTest extends AssertTest
         $parsedIndex = 9;
         $value = 'Some Value';
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
             Phake::when($this->assert)->keyExists($parsedKey, $parsedIndex)->thenReturn(null);
@@ -35,7 +35,7 @@ class KeyValueIsTest extends AssertTest
 
         $this->assert->keyValueIs($key, $value, $index);
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::verify($this->key)->parse($key, $index);
             Phake::verify($this->assert)->keyExists($parsedKey, $parsedIndex);
@@ -52,14 +52,14 @@ class KeyValueIsTest extends AssertTest
             "$index was provided for index param when key '$key' contains an nth value, but they do not match"
         );
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Phake::when($this->key)->parse($key, $index)->thenThrow($exception);
 
         $this->assertException($exception, function () use ($key, $value, $index) {
             $this->assert->keyValueIs($key, $value, $index);
         });
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Phake::verify($this->key)->parse($key, $index);
     }
 
@@ -72,7 +72,7 @@ class KeyValueIsTest extends AssertTest
         $value = 'Some Value';
         $exception = new OutOfBoundsException("Entry '$key' was not found in the store.");
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
             Phake::when($this->assert)->keyExists($parsedKey, $parsedIndex)->thenThrow($exception);
@@ -82,7 +82,7 @@ class KeyValueIsTest extends AssertTest
             $this->assert->keyValueIs($key, $value, $index);
         });
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::verify($this->key)->parse($key, $index);
             Phake::verify($this->assert)->keyExists($parsedKey, $parsedIndex);
@@ -98,7 +98,7 @@ class KeyValueIsTest extends AssertTest
         $value = 'Some Value';
         $exception = new RuntimeException("Entry '$key' does not match '$value'");
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
             Phake::when($this->assert)->keyExists($parsedKey, $parsedIndex)->thenReturn(null);
@@ -110,7 +110,7 @@ class KeyValueIsTest extends AssertTest
             $this->assert->keyValueIs($key, $value, $index);
         });
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::verify($this->key)->parse($key, $index);
             Phake::verify($this->assert)->keyExists($parsedKey, $parsedIndex);
@@ -127,7 +127,7 @@ class KeyValueIsTest extends AssertTest
         $parsedIndex = 9;
         $value = 'Some Value';
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
             Phake::when($this->assert)->keyExists($parsedKey, $parsedIndex)->thenReturn(null);
@@ -136,7 +136,7 @@ class KeyValueIsTest extends AssertTest
 
         $this->assert->keyValueIs($key, $value, $index);
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::verify($this->key)->parse($key, $index);
             Phake::verify($this->assert)->keyExists($parsedKey, $parsedIndex);

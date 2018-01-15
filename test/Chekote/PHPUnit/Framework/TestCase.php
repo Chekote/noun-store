@@ -8,18 +8,19 @@ use PHPUnit_Framework_ExpectationFailedException;
 use Throwable;
 
 /**
- * Adds additional functionality to the PHPUnit TestCase class
+ * Adds additional functionality to the PHPUnit TestCase class.
  */
 class TestCase extends BaseTestCase
 {
     /**
      * Asserts that the lambda throws the specified exception.
      *
-     * @param  Exception $expected the expected exception (class and message must match)
-     * @param  callable  $lambda   the lambda to execute
+     * @param  Exception                                    $expected the expected exception (class and message must match)
+     * @param  callable                                     $lambda   the lambda to execute
      * @throws PHPUnit_Framework_ExpectationFailedException If the specified exception is not thrown.`
      */
-    public function assertException(Exception $expected, callable $lambda): void {
+    public function assertException(Exception $expected, callable $lambda): void
+    {
         try {
             $lambda();
             $this->fail(get_class($expected) . ' was not thrown');

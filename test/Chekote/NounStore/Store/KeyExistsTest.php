@@ -24,18 +24,19 @@ class KeyExistsTest extends StoreTest
             "$index was provided for index param when key '$key' contains an nth value, but they do not match"
         );
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Phake::when($this->key)->parse($key, $index)->thenThrow($exception);
 
         $this->assertException($exception, function () use ($key, $index) {
             $this->store->keyExists($key, $index);
         });
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Phake::verify($this->key)->parse($key, $index);
     }
 
-    public function returnDataProvider() {
+    public function returnDataProvider()
+    {
         return [
         //    key,            index, expectedResult
             [ 'No such key',   null, false ], // missing key
@@ -53,12 +54,12 @@ class KeyExistsTest extends StoreTest
      */
     public function testReturn(string $key, ?int $index, bool $expectedResult)
     {
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Phake::when($this->key)->parse($key, $index)->thenReturn([$key, $index]);
 
         $this->assertEquals($expectedResult, $this->store->keyExists($key, $index));
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Phake::verify($this->key)->parse($key, $index);
     }
 }

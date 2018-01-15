@@ -23,7 +23,7 @@ class GetTest extends StoreTest
         $parsedKey = StoreTest::KEY;
         $parsedIndex = 1;
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
             Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
@@ -31,7 +31,7 @@ class GetTest extends StoreTest
 
         $this->assertEquals(StoreTest::SECOND_VALUE, $this->store->get($key, $index));
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::verify($this->key)->parse($key, $index);
             Phake::verify($this->store)->keyExists($parsedKey, $parsedIndex);
@@ -46,14 +46,14 @@ class GetTest extends StoreTest
             "$index was provided for index param when key '$key' contains an nth value, but they do not match"
         );
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Phake::when($this->key)->parse($key, $index)->thenThrow($exception);
 
         $this->assertException($exception, function () use ($key, $index) {
             $this->store->get($key, $index);
         });
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Phake::verify($this->key)->parse($key, $index);
     }
 
@@ -64,7 +64,7 @@ class GetTest extends StoreTest
         $parsedKey = $key;
         $parsedIndex = $index;
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
             Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(false);
@@ -72,7 +72,7 @@ class GetTest extends StoreTest
 
         $this->assertNull($this->store->get($key, $index));
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::verify($this->key)->parse($key, $index);
             Phake::verify($this->store)->keyExists($parsedKey, $parsedIndex);
@@ -86,7 +86,7 @@ class GetTest extends StoreTest
         $parsedKey = $key;
         $parsedIndex = $index;
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
             Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
@@ -94,7 +94,7 @@ class GetTest extends StoreTest
 
         $this->assertEquals(StoreTest::SECOND_VALUE, $this->store->get($key, $index));
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::verify($this->key)->parse($key, $index);
             Phake::verify($this->store)->keyExists($parsedKey, $parsedIndex);
@@ -108,7 +108,7 @@ class GetTest extends StoreTest
         $parsedKey = StoreTest::KEY;
         $parsedIndex = 0;
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
             Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
@@ -116,12 +116,10 @@ class GetTest extends StoreTest
 
         $this->assertEquals(StoreTest::FIRST_VALUE, $this->store->get($key, $index));
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::verify($this->key)->parse($key, $index);
             Phake::verify($this->store)->keyExists($parsedKey, $parsedIndex);
         }
-
     }
-
 }
