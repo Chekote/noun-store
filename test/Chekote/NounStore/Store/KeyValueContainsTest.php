@@ -16,100 +16,81 @@ class KeyValueContainsTest extends StoreTest
         Phake::when($this->store)->keyValueContains(Phake::anyParameters())->thenCallParent();
     }
 
-    public function successScenariosDataProvider()
+    public function testKeyIsParsedAndParsedValuesAreUsed()
     {
-        return [
-        //  key                  index, parsedKey, parsedIndex, storedValue,             checkedValue
-            ['1st ' . self::KEY,  null, self::KEY,           0, self::FIRST_VALUE,       substr(self::FIRST_VALUE, 0, 2)       ], // key with nth
-            ['2nd ' . self::KEY,  null, self::KEY,           1, self::SECOND_VALUE,      substr(self::SECOND_VALUE, 0, 2)      ], // key with nth
-            [self::KEY,           null, self::KEY,        null, self::MOST_RECENT_VALUE, substr(self::MOST_RECENT_VALUE, 0, 2) ], // key without nth
-            [self::KEY,              0, self::KEY,           0, self::FIRST_VALUE,       substr(self::FIRST_VALUE, 0, 2)       ], // with index
-            [self::KEY,              1, self::KEY,           1, self::SECOND_VALUE,      substr(self::SECOND_VALUE, 0, 2)      ], // with index
-        ];
+        $key = '2nd ' . StoreTest::KEY;
+        $index = null;
+        $parsedKey = StoreTest::KEY;
+        $parsedIndex = 1;
+        $value = substr(self::SECOND_VALUE, 0, 2);
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        {
+            Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
+            Phake::when($this->store)->get($parsedKey, $parsedIndex)->thenReturn(self::SECOND_VALUE);
+        }
+
+        $this->assertTrue($this->store->keyValueContains($key, $value, $index));
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        {
+            Phake::verify($this->key)->parse($key, $index);
+            Phake::verify($this->store)->get($parsedKey, $parsedIndex);
+        }
     }
 
-    public function failureScenariosDataProvider()
+    public function testInvalidArgumentExceptionBubblesUpFromParse()
     {
-        return [
-        //  key,                 index, parsedKey,     parsedIndex, storedValue,        checkedValue
-            ['1st ' . self::KEY,  null, self::KEY,               0, self::FIRST_VALUE,  self::SECOND_VALUE ], // value mismatch
-            ['2nd ' . self::KEY,  null, self::KEY,               1, self::SECOND_VALUE, self::FIRST_VALUE  ], // value mismatch
-            ['3rd ' . self::KEY,  null, self::KEY,               2, null,               null               ], // no such nth
-            ['No Such Key',       null, 'No Such Key',        null, null,               null               ], // no such key
-        ];
+        $key = '10th Thing';
+        $index = 5;
+        $exception = new InvalidArgumentException(
+            "$index was provided for index param when key '$key' contains an nth value, but they do not match"
+        );
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        Phake::when($this->key)->parse($key, $index)->thenThrow($exception);
+
+        $this->assertException($exception, function () use ($key, $index) {
+            $this->store->keyValueContains($key, "Doesn't matter", $index);
+        });
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        Phake::verify($this->key)->parse($key, $index);
     }
 
-    public function parseExceptionScenariosDataProvider()
-    {
+    public function returnDataProvider() {
         return [
-        //  key                  value index exception class                  exception message
-            ['1st ' . self::KEY, null,    1, InvalidArgumentException::class, "1 was provided for index param when key '1st " . self::KEY . "' contains an nth value, but they do not match"],
+        //    storedValue,       checkedValue, expectedResult
+            [ 'This is a value', 'is a',       true           ],
+            [ 'This is a value', 'words',      false          ],
         ];
     }
 
     /**
-     * Executes a success scenario against the method.
-     *
-     * @dataProvider successScenariosDataProvider
-     * @param string $key          the key to pass to the keyValueContains() method.
-     * @param int    $index        the index to pass to the keyValueContains() method.
-     * @param string $parsedKey    the key that the mocked parse() method should return.
-     * @param string $parsedIndex  the index that the mocked parse() method should return.
-     * @param mixed  $storedValue  the value that the mocked get() method should return.
-     * @param mixed  $checkedValue the value to pass to the keyValueContains() method.
+     * @dataProvider returnDataProvider
+     * @param string $storedValue    the value that should be in the store and will be returned by the mocked get()
+     * @param string $checkedValue   the value that will be passed to keyValueContains()
+     * @param bool   $expectedResult the expected results from keyExists()
      */
-    public function testSuccessScenario($key, $index, $parsedKey, $parsedIndex, $storedValue, $checkedValue)
+    public function testReturn($storedValue, $checkedValue, $expectedResult)
     {
-        /* @noinspection PhpUndefinedMethodInspection */
+        $key = StoreTest::KEY;
+        $index = null;
+        $parsedKey = $key;
+        $parsedIndex = $index;
+
+        /** @noinspection PhpUndefinedMethodInspection */
         {
             Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
             Phake::when($this->store)->get($parsedKey, $parsedIndex)->thenReturn($storedValue);
         }
 
-        $this->assertTrue($this->store->keyValueContains($key, $checkedValue, $index));
-    }
+        $this->assertEquals($expectedResult, $this->store->keyValueContains($key, $checkedValue, $index));
 
-    /**
-     * Executes a failure scenario against the method.
-     *
-     * @dataProvider failureScenariosDataProvider
-     * @param string $key          the key to pass to the keyValueContains() method.
-     * @param int    $index        the index to pass to the keyValueContains() method.
-     * @param string $parsedKey    the key that the mocked parse() method should return.
-     * @param string $parsedIndex  the index that the mocked parse() method should return.
-     * @param mixed  $storedValue  the value that the mocked get() method should return.
-     * @param mixed  $checkedValue the value to pass to the keyValueContains() method.
-     */
-    public function testFailureScenario($key, $index, $parsedKey, $parsedIndex, $storedValue, $checkedValue)
-    {
-        /* @noinspection PhpUndefinedMethodInspection */
+        /** @noinspection PhpUndefinedMethodInspection */
         {
-            Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::when($this->store)->get($parsedKey, $parsedIndex)->thenReturn($storedValue);
+            Phake::verify($this->key)->parse($key, $index);
+            Phake::verify($this->store)->get($parsedKey, $parsedIndex);
         }
-
-        $this->assertFalse($this->store->keyValueContains($key, $checkedValue, $index));
-    }
-
-    /**
-     * Executes an exception scenario against the method.
-     *
-     * @dataProvider parseExceptionScenariosDataProvider
-     * @param string $key              the key to pass to the method.
-     * @param mixed  $value            the value to pass to the method.
-     * @param int    $index            the index to pass to the method.
-     * @param string $exceptionClass   the expected class of the exception.
-     * @param string $exceptionMessage the expected message of the exception.
-     */
-    public function testParseExceptionScenario($key, $value, $index, $exceptionClass, $exceptionMessage)
-    {
-        /* @noinspection PhpUndefinedMethodInspection */
-        Phake::when($this->key)->parse($key, $index)->thenThrow(new $exceptionClass($exceptionMessage));
-
-        $this->expectException($exceptionClass);
-        $this->expectExceptionMessage($exceptionMessage);
-
-        /* @noinspection PhpUnhandledExceptionInspection */
-        $this->store->keyValueContains($key, $value, $index);
     }
 }
