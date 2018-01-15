@@ -4,28 +4,37 @@ use Chekote\NounStore\Assert;
 use Chekote\NounStore\Key;
 use Chekote\NounStore\Store;
 use Chekote\NounStore\TestCase;
-use Chekote\Phake\Phake;
-use Phake_IMock;
+use Prophecy\Prophecy\ObjectProphecy;
+use Prophecy\Prophet;
 
 abstract class AssertTest extends TestCase
 {
-    /** @var Assert|Phake_IMock */
+    /** @var Assert */
     protected $assert;
 
-    /** @var Store|Phake_IMock */
+    /** @var Store|ObjectProphecy */
     protected $store;
 
-    /** @var Key|Phake_IMock */
+    /** @var Key|ObjectProphecy */
     protected $key;
+
+    /** @var Prophet */
+    protected $prophet;
 
     /**
      * Sets up the environment before each test.
      */
     public function setUp()
     {
-        $this->key = Phake::strictMock(Key::class);
-        $this->store = Phake::strictMockWithConstructor(Store::class, $this->key);
-        $this->assert = Phake::strictMockWithConstructor(Assert::class, $this->store, $this->key);
+        $prophet = new Prophet();
+
+        $this->key = $prophet->prophesize()->willExtend(Key::class);
+        $this->store = $prophet->prophesize()->willExtend(Store::class);
+
+        /** @noinspection PhpParamsInspection */
+        $this->assert = new Assert($this->store->reveal(), $this->key->reveal());
+
+        $this->prophet = $prophet;
     }
 
     /**
@@ -33,8 +42,10 @@ abstract class AssertTest extends TestCase
      */
     public function tearDown()
     {
-        $this->assert = null;
+        $this->prophet->checkPredictions();
+
         $this->key = null;
         $this->store = null;
+        $this->assert = null;
     }
 }

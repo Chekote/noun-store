@@ -1,6 +1,5 @@
 <?php namespace Chekote\NounStore\Assert;
 
-use Chekote\Phake\Phake;
 use InvalidArgumentException;
 use OutOfBoundsException;
 
@@ -9,14 +8,6 @@ use OutOfBoundsException;
  */
 class KeyExistsTest extends AssertTest
 {
-    public function setUp()
-    {
-        parent::setUp();
-
-        /* @noinspection PhpUndefinedMethodInspection */
-        Phake::when($this->assert)->keyExists(Phake::anyParameters())->thenCallParent();
-    }
-
     public function testKeyIsParsedAndParsedValuesAreUsed()
     {
         $key = '10th Thing';
@@ -26,9 +17,9 @@ class KeyExistsTest extends AssertTest
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
-            Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::expect($this->store, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
-            Phake::expect($this->store, 1)->get($parsedKey, $parsedIndex)->thenReturn('something');
+            $this->key->parse($key, $index)->willReturn([$parsedKey, $parsedIndex])->shouldBeCalledTimes(1);
+            $this->store->keyExists($parsedKey, $parsedIndex)->willReturn(true)->shouldBeCalledTimes(1);
+            $this->store->get($parsedKey, $parsedIndex)->willReturn('something')->shouldBeCalledTimes(1);
         }
 
         $this->assert->keyExists($key, $index);
@@ -43,7 +34,7 @@ class KeyExistsTest extends AssertTest
         );
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::expect($this->key, 1)->parse($key, $index)->thenThrow($exception);
+        $this->key->parse($key, $index)->willThrow($exception)->shouldBeCalledTimes(1);
 
         $this->expectException(get_class($exception));
         $this->expectExceptionMessage($exception->getMessage());
@@ -62,9 +53,9 @@ class KeyExistsTest extends AssertTest
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
-            Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::expect($this->store, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn(false);
-            Phake::expect($this->key, 1)->build($parsedKey, $parsedIndex)->thenReturn($key);
+            $this->key->parse($key, $index)->willReturn([$parsedKey, $parsedIndex])->shouldBeCalledTimes(1);
+            $this->store->keyExists($parsedKey, $parsedIndex)->willReturn(false)->shouldBeCalledTimes(1);
+            $this->key->build($parsedKey, $parsedIndex)->willReturn($key)->shouldBeCalledTimes(1);
         }
 
         $this->expectException(get_class($exception));
@@ -83,9 +74,9 @@ class KeyExistsTest extends AssertTest
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
-            Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::expect($this->store, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
-            Phake::expect($this->store, 1)->get($parsedKey, $parsedIndex)->thenReturn($value);
+            $this->key->parse($key, $index)->willReturn([$parsedKey, $parsedIndex])->shouldBeCalledTimes(1);
+            $this->store->keyExists($parsedKey, $parsedIndex)->willReturn(true)->shouldBeCalledTimes(1);
+            $this->store->get($parsedKey, $parsedIndex)->willReturn($value)->shouldBeCalledTimes(1);
         }
 
         $this->assertEquals($value, $this->assert->keyExists($key, $index));
