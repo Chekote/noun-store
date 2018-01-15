@@ -24,16 +24,16 @@ class ParseTest extends KeyTest
     public function successScenarioDataProvider()
     {
         return [
-        //   key           index   parse parseIndex
-            ['Thing',       null, 'Thing',     null], // no nth in key or index param
-            ['1st Thing',   null, 'Thing',        0], // 1st in key with no index param
-            ['1st Thing',      0, 'Thing',        0], // nth in key with matching index param
-            ['2nd Thing',   null, 'Thing',        1], // 2nd in key with no index param
-            ['3rd Thing',   null, 'Thing',        2], // 3rd in key with no index param
-            ['4th Thing',   null, 'Thing',        3], // 3th in key with no index param
-            ['478th Thing', null, 'Thing',      477], // high nth in key with no index param
-            ['Thing',          0, 'Thing',        0], // no nth in key with 0 index param
-            ['Thing',         49, 'Thing',       49], // no nth in key with high index param
+        //   key           index   parsedKey,  parsedIndex
+            ['Thing',       null, 'Thing',            null], // no nth in key or index param
+            ['1st Thing',   null, 'Thing',               0], // 1st in key with no index param
+            ['1st Thing',      0, 'Thing',               0], // nth in key with matching index param
+            ['2nd Thing',   null, 'Thing',               1], // 2nd in key with no index param
+            ['3rd Thing',   null, 'Thing',               2], // 3rd in key with no index param
+            ['4th Thing',   null, 'Thing',               3], // 3th in key with no index param
+            ['478th Thing', null, 'Thing',             477], // high nth in key with no index param
+            ['Thing',          0, 'Thing',               0], // no nth in key with 0 index param
+            ['Thing',         49, 'Thing',              49], // no nth in key with high index param
         ];
     }
 
