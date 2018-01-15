@@ -21,7 +21,7 @@ class ParseTest extends KeyTest
      *
      * @return array
      */
-    public function validKeyAndIndexCombinationsDataProvider()
+    public function successScenarioDataProvider()
     {
         return [
         //   key           index   parse parseIndex
@@ -40,7 +40,7 @@ class ParseTest extends KeyTest
     /**
      * Tests that calling Key::parse with valid key and index combinations works correctly.
      *
-     * @dataProvider validKeyAndIndexCombinationsDataProvider
+     * @dataProvider successScenarioDataProvider
      * @param string $key         the key to parse
      * @param int    $index       the index to pass along with the key
      * @param string $parsedKey   the expected resulting parsed key
