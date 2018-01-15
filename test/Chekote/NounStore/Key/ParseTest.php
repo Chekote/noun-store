@@ -48,10 +48,7 @@ class ParseTest extends KeyTest
      */
     public function testParseKeyParsesValidKeysAndNthCombinations($key, $index, $parsedKey, $parsedIndex)
     {
-        list($actualKey, $actualIndex) = $this->key->parse($key, $index);
-
-        $this->assertEquals($parsedKey, $actualKey);
-        $this->assertEquals($parsedIndex, $actualIndex);
+        $this->assertEquals([$parsedKey, $parsedIndex], $this->key->parse($key, $index));
     }
 
     /**
