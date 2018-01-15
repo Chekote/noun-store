@@ -1,8 +1,6 @@
 <?php namespace Chekote\NounStore\Store;
 
-use Chekote\NounStore\Store;
 use Chekote\Phake\Phake;
-use ReflectionClass;
 
 class SetTest extends StoreTest
 {
@@ -22,14 +20,14 @@ class SetTest extends StoreTest
         $key = 'My Key';
         $value = 'My Value';
 
-        $class = new ReflectionClass(Store::class);
-        $nouns = $class->getProperty('nouns');
-        $nouns->setAccessible(true);
-
         $this->store->set($key, $value);
 
-        $this->assertCount(1, $nouns->getValue($this->store)[$key]);
-        $this->assertEquals($value, $nouns->getValue($this->store)[$key][0]);
+        $store = Phake::makeVisible($this->store);
+        /* @noinspection PhpUndefinedFieldInspection */
+        {
+            $this->assertCount(1, $store->nouns[$key]);
+            $this->assertEquals($value, $store->nouns[$key][0]);
+        }
     }
 
     /**
