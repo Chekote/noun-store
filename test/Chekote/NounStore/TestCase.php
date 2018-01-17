@@ -8,14 +8,16 @@ class TestCase extends BaseTestCase
     /**
      * @before
      */
-    public function clearExpectations() {
+    public function clearExpectations()
+    {
         Phake::clearExpectations();
     }
 
     /**
      * @after
      */
-    public function verifyExpectations() {
+    public function verifyExpectations()
+    {
         Phake::verifyExpectations();
     }
 }

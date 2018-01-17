@@ -21,7 +21,8 @@ abstract class Phake extends BasePhake
     /** @var Expectation[] */
     protected static $expectations;
 
-    public static function clearExpectations() {
+    public static function clearExpectations()
+    {
         self::$expectations = [];
     }
 
@@ -36,7 +37,8 @@ abstract class Phake extends BasePhake
      * @param  int         $count the expected call count.
      * @return Expectation the expectation.
      */
-    public static function expect(Phake_IMock $mock, int $count) {
+    public static function expect(Phake_IMock $mock, int $count)
+    {
         $expectation = new Expectation($mock, $count);
         self::$expectations[] = $expectation;
 
@@ -49,7 +51,8 @@ abstract class Phake extends BasePhake
      * @throws RuntimeException if a method has not been set for the expectation.
      * @throws RuntimeException if args have not been set for the expectation.
      */
-    public static function verifyExpectations() {
+    public static function verifyExpectations()
+    {
         foreach (self::$expectations as $expectation) {
             $expectation->verify();
         }

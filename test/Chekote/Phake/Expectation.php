@@ -31,7 +31,8 @@ class Expectation
      * @param Phake_IMock $mock  the mock object
      * @param int         $count number of times the method is expected to be called
      */
-    public function __construct(Phake_IMock $mock, int $count) {
+    public function __construct(Phake_IMock $mock, int $count)
+    {
         $this->mock = $mock;
         $this->count = $count;
     }
@@ -39,11 +40,12 @@ class Expectation
     /**
      * Verifies that the expected method was called.
      *
-     * @throws RuntimeException if a method has not been set for the expectation.
-     * @throws RuntimeException if args have not been set for the expectation.
+     * @throws RuntimeException            if a method has not been set for the expectation.
+     * @throws RuntimeException            if args have not been set for the expectation.
      * @return Phake_Proxies_VerifierProxy
      */
-    public function verify() {
+    public function verify()
+    {
         if (!isset($this->method)) {
             throw new RuntimeException('Expectation method was not set');
         }
@@ -63,11 +65,12 @@ class Expectation
     /**
      * Sets the expected method to be called.
      *
-     * @param  string $method the method that is expected to be called.
-     * @param  array  $args   the args that are expected to be passed to the method.
+     * @param  string                     $method the method that is expected to be called.
+     * @param  array                      $args   the args that are expected to be passed to the method.
      * @return Phake_Proxies_StubberProxy
      */
-    public function __call(string $method, array $args) {
+    public function __call(string $method, array $args)
+    {
         // record the method and args for verification later
         $this->method = $method;
         $this->args = $args;
