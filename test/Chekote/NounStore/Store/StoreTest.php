@@ -2,8 +2,8 @@
 
 use Chekote\NounStore\Key;
 use Chekote\NounStore\Store;
+use Chekote\NounStore\TestCase;
 use Chekote\Phake\Phake;
-use PHPUnit\Framework\TestCase;
 
 abstract class StoreTest extends TestCase
 {
@@ -38,5 +38,7 @@ abstract class StoreTest extends TestCase
     {
         $this->key = null;
         $this->store = null;
+
+        Phake::verifyExpectations();
     }
 }

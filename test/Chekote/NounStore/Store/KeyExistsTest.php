@@ -16,68 +16,45 @@ class KeyExistsTest extends StoreTest
         Phake::when($this->store)->keyExists(Phake::anyParameters())->thenCallParent();
     }
 
-    public function testMismatchedNthAndIndexThrowsInvalidArgumentException()
+    public function testInvalidArgumentExceptionBubblesUpFromParse()
     {
-        $key = '1st Thing';
-        $index = 1;
+        $key = '10th Thing';
+        $index = 5;
+        $exception = new InvalidArgumentException(
+            "$index was provided for index param when key '$key' contains an nth value, but they do not match"
+        );
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::when($this->key)->parse($key, $index)->thenThrow(new InvalidArgumentException());
+        Phake::expect($this->key, 1)->parse($key, $index)->thenThrow($exception);
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(get_class($exception));
+        $this->expectExceptionMessage($exception->getMessage());
 
         $this->store->keyExists($key, $index);
     }
 
-    public function testExistingNthKeyReturnsTrue()
+    public function returnDataProvider()
     {
-        $key = '1st ' . self::KEY;
-        $index = null;
-        $parsedKey = self::KEY;
-        $parsedIndex = 0;
-
-        /* @noinspection PhpUndefinedMethodInspection */
-        Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-
-        $this->assertTrue($this->store->keyExists($key));
+        return [
+        //    key,            index, expectedResult
+            [ 'No such key',   null, false ], // missing key
+            [ StoreTest::KEY,     2, false ], // missing index
+            [ StoreTest::KEY,  null, true  ], // present key
+            [ StoreTest::KEY,     1, true  ], // present index
+        ];
     }
 
-    public function testMissingNthKeyReturnsFalse()
+    /**
+     * @dataProvider returnDataProvider
+     * @param string $key            the key to pass to keyExists, and which will be returned from the mocked parse()
+     * @param int    $index          the index to pass to KeyExists, and which will be returned from the mocked parse()
+     * @param bool   $expectedResult the expected results from keyExists()
+     */
+    public function testReturn(string $key, ?int $index, bool $expectedResult)
     {
-        $key = '3rd ' . self::KEY;
-        $index = null;
-        $parsedKey = self::KEY;
-        $parsedIndex = 2;
-
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
+        Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$key, $index]);
 
-        $this->assertFalse($this->store->keyExists($key));
-    }
-
-    public function testExistingIndexParameterReturnsTrue()
-    {
-        $key = self::KEY;
-        $index = 0;
-        $parsedKey = self::KEY;
-        $parsedIndex = 0;
-
-        /* @noinspection PhpUndefinedMethodInspection */
-        Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-
-        $this->assertTrue($this->store->keyExists($key, $index));
-    }
-
-    public function testMissingIndexParameterReturnFalse()
-    {
-        $key = self::KEY;
-        $index = 2;
-        $parsedKey = self::KEY;
-        $parsedIndex = 2;
-
-        /* @noinspection PhpUndefinedMethodInspection */
-        Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-
-        $this->assertFalse($this->store->keyExists($key, $index));
+        $this->assertEquals($expectedResult, $this->store->keyExists($key, $index));
     }
 }

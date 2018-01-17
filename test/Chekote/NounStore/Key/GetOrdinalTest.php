@@ -63,9 +63,7 @@ class GetOrdinalTest extends KeyTest
      */
     public function testSuccessScenario($nth, $expected)
     {
-        $actual = $this->key->getOrdinal($nth);
-
-        $this->assertEquals($expected, $actual);
+        $this->assertEquals($expected, $this->key->getOrdinal($nth));
     }
 
     /**
