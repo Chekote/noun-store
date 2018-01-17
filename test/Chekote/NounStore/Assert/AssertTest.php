@@ -3,8 +3,8 @@
 use Chekote\NounStore\Assert;
 use Chekote\NounStore\Key;
 use Chekote\NounStore\Store;
+use Chekote\NounStore\TestCase;
 use Chekote\Phake\Phake;
-use Chekote\PHPUnit\Framework\TestCase;
 use Phake_IMock;
 
 abstract class AssertTest extends TestCase
@@ -34,5 +34,7 @@ abstract class AssertTest extends TestCase
     public function tearDown()
     {
         $this->assert = null;
+        $this->key = null;
+        $this->store = null;
     }
 }

@@ -26,17 +26,11 @@ class KeyValueContainsTest extends StoreTest
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
-            Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::when($this->store)->get($parsedKey, $parsedIndex)->thenReturn(self::SECOND_VALUE);
+            Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
+            Phake::expect($this->store, 1)->get($parsedKey, $parsedIndex)->thenReturn(self::SECOND_VALUE);
         }
 
         $this->assertTrue($this->store->keyValueContains($key, $value, $index));
-
-        /* @noinspection PhpUndefinedMethodInspection */
-        {
-            Phake::verify($this->key)->parse($key, $index);
-            Phake::verify($this->store)->get($parsedKey, $parsedIndex);
-        }
     }
 
     public function testInvalidArgumentExceptionBubblesUpFromParse()
@@ -48,14 +42,12 @@ class KeyValueContainsTest extends StoreTest
         );
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::when($this->key)->parse($key, $index)->thenThrow($exception);
+        Phake::expect($this->key, 1)->parse($key, $index)->thenThrow($exception);
 
-        $this->assertException($exception, function () use ($key, $index) {
-            $this->store->keyValueContains($key, "Doesn't matter", $index);
-        });
+        $this->expectException(get_class($exception));
+        $this->expectExceptionMessage($exception->getMessage());
 
-        /* @noinspection PhpUndefinedMethodInspection */
-        Phake::verify($this->key)->parse($key, $index);
+        $this->store->keyValueContains($key, "Doesn't matter", $index);
     }
 
     public function returnDataProvider()
@@ -82,16 +74,10 @@ class KeyValueContainsTest extends StoreTest
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
-            Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::when($this->store)->get($parsedKey, $parsedIndex)->thenReturn($storedValue);
+            Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
+            Phake::expect($this->store, 1)->get($parsedKey, $parsedIndex)->thenReturn($storedValue);
         }
 
         $this->assertEquals($expectedResult, $this->store->keyValueContains($key, $checkedValue, $index));
-
-        /* @noinspection PhpUndefinedMethodInspection */
-        {
-            Phake::verify($this->key)->parse($key, $index);
-            Phake::verify($this->store)->get($parsedKey, $parsedIndex);
-        }
     }
 }

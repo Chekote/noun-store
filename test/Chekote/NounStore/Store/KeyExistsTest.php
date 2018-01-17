@@ -25,14 +25,12 @@ class KeyExistsTest extends StoreTest
         );
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::when($this->key)->parse($key, $index)->thenThrow($exception);
+        Phake::expect($this->key, 1)->parse($key, $index)->thenThrow($exception);
 
-        $this->assertException($exception, function () use ($key, $index) {
-            $this->store->keyExists($key, $index);
-        });
+        $this->expectException(get_class($exception));
+        $this->expectExceptionMessage($exception->getMessage());
 
-        /* @noinspection PhpUndefinedMethodInspection */
-        Phake::verify($this->key)->parse($key, $index);
+        $this->store->keyExists($key, $index);
     }
 
     public function returnDataProvider()
@@ -55,11 +53,8 @@ class KeyExistsTest extends StoreTest
     public function testReturn(string $key, ?int $index, bool $expectedResult)
     {
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::when($this->key)->parse($key, $index)->thenReturn([$key, $index]);
+        Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$key, $index]);
 
         $this->assertEquals($expectedResult, $this->store->keyExists($key, $index));
-
-        /* @noinspection PhpUndefinedMethodInspection */
-        Phake::verify($this->key)->parse($key, $index);
     }
 }

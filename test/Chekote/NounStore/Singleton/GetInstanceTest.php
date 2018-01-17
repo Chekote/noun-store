@@ -1,7 +1,7 @@
 <?php namespace Chekote\NounStore\Singleton;
 
 use Chekote\NounStore\Singleton;
-use Chekote\PHPUnit\Framework\TestCase;
+use Chekote\NounStore\TestCase;
 
 class SingletonClass
 {

@@ -25,17 +25,11 @@ class GetTest extends StoreTest
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
-            Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
+            Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
+            Phake::expect($this->store, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
         }
 
         $this->assertEquals(StoreTest::SECOND_VALUE, $this->store->get($key, $index));
-
-        /* @noinspection PhpUndefinedMethodInspection */
-        {
-            Phake::verify($this->key)->parse($key, $index);
-            Phake::verify($this->store)->keyExists($parsedKey, $parsedIndex);
-        }
     }
 
     public function testInvalidArgumentExceptionBubblesUpFromParse()
@@ -47,14 +41,12 @@ class GetTest extends StoreTest
         );
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::when($this->key)->parse($key, $index)->thenThrow($exception);
+        Phake::expect($this->key, 1)->parse($key, $index)->thenThrow($exception);
 
-        $this->assertException($exception, function () use ($key, $index) {
-            $this->store->get($key, $index);
-        });
+        $this->expectException(get_class($exception));
+        $this->expectExceptionMessage($exception->getMessage());
 
-        /* @noinspection PhpUndefinedMethodInspection */
-        Phake::verify($this->key)->parse($key, $index);
+        $this->store->get($key, $index);
     }
 
     public function testReturnsNullWhenKeyDoesNotExist()
@@ -66,17 +58,11 @@ class GetTest extends StoreTest
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
-            Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(false);
+            Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
+            Phake::expect($this->store, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn(false);
         }
 
         $this->assertNull($this->store->get($key, $index));
-
-        /* @noinspection PhpUndefinedMethodInspection */
-        {
-            Phake::verify($this->key)->parse($key, $index);
-            Phake::verify($this->store)->keyExists($parsedKey, $parsedIndex);
-        }
     }
 
     public function testLastItemIsReturnedWhenParsedIndexIsNull()
@@ -88,17 +74,11 @@ class GetTest extends StoreTest
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
-            Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
+            Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
+            Phake::expect($this->store, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
         }
 
         $this->assertEquals(StoreTest::SECOND_VALUE, $this->store->get($key, $index));
-
-        /* @noinspection PhpUndefinedMethodInspection */
-        {
-            Phake::verify($this->key)->parse($key, $index);
-            Phake::verify($this->store)->keyExists($parsedKey, $parsedIndex);
-        }
     }
 
     public function testIndexItemIsReturnedWhenParsedIndexIsNotNull()
@@ -110,16 +90,10 @@ class GetTest extends StoreTest
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
-            Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
+            Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
+            Phake::expect($this->store, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
         }
 
         $this->assertEquals(StoreTest::FIRST_VALUE, $this->store->get($key, $index));
-
-        /* @noinspection PhpUndefinedMethodInspection */
-        {
-            Phake::verify($this->key)->parse($key, $index);
-            Phake::verify($this->store)->keyExists($parsedKey, $parsedIndex);
-        }
     }
 }

@@ -26,19 +26,12 @@ class KeyExistsTest extends AssertTest
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
-            Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
-            Phake::when($this->store)->get($parsedKey, $parsedIndex)->thenReturn('something');
+            Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
+            Phake::expect($this->store, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
+            Phake::expect($this->store, 1)->get($parsedKey, $parsedIndex)->thenReturn('something');
         }
 
         $this->assert->keyExists($key, $index);
-
-        /* @noinspection PhpUndefinedMethodInspection */
-        {
-            Phake::verify($this->key)->parse($key, $index);
-            Phake::verify($this->store)->keyExists($parsedKey, $parsedIndex);
-            Phake::verify($this->store)->get($parsedKey, $parsedIndex);
-        }
     }
 
     public function testInvalidArgumentExceptionBubblesUpFromParse()
@@ -50,14 +43,12 @@ class KeyExistsTest extends AssertTest
         );
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::when($this->key)->parse($key, $index)->thenThrow($exception);
+        Phake::expect($this->key, 1)->parse($key, $index)->thenThrow($exception);
 
-        $this->assertException($exception, function () use ($key, $index) {
-            $this->assert->keyExists($key, $index);
-        });
+        $this->expectException(get_class($exception));
+        $this->expectExceptionMessage($exception->getMessage());
 
-        /* @noinspection PhpUndefinedMethodInspection */
-        Phake::verify($this->key)->parse($key, $index);
+        $this->assert->keyExists($key, $index);
     }
 
     public function testMissingKeyThrowsOutOfBoundsException()
@@ -71,21 +62,15 @@ class KeyExistsTest extends AssertTest
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
-            Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(false);
-            Phake::when($this->key)->build($parsedKey, $parsedIndex)->thenReturn($key);
+            Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
+            Phake::expect($this->store, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn(false);
+            Phake::expect($this->key, 1)->build($parsedKey, $parsedIndex)->thenReturn($key);
         }
 
-        $this->assertException($exception, function () use ($key, $index) {
-            $this->assert->keyExists($key, $index);
-        });
+        $this->expectException(get_class($exception));
+        $this->expectExceptionMessage($exception->getMessage());
 
-        /* @noinspection PhpUndefinedMethodInspection */
-        {
-            Phake::verify($this->key)->parse($key, $index);
-            Phake::verify($this->store)->keyExists($parsedKey, $parsedIndex);
-            Phake::verify($this->key)->build($parsedKey, $parsedIndex);
-        }
+        $this->assert->keyExists($key, $index);
     }
 
     public function testStoredValueIsReturned()
@@ -98,18 +83,11 @@ class KeyExistsTest extends AssertTest
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
-            Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
-            Phake::when($this->store)->get($parsedKey, $parsedIndex)->thenReturn($value);
+            Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
+            Phake::expect($this->store, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
+            Phake::expect($this->store, 1)->get($parsedKey, $parsedIndex)->thenReturn($value);
         }
 
         $this->assertEquals($value, $this->assert->keyExists($key, $index));
-
-        /* @noinspection PhpUndefinedMethodInspection */
-        {
-            Phake::verify($this->key)->parse($key, $index);
-            Phake::verify($this->store)->keyExists($parsedKey, $parsedIndex);
-            Phake::verify($this->store)->get($parsedKey, $parsedIndex);
-        }
     }
 }

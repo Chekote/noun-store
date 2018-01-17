@@ -28,19 +28,12 @@ class KeyValueContainsTest extends AssertTest
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
-            Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::when($this->assert)->keyExists($parsedKey, $parsedIndex)->thenReturn(null);
-            Phake::when($this->store)->keyValueContains($parsedKey, $value, $parsedIndex)->thenReturn(true);
+            Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
+            Phake::expect($this->assert, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn(null);
+            Phake::expect($this->store, 1)->keyValueContains($parsedKey, $value, $parsedIndex)->thenReturn(true);
         }
 
         $this->assert->keyValueContains($key, $value, $index);
-
-        /* @noinspection PhpUndefinedMethodInspection */
-        {
-            Phake::verify($this->key)->parse($key, $index);
-            Phake::verify($this->assert)->keyExists($parsedKey, $parsedIndex);
-            Phake::verify($this->store)->keyValueContains($parsedKey, $value, $parsedIndex);
-        }
     }
 
     public function testInvalidArgumentExceptionBubblesUpFromParse()
@@ -53,14 +46,12 @@ class KeyValueContainsTest extends AssertTest
         );
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::when($this->key)->parse($key, $index)->thenThrow($exception);
+        Phake::expect($this->key, 1)->parse($key, $index)->thenThrow($exception);
 
-        $this->assertException($exception, function () use ($key, $value, $index) {
-            $this->assert->keyValueContains($key, $value, $index);
-        });
+        $this->expectException(get_class($exception));
+        $this->expectExceptionMessage($exception->getMessage());
 
-        /* @noinspection PhpUndefinedMethodInspection */
-        Phake::verify($this->key)->parse($key, $index);
+        $this->assert->keyValueContains($key, $value, $index);
     }
 
     public function testMissingKeyThrowsOutOfBoundsException()
@@ -74,19 +65,14 @@ class KeyValueContainsTest extends AssertTest
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
-            Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::when($this->assert)->keyExists($parsedKey, $parsedIndex)->thenThrow($exception);
+            Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
+            Phake::expect($this->assert, 1)->keyExists($parsedKey, $parsedIndex)->thenThrow($exception);
         }
 
-        $this->assertException($exception, function () use ($key, $value, $index) {
-            $this->assert->keyValueContains($key, $value, $index);
-        });
+        $this->expectException(get_class($exception));
+        $this->expectExceptionMessage($exception->getMessage());
 
-        /* @noinspection PhpUndefinedMethodInspection */
-        {
-            Phake::verify($this->key)->parse($key, $index);
-            Phake::verify($this->assert)->keyExists($parsedKey, $parsedIndex);
-        }
+        $this->assert->keyValueContains($key, $value, $index);
     }
 
     public function testFailedMatchThrowsRuntimeException()
@@ -100,23 +86,16 @@ class KeyValueContainsTest extends AssertTest
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
-            Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::when($this->assert)->keyExists($parsedKey, $parsedIndex)->thenReturn(null);
-            Phake::when($this->store)->keyValueContains($parsedKey, $value, $parsedIndex)->thenReturn(false);
-            Phake::when($this->key)->build($parsedKey, $parsedIndex)->thenReturn($key);
+            Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
+            Phake::expect($this->assert, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn(null);
+            Phake::expect($this->store, 1)->keyValueContains($parsedKey, $value, $parsedIndex)->thenReturn(false);
+            Phake::expect($this->key, 1)->build($parsedKey, $parsedIndex)->thenReturn($key);
         }
 
-        $this->assertException($exception, function () use ($key, $value, $index) {
-            $this->assert->keyValueContains($key, $value, $index);
-        });
+        $this->expectException(get_class($exception));
+        $this->expectExceptionMessage($exception->getMessage());
 
-        /* @noinspection PhpUndefinedMethodInspection */
-        {
-            Phake::verify($this->key)->parse($key, $index);
-            Phake::verify($this->assert)->keyExists($parsedKey, $parsedIndex);
-            Phake::verify($this->store)->keyValueContains($parsedKey, $value, $parsedIndex);
-            Phake::verify($this->key)->build($parsedKey, $parsedIndex);
-        }
+        $this->assert->keyValueContains($key, $value, $index);
     }
 
     public function testSuccessfulMatchThrowsNoException()
@@ -129,18 +108,11 @@ class KeyValueContainsTest extends AssertTest
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
-            Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::when($this->assert)->keyExists($parsedKey, $parsedIndex)->thenReturn(null);
-            Phake::when($this->store)->keyValueContains($parsedKey, $value, $parsedIndex)->thenReturn(true);
+            Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
+            Phake::expect($this->assert, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn(null);
+            Phake::expect($this->store, 1)->keyValueContains($parsedKey, $value, $parsedIndex)->thenReturn(true);
         }
 
         $this->assert->keyValueContains($key, $value, $index);
-
-        /* @noinspection PhpUndefinedMethodInspection */
-        {
-            Phake::verify($this->key)->parse($key, $index);
-            Phake::verify($this->assert)->keyExists($parsedKey, $parsedIndex);
-            Phake::verify($this->store)->keyValueContains($parsedKey, $value, $parsedIndex);
-        }
     }
 }
