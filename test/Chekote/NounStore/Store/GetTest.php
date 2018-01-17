@@ -16,134 +16,84 @@ class GetTest extends StoreTest
         Phake::when($this->store)->get(Phake::anyParameters())->thenCallParent();
     }
 
-    /**
-     * Tests that InvalidArgumentException is thrown if Store::get is called with the index parameter
-     * and the key also contains an nth value, but they do not match.
-     */
-    public function testGetThrowsInvalidArgumentExceptionWithMismatchedNthAndIndex()
+    public function testKeyIsParsedAndParsedValuesAreUsed()
     {
-        $key = '1st Thing';
-        $index = 1;
+        $key = '2nd ' . StoreTest::KEY;
+        $index = null;
+        $parsedKey = StoreTest::KEY;
+        $parsedIndex = 1;
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::when($this->key)->parse($key, $index)->thenThrow(new InvalidArgumentException());
+        {
+            Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
+            Phake::expect($this->store, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
+        }
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->assertEquals(StoreTest::SECOND_VALUE, $this->store->get($key, $index));
+    }
+
+    public function testInvalidArgumentExceptionBubblesUpFromParse()
+    {
+        $key = '10th Thing';
+        $index = 5;
+        $exception = new InvalidArgumentException(
+            "$index was provided for index param when key '$key' contains an nth value, but they do not match"
+        );
+
+        /* @noinspection PhpUndefinedMethodInspection */
+        Phake::expect($this->key, 1)->parse($key, $index)->thenThrow($exception);
+
+        $this->expectException(get_class($exception));
+        $this->expectExceptionMessage($exception->getMessage());
 
         $this->store->get($key, $index);
     }
 
-    /**
-     * Tests that Store::get returns the item at the end of the stack.
-     */
-    public function testGetReturnsItemAtEndOfStack()
+    public function testReturnsNullWhenKeyDoesNotExist()
     {
-        $key = self::KEY;
-        $index = null;
-        $parsedKey = self::KEY;
-        $parsedIndex = null;
-
-        /* @noinspection PhpUndefinedMethodInspection */
-        {
-            Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
-        }
-
-        $this->assertEquals(self::SECOND_VALUE, $this->store->get(self::KEY));
-    }
-
-    /**
-     * Tests that Store::get returns the nth item at of the stack when the $key contains nth.
-     */
-    public function testGetWithNthKeyReturnsNthItem()
-    {
-        $key = '1st ' . self::KEY;
-        $index = null;
-        $parsedKey = self::KEY;
-        $parsedIndex = 0;
-
-        /* @noinspection PhpUndefinedMethodInspection */
-        {
-            Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
-        }
-
-        $this->assertEquals(self::FIRST_VALUE, $this->store->get($key));
-    }
-
-    /**
-     * Tests that Store::get returns the index item at of the stack when index parameter is provided.
-     */
-    public function testGetWithIndexParameterReturnsIndexItem()
-    {
-        $key = self::KEY;
-        $index = 0;
-        $parsedKey = self::KEY;
-        $parsedIndex = 0;
-
-        /* @noinspection PhpUndefinedMethodInspection */
-        {
-            Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
-        }
-
-        $this->assertEquals(self::FIRST_VALUE, $this->store->get(self::KEY, $index));
-    }
-
-    /**
-     * Tests that Store::get returns null when the specified $key does not exist.
-     */
-    public function testGetReturnsNullWhenKeyDoesNotExist()
-    {
-        $key = 'Thing';
-        $index = null;
-        $parsedKey = 'Thing';
-        $parsedIndex = null;
-
-        /* @noinspection PhpUndefinedMethodInspection */
-        {
-            Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(false);
-        }
-
-        $this->assertEquals(null, $this->store->get($key));
-    }
-
-    /**
-     * Tests that Store::get returns null when the specified nth $key does not exist.
-     */
-    public function testGetReturnsNullWhenNthKeyDoesNotExist()
-    {
-        $key = '3rd ' . self::KEY;
-        $index = null;
-        $parsedKey = self::KEY;
-        $parsedIndex = 2;
-
-        /* @noinspection PhpUndefinedMethodInspection */
-        {
-            Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(false);
-        }
-
-        $this->assertEquals(null, $this->store->get($key));
-    }
-
-    /**
-     * Tests that Store::get returns null when the specified $index param does not exist.
-     */
-    public function testGetReturnsNullWhenIndexDoesNotExist()
-    {
-        $key = self::KEY;
+        $key = StoreTest::KEY;
         $index = 2;
-        $parsedKey = self::KEY;
-        $parsedIndex = 2;
+        $parsedKey = $key;
+        $parsedIndex = $index;
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
-            Phake::when($this->key)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::when($this->store)->keyExists($parsedKey, $parsedIndex)->thenReturn(false);
+            Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
+            Phake::expect($this->store, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn(false);
         }
 
-        $this->assertEquals(null, $this->store->get($key, $index));
+        $this->assertNull($this->store->get($key, $index));
+    }
+
+    public function testLastItemIsReturnedWhenParsedIndexIsNull()
+    {
+        $key = StoreTest::KEY;
+        $index = null;
+        $parsedKey = $key;
+        $parsedIndex = $index;
+
+        /* @noinspection PhpUndefinedMethodInspection */
+        {
+            Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
+            Phake::expect($this->store, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
+        }
+
+        $this->assertEquals(StoreTest::SECOND_VALUE, $this->store->get($key, $index));
+    }
+
+    public function testIndexItemIsReturnedWhenParsedIndexIsNotNull()
+    {
+        $key = '1st ' . StoreTest::KEY;
+        $index = null;
+        $parsedKey = StoreTest::KEY;
+        $parsedIndex = 0;
+
+        /* @noinspection PhpUndefinedMethodInspection */
+        {
+            Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
+            Phake::expect($this->store, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
+        }
+
+        $this->assertEquals(StoreTest::FIRST_VALUE, $this->store->get($key, $index));
     }
 }

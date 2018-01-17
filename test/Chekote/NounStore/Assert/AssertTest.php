@@ -3,10 +3,9 @@
 use Chekote\NounStore\Assert;
 use Chekote\NounStore\Key;
 use Chekote\NounStore\Store;
-use Chekote\NounStore\Store\StoreTest;
+use Chekote\NounStore\TestCase;
 use Chekote\Phake\Phake;
 use Phake_IMock;
-use PHPUnit\Framework\TestCase;
 
 abstract class AssertTest extends TestCase
 {
@@ -26,10 +25,6 @@ abstract class AssertTest extends TestCase
     {
         $this->key = Phake::strictMock(Key::class);
         $this->store = Phake::strictMockWithConstructor(Store::class, $this->key);
-
-        /* @noinspection PhpUndefinedFieldInspection */
-        Phake::makeVisible($this->store)->nouns = [StoreTest::KEY => [StoreTest::FIRST_VALUE, StoreTest::SECOND_VALUE]];
-
         $this->assert = Phake::strictMockWithConstructor(Assert::class, $this->store, $this->key);
     }
 
@@ -39,5 +34,7 @@ abstract class AssertTest extends TestCase
     public function tearDown()
     {
         $this->assert = null;
+        $this->key = null;
+        $this->store = null;
     }
 }

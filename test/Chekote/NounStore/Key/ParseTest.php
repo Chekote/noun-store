@@ -21,37 +21,34 @@ class ParseTest extends KeyTest
      *
      * @return array
      */
-    public function validKeyAndIndexCombinationsDataProvider()
+    public function successScenarioDataProvider()
     {
         return [
-        //   key           index   parse parseIndex
-            ['Thing',       null, 'Thing',     null], // no nth in key or index param
-            ['1st Thing',   null, 'Thing',        0], // 1st in key with no index param
-            ['1st Thing',      0, 'Thing',        0], // nth in key with matching index param
-            ['2nd Thing',   null, 'Thing',        1], // 2nd in key with no index param
-            ['3rd Thing',   null, 'Thing',        2], // 3rd in key with no index param
-            ['4th Thing',   null, 'Thing',        3], // 3th in key with no index param
-            ['478th Thing', null, 'Thing',      477], // high nth in key with no index param
-            ['Thing',          0, 'Thing',        0], // no nth in key with 0 index param
-            ['Thing',         49, 'Thing',       49], // no nth in key with high index param
+        //   key           index   parsedKey,  parsedIndex
+            ['Thing',       null, 'Thing',            null], // no nth in key or index param
+            ['1st Thing',   null, 'Thing',               0], // 1st in key with no index param
+            ['1st Thing',      0, 'Thing',               0], // nth in key with matching index param
+            ['2nd Thing',   null, 'Thing',               1], // 2nd in key with no index param
+            ['3rd Thing',   null, 'Thing',               2], // 3rd in key with no index param
+            ['4th Thing',   null, 'Thing',               3], // 3th in key with no index param
+            ['478th Thing', null, 'Thing',             477], // high nth in key with no index param
+            ['Thing',          0, 'Thing',               0], // no nth in key with 0 index param
+            ['Thing',         49, 'Thing',              49], // no nth in key with high index param
         ];
     }
 
     /**
      * Tests that calling Key::parse with valid key and index combinations works correctly.
      *
-     * @dataProvider validKeyAndIndexCombinationsDataProvider
+     * @dataProvider successScenarioDataProvider
      * @param string $key         the key to parse
      * @param int    $index       the index to pass along with the key
      * @param string $parsedKey   the expected resulting parsed key
      * @param int    $parsedIndex the expected resulting parsed index
      */
-    public function testParseKeyParsesValidKeysAndNthCombinations($key, $index, $parsedKey, $parsedIndex)
+    public function testSuccessScenario($key, $index, $parsedKey, $parsedIndex)
     {
-        list($actualKey, $actualIndex) = $this->key->parse($key, $index);
-
-        $this->assertEquals($parsedKey, $actualKey);
-        $this->assertEquals($parsedIndex, $actualIndex);
+        $this->assertEquals([$parsedKey, $parsedIndex], $this->key->parse($key, $index));
     }
 
     /**
