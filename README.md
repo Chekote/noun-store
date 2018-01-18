@@ -43,7 +43,8 @@ $store->keyExists('best friend');
 ### Assert if we have something
 
 ```php
-$store->assertKeyExists('best friend');
+$assert = new \Chekote\NounStore\Assert($store);
+$assert->keyExists('best friend');
 ```
 
 ### Retrieve something
