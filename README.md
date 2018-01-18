@@ -1,8 +1,9 @@
-[![Packagist Latest Stable Version](https://poser.pugx.org/chekote/noun-store/version.svg)](https://packagist.org/packages/chekote/noun-store)
-[![Packagist Latest Unstable Version](https://poser.pugx.org/chekote/noun-store/v/unstable.svg)](https://packagist.org/packages/chekote/noun-store)
-[![Packagist Total Downloads](https://poser.pugx.org/chekote/noun-store/downloads.svg)](https://packagist.org/packages/chekote/noun-store)
-[![CircleCI](https://circleci.com/gh/Chekote/noun-store.svg?style=shield)](https://circleci.com/gh/Chekote/noun-store)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Chekote/noun-store/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Chekote/noun-store/?branch=master)
+[![Packagist Latest Stable Version](https://img.shields.io/packagist/v/chekote/noun-store.svg)](https://packagist.org/packages/chekote/noun-store)
+[![Packagist Latest Unstable Version](https://img.shields.io/packagist/vpre/chekote/noun-store.svg)](https://packagist.org/packages/chekote/noun-store)
+[![Packagist Total Downloads](https://img.shields.io/packagist/dt/chekote/noun-store.svg)](https://packagist.org/packages/chekote/noun-store)
+[![CircleCI](https://img.shields.io/circleci/project/github/Chekote/noun-store/master.svg)](https://circleci.com/gh/Chekote/noun-store)
+[![Scrutinizer Code Coverage](https://img.shields.io/scrutinizer/coverage/g/chekote/noun-store/master.svg)](https://scrutinizer-ci.com/g/Chekote/noun-store/?branch=master)
+[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/chekote/noun-store/master.svg)](https://scrutinizer-ci.com/g/Chekote/noun-store/?branch=master)
 [![StyleCI](https://styleci.io/repos/63828286/shield?style=plastic)](https://styleci.io/repos/63828286)
 
 # noun-store
