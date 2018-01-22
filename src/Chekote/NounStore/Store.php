@@ -169,7 +169,7 @@ class Store
      * @example buildKey("Item", 2): "3rd Item"
      *
      * @param  string                   $key   The key to check.
-     * @param  int                      $index The index (zero indexed) value for the key. If not specified, the method
+     * @param  int|null                 $index The index (zero indexed) value for the key. If not specified, the method
      *                                         will not add an nth notation to the key.
      * @throws InvalidArgumentException if $key is not a string.
      * @throws InvalidArgumentException if $index is not an int.
