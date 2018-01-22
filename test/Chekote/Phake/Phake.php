@@ -89,7 +89,7 @@ abstract class Phake extends BasePhake
      * mocked method in the way that a partial mock would.
      *
      * @param  string      $className the name of the class to mock.
-     * @param  array       ...$args   arguments for the classes constructor.
+     * @param  mixed       ...$args   arguments for the classes constructor.
      * @return Phake_IMock the mocked class instance.
      */
     public static function strictMockWithConstructor(string $className, ...$args)
