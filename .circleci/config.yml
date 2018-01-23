@@ -46,5 +46,9 @@ jobs:
             chmod 700 ./bin/ocular.phar
 
       - run:
-          name: Upload code coverage
+          name: Upload code coverage to Codecov
+          command: bash <(curl -s https://codecov.io/bash)
+
+      - run:
+          name: Upload code coverage to scrutinizer
           command: ./bin/ocular.phar code-coverage:upload --access-token=${SCRUTINIZER_TOKEN} --format=php-clover coverage.clover
