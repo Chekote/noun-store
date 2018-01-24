@@ -18,15 +18,16 @@ class Assert
     /**
      * Assert constructor.
      *
-     * @param Store $store      the store to assert against.
-     * @param Key   $keyService the keyService to use for key parsing/building.
+     * @param Store    $store      the store to assert against.
+     * @param Key|null $keyService the keyService to use for key parsing/building. Will use the default Key service
+     *                             if not specified.
      *
      * @codeCoverageIgnore
      */
-    public function __construct(Store $store, Key $keyService)
+    public function __construct(Store $store, Key $keyService = null)
     {
         $this->store = $store;
-        $this->keyService = $keyService;
+        $this->keyService = $keyService ?: Key::getInstance();
     }
 
     /**
