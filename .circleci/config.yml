@@ -40,11 +40,5 @@ jobs:
           command: ./bin/phpunit --coverage-clover=coverage.clover
 
       - run:
-          name: Install Scrutinizer's Ocular
-          command: |
-            curl -L https://scrutinizer-ci.com/ocular.phar > ./bin/ocular.phar
-            chmod 700 ./bin/ocular.phar
-
-      - run:
-          name: Upload code coverage
-          command: ./bin/ocular.phar code-coverage:upload --access-token=${SCRUTINIZER_TOKEN} --format=php-clover coverage.clover
+          name: Upload code coverage to Codecov
+          command: bash <(curl -s https://codecov.io/bash)
