@@ -29,8 +29,7 @@ class KeyValueIsTest extends AssertTest
         /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::expect($this->assert, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn(null);
-            Phake::expect($this->store, 1)->get($parsedKey, $parsedIndex)->thenReturn($value);
+            Phake::expect($this->assert, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn($value);
         }
 
         $this->assert->keyValueIs($key, $value, $index);
@@ -87,8 +86,7 @@ class KeyValueIsTest extends AssertTest
         /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::expect($this->assert, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn(null);
-            Phake::expect($this->store, 1)->get($parsedKey, $parsedIndex)->thenReturn('Some Other Value');
+            Phake::expect($this->assert, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn('Some Other Value');
             Phake::expect($this->key, 1)->build($parsedKey, $parsedIndex)->thenReturn($key);
         }
 
@@ -109,8 +107,7 @@ class KeyValueIsTest extends AssertTest
         /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::expect($this->assert, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn(null);
-            Phake::expect($this->store, 1)->get($parsedKey, $parsedIndex)->thenReturn($value);
+            Phake::expect($this->assert, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn($value);
         }
 
         $this->assert->keyValueIs($key, $value, $index);
