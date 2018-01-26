@@ -93,9 +93,7 @@ class Assert
     {
         list($key, $index) = $this->keyService->parse($key, $index);
 
-        $this->keyExists($key, $index);
-
-        if ($this->store->get($key, $index) != $value) {
+        if ($this->keyExists($key, $index) != $value) {
             throw new RuntimeException(
                 "Entry '" . $this->keyService->build($key, $index) . "' does not match '" . print_r($value, true) . "'"
             );
