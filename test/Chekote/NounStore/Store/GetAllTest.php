@@ -1,12 +1,21 @@
 <?php namespace Chekote\NounStore\Store;
 
+use Chekote\Phake\Phake;
 use OutOfBoundsException;
 
 /**
- * @covers Store::getAll()
+ * @covers \Chekote\NounStore\Store::getAll()
  */
 class GetAllTest extends StoreTest
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        /* @noinspection PhpUndefinedMethodInspection */
+        Phake::when($this->store)->getAll(Phake::anyParameters())->thenCallParent();
+    }
+
     /**
      * Tests that Store::getAll throws exception when the specified $key does not exist.
      */

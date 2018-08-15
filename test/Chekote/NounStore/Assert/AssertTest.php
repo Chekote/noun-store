@@ -1,23 +1,22 @@
-<?php namespace Chekote\NounStore\Store;
+<?php namespace Chekote\NounStore\Assert;
 
+use Chekote\NounStore\Assert;
 use Chekote\NounStore\Key;
 use Chekote\NounStore\Store;
 use Chekote\NounStore\TestCase;
 use Chekote\Phake\Phake;
+use Phake_IMock;
 
-abstract class StoreTest extends TestCase
+abstract class AssertTest extends TestCase
 {
-    /** @var Key|\Phake_IMock */
-    protected $key;
+    /** @var Assert|Phake_IMock */
+    protected $assert;
 
-    /** @var Store|\Phake_IMock */
+    /** @var Store|Phake_IMock */
     protected $store;
 
-    const KEY = 'Some Key';
-    const FIRST_VALUE = 'The First Value';
-    const SECOND_VALUE = 'The Second Value';
-
-    const MOST_RECENT_VALUE = self::SECOND_VALUE;
+    /** @var Key|Phake_IMock */
+    protected $key;
 
     /**
      * Sets up the environment before each test.
@@ -26,9 +25,7 @@ abstract class StoreTest extends TestCase
     {
         $this->key = Phake::strictMock(Key::class);
         $this->store = Phake::strictMockWithConstructor(Store::class, $this->key);
-
-        /* @noinspection PhpUndefinedFieldInspection */
-        Phake::makeVisible($this->store)->nouns = [self::KEY => [self::FIRST_VALUE, self::SECOND_VALUE]];
+        $this->assert = Phake::strictMockWithConstructor(Assert::class, $this->store, $this->key);
     }
 
     /**
@@ -36,9 +33,8 @@ abstract class StoreTest extends TestCase
      */
     public function tearDown()
     {
+        $this->assert = null;
         $this->key = null;
         $this->store = null;
-
-        Phake::verifyExpectations();
     }
 }

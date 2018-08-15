@@ -1,35 +1,37 @@
-<?php namespace Chekote\NounStore\Store;
+<?php namespace Chekote\NounStore\Assert;
 
 use Chekote\Phake\Phake;
 use InvalidArgumentException;
+use OutOfBoundsException;
 
 /**
- * @covers \Chekote\NounStore\Store::get()
+ * @covers \Chekote\NounStore\Assert::keyExists()
  */
-class GetTest extends StoreTest
+class KeyExistsTest extends AssertTest
 {
     public function setUp()
     {
         parent::setUp();
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::when($this->store)->get(Phake::anyParameters())->thenCallParent();
+        Phake::when($this->assert)->keyExists(Phake::anyParameters())->thenCallParent();
     }
 
     public function testKeyIsParsedAndParsedValuesAreUsed()
     {
-        $key = '2nd ' . StoreTest::KEY;
+        $key = '10th Thing';
         $index = null;
-        $parsedKey = StoreTest::KEY;
-        $parsedIndex = 1;
+        $parsedKey = 'Thing';
+        $parsedIndex = 9;
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
             Phake::expect($this->store, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
+            Phake::expect($this->store, 1)->get($parsedKey, $parsedIndex)->thenReturn('something');
         }
 
-        $this->assertEquals(StoreTest::SECOND_VALUE, $this->store->get($key, $index));
+        $this->assert->keyExists($key, $index);
     }
 
     public function testInvalidArgumentExceptionBubblesUpFromParse()
@@ -46,54 +48,46 @@ class GetTest extends StoreTest
         $this->expectException(get_class($exception));
         $this->expectExceptionMessage($exception->getMessage());
 
-        $this->store->get($key, $index);
+        $this->assert->keyExists($key, $index);
     }
 
-    public function testReturnsNullWhenKeyDoesNotExist()
+    public function testMissingKeyThrowsOutOfBoundsException()
     {
-        $key = StoreTest::KEY;
-        $index = 2;
-        $parsedKey = $key;
-        $parsedIndex = $index;
+        $key = '10th Thing';
+        $index = null;
+        $parsedKey = 'Thing';
+        $parsedIndex = 9;
+
+        $exception = new OutOfBoundsException("Entry '$key' was not found in the store.");
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
             Phake::expect($this->store, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn(false);
+            Phake::expect($this->key, 1)->build($parsedKey, $parsedIndex)->thenReturn($key);
         }
 
-        $this->assertNull($this->store->get($key, $index));
+        $this->expectException(get_class($exception));
+        $this->expectExceptionMessage($exception->getMessage());
+
+        $this->assert->keyExists($key, $index);
     }
 
-    public function testLastItemIsReturnedWhenParsedIndexIsNull()
+    public function testStoredValueIsReturned()
     {
-        $key = StoreTest::KEY;
+        $key = '10th Thing';
         $index = null;
-        $parsedKey = $key;
-        $parsedIndex = $index;
+        $parsedKey = 'Thing';
+        $parsedIndex = 9;
+        $value = 'Some Value';
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
             Phake::expect($this->store, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
+            Phake::expect($this->store, 1)->get($parsedKey, $parsedIndex)->thenReturn($value);
         }
 
-        $this->assertEquals(StoreTest::SECOND_VALUE, $this->store->get($key, $index));
-    }
-
-    public function testIndexItemIsReturnedWhenParsedIndexIsNotNull()
-    {
-        $key = '1st ' . StoreTest::KEY;
-        $index = null;
-        $parsedKey = StoreTest::KEY;
-        $parsedIndex = 0;
-
-        /* @noinspection PhpUndefinedMethodInspection */
-        {
-            Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::expect($this->store, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
-        }
-
-        $this->assertEquals(StoreTest::FIRST_VALUE, $this->store->get($key, $index));
+        $this->assertEquals($value, $this->assert->keyExists($key, $index));
     }
 }
