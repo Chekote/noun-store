@@ -23,7 +23,7 @@ class ProcessMatchesTest extends KeyTest
 
     public function successDataProvider() {
         return [
-        //  index, matches,                          resolvedIndex, expectedNth, expectedKey, expectedRelation
+        //  index, matches,                          resolvedIndex, expectedNth, expectedKey, expectedProperty
             [null, self::MATCHES_NO_NTH,                      null,        null, 'thing',     null     ],
             [   1, self::MATCHES_NO_NTH,                         1,        null, 'thing',     null     ],
             [null, self::MATCHES_NO_NTH_RELATIONSHIP,         null,        null, 'thing',     'address'],
@@ -42,15 +42,15 @@ class ProcessMatchesTest extends KeyTest
      * @param int|null    $resolvedIndex    the index that mocked resolveIndex() should return.
      * @param string      $expectedKey      the expected key to be returned from the method.
      * @param int|null    $expectedNth      the nth expected to be pulled from the $matches array.
-     * @param string|null $expectedRelation the expected relationship to be returned from the method.
+     * @param string|null $expectedProperty the expected property to be returned from the method.
      */
-    public function testSuccess($index, array $matches, $resolvedIndex, $expectedNth, $expectedKey, $expectedRelation) {
+    public function testSuccess($index, array $matches, $resolvedIndex, $expectedNth, $expectedKey, $expectedProperty) {
         /* @noinspection PhpUndefinedMethodInspection */
         Phake::expect($this->key, 1)->resolveIndex($index, $expectedNth)->thenReturn($resolvedIndex);
 
         /* @noinspection PhpUndefinedMethodInspection */
         $this->assertEquals(
-            [$expectedKey, $resolvedIndex, $expectedRelation],
+            [$expectedKey, $resolvedIndex, $expectedProperty],
             Phake::makeVisible($this->key)->processMatches($index, $matches)
         );
     }

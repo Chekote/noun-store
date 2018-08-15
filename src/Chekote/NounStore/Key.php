@@ -29,7 +29,7 @@ class Key
 
     const REGEX_GROUP_KEY_NTH = 2;
     const REGEX_GROUP_KEY = 3;
-    const REGEX_GROUP_RELATIONSHIP = 5;
+    const REGEX_GROUP_PROPERTY = 5;
 
     /**
      * Builds a key from it's separate key and index values.
@@ -87,8 +87,8 @@ class Key
      * @param  int                      $index [optional] the index to return if the key does not contain one.
      * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
      *                                        that does not match the index.
-     * @return array                    a tuple, the 1st being the key with the nth and relationship removed, the 2nd
-     *                                        being the index, and the third being the relation (or null if no relation
+     * @return array                    a tuple, the 1st being the key with the nth and property removed, the 2nd
+     *                                        being the index, and the third being the property (or null if no property
      *                                        was found).
      */
     public function parse($key, $index = null)
@@ -109,8 +109,8 @@ class Key
      * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
      *                                        that does not match the index.
      * @throws InvalidArgumentException if nth is not null and is less than 1
-     * @return array  a tuple, the 1st being the key with the nth and relationship removed, the 2nd being the index,
-     *                and the third being the relation (or null if no relation was found).
+     * @return array  a tuple, the 1st being the key with the nth and property removed, the 2nd being the index,
+     *                and the third being the property (or null if no property was found).
      */
     protected function processMatches($index, array $matches) {
         // @todo remove ternary once PREG_UNMATCHED_AS_NULL is used to generate $matches
@@ -118,12 +118,12 @@ class Key
         $key = $matches[self::REGEX_GROUP_KEY];
 
         // @todo use Null coalescing operator when upgrading to PHP 7
-        $relation = null;
-        if (isset($matches[self::REGEX_GROUP_RELATIONSHIP])) {
-            $relation = $matches[self::REGEX_GROUP_RELATIONSHIP] ?: null;
+        $property = null;
+        if (isset($matches[self::REGEX_GROUP_PROPERTY])) {
+            $property = $matches[self::REGEX_GROUP_PROPERTY] ?: null;
         }
 
-        return [$key, $index, $relation];
+        return [$key, $index, $property];
     }
 
     /**
