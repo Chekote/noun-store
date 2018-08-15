@@ -24,6 +24,13 @@ class Key
         9 => self::ORDINAL_TH,
     ];
 
+    const REGEX_NTH = '([1-9][0-9]*)(?:st|nd|rd|th)';
+    const REGEX_KEY = '/^(' . self::REGEX_NTH . " )?([^']+)('s ([^.]+))?$/";
+
+    const REGEX_GROUP_KEY_NTH = 2;
+    const REGEX_GROUP_KEY = 3;
+    const REGEX_GROUP_PROPERTY = 5;
+
     /**
      * Builds a key from it's separate key and index values.
      *
@@ -69,33 +76,55 @@ class Key
     /**
      * Parses a key into the separate key and index value.
      *
-     * @example parseKey("Item"): ["Item", null]
-     * @example parseKey("Item", 1): ["Item", 1]
-     * @example parseKey("1st Item"): ["Item", 0]
-     * @example parseKey("2nd Item"): ["Item", 1]
-     * @example parseKey("3rd Item"): ["Item", 2]
+     * @example parseKey("Item"): ["Item", null, null]
+     * @example parseKey("Item", 1): ["Item", 1, null]
+     * @example parseKey("1st Item"): ["Item", 0, null]
+     * @example parseKey("2nd Item"): ["Item", 1, null]
+     * @example parseKey("3rd Item"): ["Item", 2, null]
+     * @example parseKey("3rd Item's price"): ["Item", 2, "price"]
      *
      * @param  string                   $key   the key to parse.
      * @param  int                      $index [optional] the index to return if the key does not contain one.
      * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
      *                                        that does not match the index.
-     * @return array                    a tuple, the 1st being the key with the nth removed, and the 2nd being the
-     *                                        index.
+     * @return array                    a tuple, the 1st being the key with the nth and property removed, the 2nd
+     *                                        being the index, and the third being the property (or null if no property
+     *                                        was found).
      */
     public function parse($key, $index = null)
     {
-        if (preg_match('/^([1-9][0-9]*)(?:st|nd|rd|th) (.+)$/', $key, $matches)) {
-            if ($index !== null && $index != $matches[1] - 1) {
-                throw new InvalidArgumentException(
-                    "$index was provided for index param when key '$key' contains an nth value, but they do not match"
-                );
-            }
-
-            $index = $matches[1] - 1;
-            $key = $matches[2];
+        // @todo use PREG_UNMATCHED_AS_NULL when upgrading to PHP 7.2
+        if (!preg_match(self::REGEX_KEY, $key, $matches)) {
+            throw new InvalidArgumentException('Key is not valid. Must match pattern ' . self::REGEX_KEY);
         }
 
-        return [$key, $index];
+        return $this->processMatches($index, $matches);
+    }
+
+    /**
+     * Process the matches resulting from parsing a key via regex.
+     *
+     * @param  string                   $index   the index provided along with the original key.
+     * @param  array                    $matches the matches resulting from parsing the key.
+     * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
+     *                                          that does not match the index.
+     * @throws InvalidArgumentException if nth is not null and is less than 1
+     * @return array                    a tuple, the 1st being the key with the nth and property removed, the 2nd being the index,
+     *                                          and the third being the property (or null if no property was found).
+     */
+    protected function processMatches($index, array $matches)
+    {
+        // @todo remove ternary once PREG_UNMATCHED_AS_NULL is used to generate $matches
+        $index = $this->resolveIndex($index, $matches[self::REGEX_GROUP_KEY_NTH] ?: null);
+        $key = $matches[self::REGEX_GROUP_KEY];
+
+        // @todo use Null coalescing operator when upgrading to PHP 7
+        $property = null;
+        if (isset($matches[self::REGEX_GROUP_PROPERTY])) {
+            $property = $matches[self::REGEX_GROUP_PROPERTY] ?: null;
+        }
+
+        return [$key, $index, $property];
     }
 
     /**
