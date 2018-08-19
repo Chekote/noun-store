@@ -98,19 +98,16 @@ class Store
     /**
      * Asserts that the key's value contains the specified string.
      *
-     * @param  string                   $key   The key to check. @see self::get() for formatting options.
+     * @see    Key::build()
+     * @see    Key::parse()
+     * @param  string                   $key   The key to check.
      * @param  string                   $value The value expected to be contained within the key's value.
-     * @param  int                      $index [optional] The index of the key entry to retrieve. If not specified, the
-     *                                         method will check the most recent value stored under the key.
-     * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
-     *                                        that does not match the index.
+     * @throws InvalidArgumentException if the key syntax is invalid.
      * @return bool                     True if the key's value contains the specified string, false if not.
      */
-    public function keyValueContains($key, $value, $index = null)
+    public function keyValueContains($key, $value)
     {
-        list($key, $index) = $this->keyService->parse($key, $index);
-
-        $actual = $this->get($key, $index);
+        $actual = $this->get($key);
 
         return is_string($actual) && strpos($actual, $value) !== false;
     }
