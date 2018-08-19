@@ -34,43 +34,31 @@ class Store
      * Retrieves a value for the specified key.
      *
      * Each key is actually a collection. If you do not specify which item in the collection you want,
-     * the method will return the most recent entry. You can specify the entry you want by either
-     * using the plain english 1st, 2nd, 3rd etc in the $key param, or by specifying 0, 1, 2 etc in
-     * the $index param. For example:
+     * the method will return the most recent entry. You can optionally specify the entry you want by
+     * using the plain english 1st, 2nd, 3rd etc in the $key param. For example:
      *
      * Retrieve the most recent entry "Thing" collection:
      *   retrieve("Thing")
      *
      * Retrieve the 1st entry in the "Thing" collection:
      *   retrieve("1st Thing")
-     *   retrieve("Thing", 0)
      *
      * Retrieve the 3rd entry in the "Thing" collection:
      *   retrieve("3rd Thing")
-     *   retrieve("Thing", 2)
      *
-     * Please note: The nth value in the string key is indexed from 1. In that "1st" is the first item stored.
-     * The index parameter is indexed from 0. In that 0 is the first item stored.
-     *
-     * Please Note: If you specify both an $index param and an nth in the $key, they must both reference the same index.
-     * If they do not, the method will throw an InvalidArgumentException.
-     *
-     * retrieve("1st Thing", 1);
-     *
-     * @param  string                   $key   The key to retrieve the value for. Can be prefixed with an nth descriptor.
-     * @param  int                      $index [optional] The index of the key entry to retrieve. If not specified, the
-     *                                         method will return the most recent value stored under the key.
-     * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
-     *                                        that does not match the index.
+     * @see    Key::build()
+     * @see    Key::parse()
+     * @param  string                   $key The key to retrieve the value for. Can be prefixed with an nth descriptor.
+     * @throws InvalidArgumentException if the key syntax is invalid.
      * @return mixed                    The value, or null if no value exists for the specified key/index combination.
      */
-    public function get($key, $index = null)
+    public function get($key)
     {
-        list($key, $index) = $this->keyService->parse($key, $index);
-
-        if (!$this->keyExists($key, $index)) {
-            return;
+        if (!$this->keyExists($key)) {
+            return null;
         }
+
+        list($key, $index) = $this->keyService->parse($key);
 
         return $index !== null ? $this->nouns[$key][$index] : end($this->nouns[$key]);
     }

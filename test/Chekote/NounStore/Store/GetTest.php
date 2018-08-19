@@ -19,81 +19,88 @@ class GetTest extends StoreTest
     public function testKeyIsParsedAndParsedValuesAreUsed()
     {
         $key = '2nd ' . StoreTest::KEY;
-        $index = null;
         $parsedKey = StoreTest::KEY;
         $parsedIndex = 1;
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
-            Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::expect($this->store, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
+            Phake::expect($this->store, 1)->keyExists($key)->thenReturn(true);
+            Phake::expect($this->key, 1)->parse($key)->thenReturn([$parsedKey, $parsedIndex]);
         }
 
-        $this->assertEquals(StoreTest::SECOND_VALUE, $this->store->get($key, $index));
+        $this->assertEquals(StoreTest::SECOND_VALUE, $this->store->get($key));
     }
 
-    public function testInvalidArgumentExceptionBubblesUpFromParse()
+    public function testInvalidArgumentExceptionBubblesUpFromKeyExists()
     {
-        $key = '10th Thing';
-        $index = 5;
-        $exception = new InvalidArgumentException(
-            "$index was provided for index param when key '$key' contains an nth value, but they do not match"
-        );
+        $key = "10th Thing's thingy";
+        $exception = new InvalidArgumentException('Key syntax is invalid');
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::expect($this->key, 1)->parse($key, $index)->thenThrow($exception);
+        Phake::expect($this->store, 1)->keyExists($key)->thenThrow($exception);
 
         $this->expectException(get_class($exception));
         $this->expectExceptionMessage($exception->getMessage());
 
-        $this->store->get($key, $index);
+        $this->store->get($key);
+    }
+
+    // If the Key service is behaving properly, this should never actually be possible. But we test the behavior
+    // here to ensure that our method behaves correctly should the impossible ever occur.
+    public function testInvalidArgumentExceptionBubblesUpFromParse()
+    {
+        $key = "10th Thing's thingy";
+        $exception = new InvalidArgumentException('Key syntax is invalid');
+
+        /* @noinspection PhpUndefinedMethodInspection */
+        {
+            Phake::expect($this->store, 1)->keyExists($key)->thenReturn(true);
+            Phake::expect($this->key, 1)->parse($key)->thenThrow($exception);
+        }
+
+        $this->expectException(get_class($exception));
+        $this->expectExceptionMessage($exception->getMessage());
+
+        $this->store->get($key);
     }
 
     public function testReturnsNullWhenKeyDoesNotExist()
     {
-        $key = StoreTest::KEY;
-        $index = 2;
-        $parsedKey = $key;
-        $parsedIndex = $index;
+        $key = '3rd ' . StoreTest::KEY;
 
         /* @noinspection PhpUndefinedMethodInspection */
-        {
-            Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::expect($this->store, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn(false);
-        }
+        Phake::expect($this->store, 1)->keyExists($key)->thenReturn(false);
 
-        $this->assertNull($this->store->get($key, $index));
+        $this->assertNull($this->store->get($key));
     }
 
     public function testLastItemIsReturnedWhenParsedIndexIsNull()
     {
         $key = StoreTest::KEY;
-        $index = null;
         $parsedKey = $key;
-        $parsedIndex = $index;
+        $parsedIndex = null;
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
-            Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::expect($this->store, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
+            Phake::expect($this->store, 1)->keyExists($key)->thenReturn(true);
+            Phake::expect($this->key, 1)->parse($key)->thenReturn([$parsedKey, $parsedIndex]);
         }
 
-        $this->assertEquals(StoreTest::SECOND_VALUE, $this->store->get($key, $index));
+        $this->assertEquals(StoreTest::SECOND_VALUE, $this->store->get($key));
     }
 
     public function testIndexItemIsReturnedWhenParsedIndexIsNotNull()
     {
         $key = '1st ' . StoreTest::KEY;
-        $index = null;
         $parsedKey = StoreTest::KEY;
         $parsedIndex = 0;
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
-            Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$parsedKey, $parsedIndex]);
-            Phake::expect($this->store, 1)->keyExists($parsedKey, $parsedIndex)->thenReturn(true);
+            Phake::expect($this->store, 1)->keyExists($key)->thenReturn(true);
+            Phake::expect($this->key, 1)->parse($key)->thenReturn([$parsedKey, $parsedIndex]);
         }
 
-        $this->assertEquals(StoreTest::FIRST_VALUE, $this->store->get($key, $index));
+        $this->assertEquals(StoreTest::FIRST_VALUE, $this->store->get($key));
     }
 }
