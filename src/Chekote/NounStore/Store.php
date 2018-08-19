@@ -94,16 +94,15 @@ class Store
     /**
      * Determines if a value has been stored for the specified key.
      *
+     * @see    Key::build()
+     * @see    Key::parse()
      * @param  string                   $key   The key to check.
-     * @param  int                      $index [optional] The index of the key entry to check. If not specified, the
-     *                                         method will ensure that at least one item is stored for the key.
-     * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
-     *                                        that does not match the index.
+     * @throws InvalidArgumentException if the key syntax is invalid.
      * @return bool                     True if the a value has been stored, false if not.
      */
-    public function keyExists($key, $index = null)
+    public function keyExists($key)
     {
-        list($key, $index) = $this->keyService->parse($key, $index);
+        list($key, $index) = $this->keyService->parse($key);
 
         return $index !== null ? isset($this->nouns[$key][$index]) : isset($this->nouns[$key]);
     }
