@@ -70,30 +70,24 @@ class Key
      * Parses a key into the separate key and index value.
      *
      * @example parseKey("Item"): ["Item", null]
-     * @example parseKey("Item", 1): ["Item", 1]
      * @example parseKey("1st Item"): ["Item", 0]
      * @example parseKey("2nd Item"): ["Item", 1]
      * @example parseKey("3rd Item"): ["Item", 2]
      *
      * @param  string                   $key   the key to parse.
-     * @param  int                      $index [optional] the index to return if the key does not contain one.
-     * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
-     *                                        that does not match the index.
+     * @throws InvalidArgumentException if the key syntax is invalid.
      * @return array                    a tuple, the 1st being the key with the nth removed, and the 2nd being the
-     *                                        index.
+     *                                        index that the nth translates to, or null if no nth was specified.
      */
-    public function parse($key, $index = null)
+    public function parse($key)
     {
-        if (preg_match('/^([1-9][0-9]*)(?:st|nd|rd|th) (.+)$/', $key, $matches)) {
-            if ($index !== null && $index != $matches[1] - 1) {
-                throw new InvalidArgumentException(
-                    "$index was provided for index param when key '$key' contains an nth value, but they do not match"
-                );
-            }
-
-            $index = $matches[1] - 1;
-            $key = $matches[2];
+        if (!preg_match("/^(([1-9][0-9]*)(?:st|nd|rd|th) )?([^']+)$/", $key, $matches)) {
+            throw new InvalidArgumentException('Key syntax is invalid');
         }
+
+        // @todo use null coalescing operator when upgrading to PHP 7
+        $index = isset($matches[2]) && $matches[2] !== '' ? $matches[2] - 1 : null;
+        $key = $matches[3];
 
         return [$key, $index];
     }
