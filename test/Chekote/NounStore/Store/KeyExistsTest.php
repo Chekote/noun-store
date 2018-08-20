@@ -1,5 +1,6 @@
 <?php namespace Chekote\NounStore\Store;
 
+use Chekote\NounStore\Key\KeyTest;
 use Chekote\Phake\Phake;
 use InvalidArgumentException;
 
@@ -18,16 +19,15 @@ class KeyExistsTest extends StoreTest
 
     public function testInvalidArgumentExceptionBubblesUpFromParse()
     {
-        $key = "Thing's doodle flip";
         $exception = new InvalidArgumentException('Key syntax is invalid');
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::expect($this->key, 1)->parse($key)->thenThrow($exception);
+        Phake::expect($this->key, 1)->parse(KeyTest::INVALID_KEY)->thenThrow($exception);
 
         $this->expectException(get_class($exception));
         $this->expectExceptionMessage($exception->getMessage());
 
-        $this->store->keyExists($key);
+        $this->store->keyExists(KeyTest::INVALID_KEY);
     }
 
     public function returnDataProvider()

@@ -1,5 +1,6 @@
 <?php namespace Chekote\NounStore\Assert;
 
+use Chekote\NounStore\Key\KeyTest;
 use Chekote\Phake\Phake;
 use InvalidArgumentException;
 use OutOfBoundsException;
@@ -20,37 +21,35 @@ class KeyValueContainsTest extends AssertTest
 
     public function testInvalidArgumentExceptionBubblesUpFromKeyExists()
     {
-        $key = '10th Thing';
         $value = 'Some Value';
         $exception = new InvalidArgumentException('Key syntax is invalid');
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::expect($this->assert, 1)->keyExists($key)->thenThrow($exception);
+        Phake::expect($this->assert, 1)->keyExists(KeyTest::INVALID_KEY)->thenThrow($exception);
 
         $this->expectException(get_class($exception));
         $this->expectExceptionMessage($exception->getMessage());
 
-        $this->assert->keyValueContains($key, $value);
+        $this->assert->keyValueContains(KeyTest::INVALID_KEY, $value);
     }
 
     // An invalid key should not get past keyExists(), so this should never actually be possible. But we test
     // the behavior here to ensure that our method behaves correctly should the impossible ever occur.
     public function testInvalidArgumentExceptionBubblesUpFromKeyValueContains()
     {
-        $key = '10th Thing';
         $value = 'Some Value';
         $exception = new InvalidArgumentException('Key syntax is invalid');
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
-            Phake::expect($this->assert, 1)->keyExists($key)->thenReturn(true);
-            Phake::expect($this->store, 1)->keyValueContains($key, $value)->thenThrow($exception);
+            Phake::expect($this->assert, 1)->keyExists(KeyTest::INVALID_KEY)->thenReturn(true);
+            Phake::expect($this->store, 1)->keyValueContains(KeyTest::INVALID_KEY, $value)->thenThrow($exception);
         }
 
         $this->expectException(get_class($exception));
         $this->expectExceptionMessage($exception->getMessage());
 
-        $this->assert->keyValueContains($key, $value);
+        $this->assert->keyValueContains(KeyTest::INVALID_KEY, $value);
     }
 
     public function testMissingKeyThrowsOutOfBoundsException()

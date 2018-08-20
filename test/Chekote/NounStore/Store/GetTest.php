@@ -1,5 +1,6 @@
 <?php namespace Chekote\NounStore\Store;
 
+use Chekote\NounStore\Key\KeyTest;
 use Chekote\Phake\Phake;
 use InvalidArgumentException;
 
@@ -33,35 +34,33 @@ class GetTest extends StoreTest
 
     public function testInvalidArgumentExceptionBubblesUpFromKeyExists()
     {
-        $key = "10th Thing's thingy";
         $exception = new InvalidArgumentException('Key syntax is invalid');
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::expect($this->store, 1)->keyExists($key)->thenThrow($exception);
+        Phake::expect($this->store, 1)->keyExists(KeyTest::INVALID_KEY)->thenThrow($exception);
 
         $this->expectException(get_class($exception));
         $this->expectExceptionMessage($exception->getMessage());
 
-        $this->store->get($key);
+        $this->store->get(KeyTest::INVALID_KEY);
     }
 
     // If the Key service is behaving properly, this should never actually be possible. But we test the behavior
     // here to ensure that our method behaves correctly should the impossible ever occur.
     public function testInvalidArgumentExceptionBubblesUpFromParse()
     {
-        $key = "10th Thing's thingy";
         $exception = new InvalidArgumentException('Key syntax is invalid');
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
-            Phake::expect($this->store, 1)->keyExists($key)->thenReturn(true);
-            Phake::expect($this->key, 1)->parse($key)->thenThrow($exception);
+            Phake::expect($this->store, 1)->keyExists(KeyTest::INVALID_KEY)->thenReturn(true);
+            Phake::expect($this->key, 1)->parse(KeyTest::INVALID_KEY)->thenThrow($exception);
         }
 
         $this->expectException(get_class($exception));
         $this->expectExceptionMessage($exception->getMessage());
 
-        $this->store->get($key);
+        $this->store->get(KeyTest::INVALID_KEY);
     }
 
     public function testReturnsNullWhenKeyDoesNotExist()
