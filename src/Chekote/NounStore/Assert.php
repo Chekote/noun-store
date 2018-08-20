@@ -73,22 +73,18 @@ class Assert
     /**
      * Asserts that the key's value matches the specified value.
      *
-     * @param  string                   $key   The key to check. @see self::get() for formatting options.
+     * @see    Key::build()
+     * @see    Key::parse()
+     * @param  string                   $key   The key to check. Supports nth notation.
      * @param  mixed                    $value The expected value.
-     * @param  int                      $index [optional] The index of the key entry to retrieve. If not specified, the
-     *                                         method will check the most recent value stored under the key.
      * @throws OutOfBoundsException     If a value has not been stored for the specified key.
      * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
      *                                        that does not match the index.
      */
-    public function keyValueIs($key, $value, $index = null)
+    public function keyValueIs($key, $value)
     {
-        list($key, $index) = $this->keyService->parse($key, $index);
-
-        if ($this->keyExists($key, $index) != $value) {
-            throw new RuntimeException(
-                "Entry '" . $this->keyService->build($key, $index) . "' does not match '" . print_r($value, true) . "'"
-            );
+        if ($this->keyExists($key) != $value) {
+            throw new RuntimeException("Entry '$key' does not match '" . print_r($value, true) . "'");
         }
     }
 }
