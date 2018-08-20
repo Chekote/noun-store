@@ -64,7 +64,7 @@ class ParseTest extends KeyTest
      * Tests that calling Key::parse with an invalid key throws an exception.
      *
      * @dataProvider invalidKeyDataProvider
-     * @param string $key   the key to parse
+     * @param string $key the key to parse
      */
     public function testParseKeyThrowsExceptionIfKeyAndIndexMismatch($key)
     {

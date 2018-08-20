@@ -35,10 +35,10 @@ class Assert
      *
      * @see    Key::build()
      * @see    Key::parse()
-     * @param  string                   $key   The key to check. Supports nth notation.
+     * @param  string                   $key The key to check. Supports nth notation.
      * @throws OutOfBoundsException     if a value has not been stored for the specified key.
      * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
-     *                                        that does not match the index.
+     *                                      that does not match the index.
      * @return mixed                    The value.
      */
     public function keyExists($key)

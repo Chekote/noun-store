@@ -74,10 +74,10 @@ class Key
      * @example parseKey("2nd Item"): ["Item", 1]
      * @example parseKey("3rd Item"): ["Item", 2]
      *
-     * @param  string                   $key   the key to parse.
+     * @param  string                   $key the key to parse.
      * @throws InvalidArgumentException if the key syntax is invalid.
      * @return array                    a tuple, the 1st being the key with the nth removed, and the 2nd being the
-     *                                        index that the nth translates to, or null if no nth was specified.
+     *                                      index that the nth translates to, or null if no nth was specified.
      */
     public function parse($key)
     {

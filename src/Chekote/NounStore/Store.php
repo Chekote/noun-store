@@ -55,7 +55,7 @@ class Store
     public function get($key)
     {
         if (!$this->keyExists($key)) {
-            return null;
+            return;
         }
 
         list($key, $index) = $this->keyService->parse($key);
@@ -84,7 +84,7 @@ class Store
      *
      * @see    Key::build()
      * @see    Key::parse()
-     * @param  string                   $key   The key to check. Supports nth notation.
+     * @param  string                   $key The key to check. Supports nth notation.
      * @throws InvalidArgumentException if the key syntax is invalid.
      * @return bool                     True if the a value has been stored, false if not.
      */
