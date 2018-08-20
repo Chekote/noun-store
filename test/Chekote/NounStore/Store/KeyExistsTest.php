@@ -1,5 +1,6 @@
 <?php namespace Chekote\NounStore\Store;
 
+use Chekote\NounStore\Key\KeyTest;
 use Chekote\Phake\Phake;
 use InvalidArgumentException;
 
@@ -18,43 +19,36 @@ class KeyExistsTest extends StoreTest
 
     public function testInvalidArgumentExceptionBubblesUpFromParse()
     {
-        $key = '10th Thing';
-        $index = 5;
-        $exception = new InvalidArgumentException(
-            "$index was provided for index param when key '$key' contains an nth value, but they do not match"
-        );
+        $exception = new InvalidArgumentException('Key syntax is invalid');
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::expect($this->key, 1)->parse($key, $index)->thenThrow($exception);
+        Phake::expect($this->key, 1)->parse(KeyTest::INVALID_KEY)->thenThrow($exception);
 
         $this->expectException(get_class($exception));
         $this->expectExceptionMessage($exception->getMessage());
 
-        $this->store->keyExists($key, $index);
+        $this->store->keyExists(KeyTest::INVALID_KEY);
     }
 
     public function returnDataProvider()
     {
         return [
-        //    key,            index, expectedResult
-            [ 'No such key',   null, false ], // missing key
-            [ StoreTest::KEY,     2, false ], // missing index
-            [ StoreTest::KEY,  null, true  ], // present key
-            [ StoreTest::KEY,     1, true  ], // present index
+        //    key,            expectedResult
+            [ 'No such key',  false ], // missing key
+            [ StoreTest::KEY, true  ], // present key
         ];
     }
 
     /**
      * @dataProvider returnDataProvider
      * @param string $key            the key to pass to keyExists, and which will be returned from the mocked parse()
-     * @param int    $index          the index to pass to KeyExists, and which will be returned from the mocked parse()
      * @param bool   $expectedResult the expected results from keyExists()
      */
-    public function testReturn($key, $index, $expectedResult)
+    public function testReturn($key, $expectedResult)
     {
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$key, $index]);
+        Phake::expect($this->key, 1)->parse($key)->thenReturn([$key, null]);
 
-        $this->assertEquals($expectedResult, $this->store->keyExists($key, $index));
+        $this->assertEquals($expectedResult, $this->store->keyExists($key));
     }
 }

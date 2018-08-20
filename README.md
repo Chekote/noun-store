@@ -71,20 +71,12 @@ $store->get('best friend');
 or
 
 $store->get('2nd best friend');
-
-or
-
-$store->get('best friend', 1);
 ```
 
 ### Retrieve the old thing
 
 ```php
 $store->get('1st best friend');
-
-or
-
-$store->get('best friend', 0);
 ```
 
 ### Empty the store

@@ -7,6 +7,8 @@ use Phake_IMock;
 
 abstract class KeyTest extends TestCase
 {
+    const INVALID_KEY = "It's invalid because of the apostrophe";
+
     /** @var Key|Phake_IMock */
     protected $key;
 
