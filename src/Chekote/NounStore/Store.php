@@ -115,6 +115,8 @@ class Store
     /**
      * Stores a value for the specified key.
      *
+     * The specified value is added to the top of the "stack" for the specified key.
+     *
      * @param string $key   The key to store the value under. Does not support nth notation.
      * @param mixed  $value The value to store.
      */
