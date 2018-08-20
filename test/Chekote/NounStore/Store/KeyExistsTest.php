@@ -50,7 +50,7 @@ class KeyExistsTest extends StoreTest
      * @param int    $index          the index to pass to KeyExists, and which will be returned from the mocked parse()
      * @param bool   $expectedResult the expected results from keyExists()
      */
-    public function testReturn(string $key, ?int $index, bool $expectedResult)
+    public function testReturn($key, $index, $expectedResult)
     {
         /* @noinspection PhpUndefinedMethodInspection */
         Phake::expect($this->key, 1)->parse($key, $index)->thenReturn([$key, $index]);
