@@ -48,7 +48,7 @@ class Store
      *
      * @see    Key::build()
      * @see    Key::parse()
-     * @param  string                   $key The key to retrieve the value for. Can be prefixed with an nth descriptor.
+     * @param  string                   $key The key to retrieve the value for. Supports nth notation.
      * @throws InvalidArgumentException if the key syntax is invalid.
      * @return mixed                    The value, or null if no value exists for the specified key/index combination.
      */
@@ -66,7 +66,7 @@ class Store
     /**
      * Retrieves all values for the specified key.
      *
-     * @param  string               $key The key to retrieve the values for.
+     * @param  string               $key The key to retrieve the values for. Does not support nth notation.
      * @throws OutOfBoundsException if the specified $key does not exist in the store.
      * @return array                The values.
      */
@@ -84,7 +84,7 @@ class Store
      *
      * @see    Key::build()
      * @see    Key::parse()
-     * @param  string                   $key   The key to check.
+     * @param  string                   $key   The key to check. Supports nth notation.
      * @throws InvalidArgumentException if the key syntax is invalid.
      * @return bool                     True if the a value has been stored, false if not.
      */
@@ -115,7 +115,7 @@ class Store
     /**
      * Stores a value for the specified key.
      *
-     * @param string $key   The key to store the value under.
+     * @param string $key   The key to store the value under. Does not support nth notation.
      * @param mixed  $value The value to store.
      */
     public function set($key, $value)
