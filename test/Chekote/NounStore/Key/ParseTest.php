@@ -24,63 +24,53 @@ class ParseTest extends KeyTest
     public function successScenarioDataProvider()
     {
         return [
-        //   key           index   parsedKey,  parsedIndex
-            ['Thing',       null, 'Thing',            null], // no nth in key or index param
-            ['1st Thing',   null, 'Thing',               0], // 1st in key with no index param
-            ['1st Thing',      0, 'Thing',               0], // nth in key with matching index param
-            ['2nd Thing',   null, 'Thing',               1], // 2nd in key with no index param
-            ['3rd Thing',   null, 'Thing',               2], // 3rd in key with no index param
-            ['4th Thing',   null, 'Thing',               3], // 3th in key with no index param
-            ['478th Thing', null, 'Thing',             477], // high nth in key with no index param
-            ['Thing',          0, 'Thing',               0], // no nth in key with 0 index param
-            ['Thing',         49, 'Thing',              49], // no nth in key with high index param
+        //   key             parsedKey, parsedIndex
+            ['Thing',       'Thing',           null],
+            ['1st Thing',   'Thing',              0],
+            ['2nd Thing',   'Thing',              1],
+            ['3rd Thing',   'Thing',              2],
+            ['4th Thing',   'Thing',              3],
+            ['478th Thing', 'Thing',            477],
         ];
     }
 
     /**
-     * Tests that calling Key::parse with valid key and index combinations works correctly.
+     * Tests that calling Key::parse with valid key works correctly.
      *
      * @dataProvider successScenarioDataProvider
      * @param string $key         the key to parse
-     * @param int    $index       the index to pass along with the key
      * @param string $parsedKey   the expected resulting parsed key
      * @param int    $parsedIndex the expected resulting parsed index
      */
-    public function testSuccessScenario($key, $index, $parsedKey, $parsedIndex)
+    public function testSuccessScenario($key, $parsedKey, $parsedIndex)
     {
-        $this->assertEquals([$parsedKey, $parsedIndex], $this->key->parse($key, $index));
+        $this->assertEquals([$parsedKey, $parsedIndex], $this->key->parse($key));
     }
 
     /**
-     * Provides examples of mismatched key & index pairs.
+     * Provides examples of invalid keys.
      *
      * @return array
      */
-    public function mismatchedKeyAndIndexDataProvider()
+    public function invalidKeyDataProvider()
     {
         return [
-            ['1st Thing', 1],
-            ['1st Thing', 2],
-            ['4th Person', 0],
-            ['4th Person', 4],
-            ['4th Person', 10],
+            ["Thing's stuff"],
+            ["1st Thing's thingamajig"],
         ];
     }
 
     /**
-     * Tests that calling Key::parse with mismatched key and index param throws an exception.
+     * Tests that calling Key::parse with an invalid key throws an exception.
      *
-     * @dataProvider mismatchedKeyAndIndexDataProvider
-     * @param string $key   the key to parse
-     * @param string $index the mismatched index to pass along with the key
+     * @dataProvider invalidKeyDataProvider
+     * @param string $key the key to parse
      */
-    public function testParseKeyThrowsExceptionIfKeyAndIndexMismatch($key, $index)
+    public function testParseKeyThrowsExceptionIfKeyAndIndexMismatch($key)
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage(
-            "$index was provided for index param when key '$key' contains an nth value, but they do not match"
-        );
+        $this->expectExceptionMessage('Key syntax is invalid');
 
-        $this->key->parse($key, $index);
+        $this->key->parse($key);
     }
 }
