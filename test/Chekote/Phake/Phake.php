@@ -37,7 +37,7 @@ abstract class Phake extends BasePhake
      * @param  int         $count the expected call count.
      * @return Expectation the expectation.
      */
-    public static function expect(Phake_IMock $mock, int $count)
+    public static function expect(Phake_IMock $mock, $count)
     {
         $expectation = new Expectation($mock, $count);
         self::$expectations[] = $expectation;
@@ -75,7 +75,7 @@ abstract class Phake extends BasePhake
      * @param  string      $className the name of the class to mock.
      * @return Phake_IMock the mocked class instance.
      */
-    public static function strictMock(string $className)
+    public static function strictMock($className)
     {
         return self::mock($className, new Phake_Stubber_AnswerCollection(new UnMockedResponseExceptionAnswer()));
     }
@@ -92,7 +92,7 @@ abstract class Phake extends BasePhake
      * @param  mixed       ...$args   arguments for the classes constructor.
      * @return Phake_IMock the mocked class instance.
      */
-    public static function strictMockWithConstructor(string $className, ...$args)
+    public static function strictMockWithConstructor($className, ...$args)
     {
         return self::getPhake()->mock(
             $className,
