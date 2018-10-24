@@ -1,7 +1,6 @@
 <?php namespace Chekote\NounStore;
 
 use InvalidArgumentException;
-use OutOfBoundsException;
 
 class Store
 {
@@ -66,17 +65,12 @@ class Store
     /**
      * Retrieves all values for the specified key.
      *
-     * @param  string               $key The key to retrieve the values for. Does not support nth notation.
-     * @throws OutOfBoundsException if the specified $key does not exist in the store.
-     * @return array                The values.
+     * @param  string $key The key to retrieve the values for. Does not support nth notation.
+     * @return array  The values, or an empty array if no value exists for the specified key.
      */
     public function getAll($key)
     {
-        if (!isset($this->nouns[$key])) {
-            throw new OutOfBoundsException("'$key' does not exist in the store");
-        }
-
-        return $this->nouns[$key];
+        return isset($this->nouns[$key]) ? $this->nouns[$key] : [];
     }
 
     /**
