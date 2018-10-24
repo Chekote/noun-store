@@ -1,7 +1,6 @@
 <?php namespace Chekote\NounStore\Store;
 
 use Chekote\Phake\Phake;
-use OutOfBoundsException;
 
 /**
  * @covers \Chekote\NounStore\Store::getAll()
@@ -17,13 +16,11 @@ class GetAllTest extends StoreTest
     }
 
     /**
-     * Tests that Store::getAll throws exception when the specified $key does not exist.
+     * Tests that Store::getAll returns an empty array the specified $key does not exist.
      */
-    public function testGetAllThrowsExceptionWhenKeyDoesNotExist()
+    public function testGetAllReturnsEmptyArrayWhenKeyDoesNotExist()
     {
-        $this->expectException(OutOfBoundsException::class);
-
-        $this->assertEquals(null, $this->store->getAll('Thing'));
+        $this->assertEquals([], $this->store->getAll('Thing'));
     }
 
     /**
