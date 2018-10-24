@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: chekote/noun-store-php:2017-12-11
+      - image: chekote/noun-store-php:2018-08-20
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
