@@ -69,10 +69,10 @@ class Key
     /**
      * Parses a key into the separate key and index value.
      *
-     * @example parseKey("Item"): ["Item", null]
-     * @example parseKey("1st Item"): ["Item", 0]
-     * @example parseKey("2nd Item"): ["Item", 1]
-     * @example parseKey("3rd Item"): ["Item", 2]
+     * @example parse("Item"): ["Item", null]
+     * @example parse("1st Item"): ["Item", 0]
+     * @example parse("2nd Item"): ["Item", 1]
+     * @example parse("3rd Item"): ["Item", 2]
      *
      * @param  string                   $key the key to parse.
      * @throws InvalidArgumentException if the key syntax is invalid.
@@ -90,6 +90,22 @@ class Key
         $key = $matches[3];
 
         return [$key, $index];
+    }
+
+    /**
+     * Converts a key part of the form "foo's bar" into "foo" and "bar".
+     *
+     * @example parseNested("Item's foo"): ["Item", "foo"]
+     * @example parseNested("Item's foo's bar"): ["Item", "foo", "bar"]
+     *
+     * @param  string $key The key name to parse
+     * @return array  a tuple, the 1st being the key, and the 2nd being the array of child keys, or null
+     */
+    public function parseNested($key)
+    {
+        $key_parts = explode("'s ", $key);
+
+        return [array_shift($key_parts), $key_parts];
     }
 
     /**
