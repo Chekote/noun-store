@@ -73,7 +73,6 @@ class Store
         return $index
             ? $this->data_get($this->nouns[$base_key][$index - 1], $child_keys)
             : $this->data_get(end($this->nouns[$base_key]), $child_keys);
-
     }
 
     /**
