@@ -31,8 +31,8 @@ class GetOrdinalTest extends KeyTest
     public function failureScenariosDataProvider()
     {
         return [
-        //   nth  exception class                  exception message
-            [-1,  InvalidArgumentException::class, '$nth must be a positive number'],
+            //nth  exception class                  exception message
+            [  -1, InvalidArgumentException::class, '$nth must be a positive number'],
         ];
     }
 

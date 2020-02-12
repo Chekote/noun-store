@@ -31,13 +31,13 @@ class ResolveIndexTest extends KeyTest
     public function mismatchedIndexAndNthDataProvider()
     {
         return [
-        //   index, nth
-            [    1,   0],
-            [    1,   1],
-            [    1,   5],
-            [    4,   0],
-            [    4,   4],
-            [    4,  10],
+            // index, nth
+            [      1,   0],
+            [      1,   1],
+            [      1,   5],
+            [      4,   0],
+            [      4,   4],
+            [      4,  10],
         ];
     }
 
@@ -87,11 +87,11 @@ class ResolveIndexTest extends KeyTest
     public function validIndexAndNthDataProvider()
     {
         return [
-        //   index, nth
-            [    0,   1],
-            [   10,  11],
-            [  100, 101],
-            [ null,  50],
+            // index, nth
+            [      0,   1],
+            [     10,  11],
+            [    100, 101],
+            [   null,  50],
         ];
     }
 

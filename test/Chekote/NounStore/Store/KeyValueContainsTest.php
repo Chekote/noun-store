@@ -33,7 +33,7 @@ class KeyValueContainsTest extends StoreTest
     public function returnDataProvider()
     {
         return [
-        //    storedValue,       checkedValue, expectedResult
+            // storedValue,      checkedValue, expectedResult
             [ 'This is a value', 'is a',       true           ],
             [ 'This is a value', 'words',      false          ],
         ];

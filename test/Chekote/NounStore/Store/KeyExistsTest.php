@@ -33,7 +33,7 @@ class KeyExistsTest extends StoreTest
     public function returnDataProvider()
     {
         return [
-        //    key,            expectedResult
+            // key,           expectedResult
             [ 'No such key',  false ], // missing key
             [ StoreTest::KEY, true  ], // present key
         ];
