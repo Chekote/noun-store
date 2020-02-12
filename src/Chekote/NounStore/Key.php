@@ -24,6 +24,8 @@ class Key
         9 => self::ORDINAL_TH,
     ];
 
+    const POSSESSION = "'s ";
+
     /**
      * Builds a key from it's separate key and index values.
      *
@@ -125,5 +127,16 @@ class Key
         }
 
         return $decrementedNth;
+    }
+
+    /**
+     * Determines if the specified key is a possessive noun.
+     *
+     * @param  string $key
+     * @return bool   true if the key is possessive, false if not
+     */
+    protected function isPossessive($key)
+    {
+        return strpos($key, self::POSSESSION) !== false;
     }
 }
