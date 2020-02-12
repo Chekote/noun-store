@@ -24,7 +24,7 @@ class ParseTest extends KeyTest
     public function successScenarioDataProvider()
     {
         return [
-        //   key             parsedKey, parsedIndex
+            // key          parsedKey,  parsedIndex
             ['Thing',       'Thing',           null],
             ['1st Thing',   'Thing',              0],
             ['2nd Thing',   'Thing',              1],
