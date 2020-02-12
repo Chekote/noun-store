@@ -24,6 +24,8 @@ class Key
         9 => self::ORDINAL_TH,
     ];
 
+    const POSSESSION = "'s ";
+
     /**
      * Builds a key from it's separate key and index values.
      *
@@ -90,5 +92,16 @@ class Key
         $key = $matches[3];
 
         return [$key, $index];
+    }
+
+    /**
+     * Determines if the specified key is a possessive noun.
+     *
+     * @param  string $key
+     * @return bool   true if the key is possessive, false if not
+     */
+    protected function isPossessive($key)
+    {
+        return strpos($key, self::POSSESSION) !== false;
     }
 }
