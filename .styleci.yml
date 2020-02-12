@@ -3,6 +3,7 @@ preset: recommended
 disabled:
   - blank_line_after_opening_tag
   - concat_without_spaces
+  - no_unneeded_curly_braces
   - phpdoc_separation
   - post_increment
   - single_blank_line_before_namespace
