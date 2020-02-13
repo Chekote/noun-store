@@ -20,3 +20,8 @@ coding_style:
     spaces:
       around_operators:
         concatenation: true
+
+build_failure_conditions:
+  - 'elements.rating(< A).new.exists'             # No new classes/methods with a rating below A
+  - 'issues.new.exists'                           # No new issues
+  - 'project.metric("scrutinizer.quality", < 10)' # Code Quality Rating drops below 10
