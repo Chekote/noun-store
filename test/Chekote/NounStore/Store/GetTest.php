@@ -24,7 +24,7 @@ class GetTest extends StoreTest
         $parsedIndex = 1;
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::expect($this->key, 1)->parse($key)->thenReturn("$parsedKey.$parsedIndex");
+        Phake::expect($this->key, 1)->parseNoun($key)->thenReturn("$parsedKey.$parsedIndex");
 
         $this->assertEquals(StoreTest::SECOND_VALUE, $this->store->get($key));
     }
@@ -34,7 +34,7 @@ class GetTest extends StoreTest
         $exception = new InvalidArgumentException('Key syntax is invalid');
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::expect($this->key, 1)->parse(KeyTest::INVALID_KEY)->thenThrow($exception);
+        Phake::expect($this->key, 1)->parseNoun(KeyTest::INVALID_KEY)->thenThrow($exception);
 
         $this->expectException(get_class($exception));
         $this->expectExceptionMessage($exception->getMessage());
@@ -48,7 +48,7 @@ class GetTest extends StoreTest
         $dotPath = StoreTest::KEY . '.2';
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::expect($this->key, 1)->parse($key)->thenReturn($dotPath);
+        Phake::expect($this->key, 1)->parseNoun($key)->thenReturn($dotPath);
 
         $this->assertNull($this->store->get($key));
     }
@@ -59,7 +59,7 @@ class GetTest extends StoreTest
         $dotPath = $key;
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::expect($this->key, 1)->parse($key)->thenReturn($dotPath);
+        Phake::expect($this->key, 1)->parseNoun($key)->thenReturn($dotPath);
 
         $this->assertEquals(StoreTest::SECOND_VALUE, $this->store->get($key));
     }
@@ -70,7 +70,7 @@ class GetTest extends StoreTest
         $dotPath = StoreTest::KEY . '.0';
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::expect($this->key, 1)->parse($key)->thenReturn($dotPath);
+        Phake::expect($this->key, 1)->parseNoun($key)->thenReturn($dotPath);
 
         $this->assertEquals(StoreTest::FIRST_VALUE, $this->store->get($key));
     }

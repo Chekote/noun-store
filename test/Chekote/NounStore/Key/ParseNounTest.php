@@ -4,16 +4,16 @@ use Chekote\Phake\Phake;
 use InvalidArgumentException;
 
 /**
- * @covers \Chekote\NounStore\Key::parse()
+ * @covers \Chekote\NounStore\Key::parseNoun()
  */
-class ParseTest extends KeyTest
+class ParseNounTest extends KeyTest
 {
     public function setUp()
     {
         parent::setUp();
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::when($this->key)->parse(Phake::anyParameters())->thenCallParent();
+        Phake::when($this->key)->parseNoun(Phake::anyParameters())->thenCallParent();
     }
 
     /**
@@ -43,7 +43,7 @@ class ParseTest extends KeyTest
      */
     public function testSuccessScenario($key, $dotPath)
     {
-        $this->assertEquals($dotPath, $this->key->parse($key));
+        $this->assertEquals($dotPath, $this->key->parseNoun($key));
     }
 
     /**
@@ -70,6 +70,6 @@ class ParseTest extends KeyTest
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Key syntax is invalid');
 
-        $this->key->parse($key);
+        $this->key->parseNoun($key);
     }
 }

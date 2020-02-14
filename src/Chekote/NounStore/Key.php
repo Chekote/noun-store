@@ -69,28 +69,28 @@ class Key
     }
 
     /**
-     * Parses a key into dot-notation.
+     * Parses a single noun into dot-notation.
      *
-     * @example parseKey("Item"): "Item"
-     * @example parseKey("1st Item"): "Item.0"
-     * @example parseKey("2nd Item"): "Item.1"
-     * @example parseKey("3rd Item"): "Item.2"
+     * @example parseNoun("Item"): "Item"
+     * @example parseNoun("1st Item"): "Item.0"
+     * @example parseNoun("2nd Item"): "Item.1"
+     * @example parseNoun("3rd Item"): "Item.2"
      *
-     * @param  string                   $key the key to parse.
+     * @param  string                   $noun the key to parse.
      * @throws InvalidArgumentException if the key syntax is invalid.
      * @return string                   the dot-notation string.
      */
-    public function parse($key)
+    public function parseNoun($noun)
     {
-        if (!preg_match("/^(([1-9][0-9]*)(?:st|nd|rd|th) )?([^']+)$/", $key, $matches)) {
+        if (!preg_match("/^(([1-9][0-9]*)(?:st|nd|rd|th) )?([^']+)$/", $noun, $matches)) {
             throw new InvalidArgumentException('Key syntax is invalid');
         }
 
         // @todo use null coalescing operator when upgrading to PHP 7
         $index = isset($matches[2]) && $matches[2] !== '' ? $matches[2] - 1 : null;
-        $key = $matches[3];
+        $noun = $matches[3];
 
-        return $index !== null ? "$key.$index" : $key;
+        return $index !== null ? "$noun.$index" : $noun;
     }
 
     /**

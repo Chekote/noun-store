@@ -22,7 +22,7 @@ class KeyExistsTest extends StoreTest
         $exception = new InvalidArgumentException('Key syntax is invalid');
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::expect($this->key, 1)->parse(KeyTest::INVALID_KEY)->thenThrow($exception);
+        Phake::expect($this->key, 1)->parseNoun(KeyTest::INVALID_KEY)->thenThrow($exception);
 
         $this->expectException(get_class($exception));
         $this->expectExceptionMessage($exception->getMessage());
@@ -47,7 +47,7 @@ class KeyExistsTest extends StoreTest
     public function testReturn($key, $expectedResult)
     {
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::expect($this->key, 1)->parse($key)->thenReturn($key);
+        Phake::expect($this->key, 1)->parseNoun($key)->thenReturn($key);
 
         $this->assertEquals($expectedResult, $this->store->keyExists($key));
     }
