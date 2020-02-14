@@ -24,6 +24,8 @@ class Key
         9 => self::ORDINAL_TH,
     ];
 
+    const POSSESSION = "'s ";
+
     /**
      * Builds a key from it's separate key and index values.
      *
@@ -89,5 +91,22 @@ class Key
         $key = $matches[3];
 
         return $index !== null ? "$key.$index" : $key;
+    }
+
+    /**
+     * Splits a possessive key into its separate nouns.
+     *
+     * @example splitPossessions("Customer's Car"): ['Customer', 'Car']
+     * @example splitPossessions("8th Customer's Car"): ['8th Customer', 'Car']
+     * @example splitPossessions("Customer's 2nd Car"): ['Customer', '2nd Car']
+     * @example splitPossessions("7th Customer's 4th Car"): ['7th Customer', '4th Car']
+     * @example splitPossessions("7th Customer's 4th Car's 2nd Wheel"): ['7th Customer', '4th Car', '2nd Wheel']
+     *
+     * @param  string   $key the possessive key to parse
+     * @return string[] an array of nouns
+     */
+    protected function splitPossessions($key)
+    {
+        return ($nouns = preg_split('/' . self::POSSESSION . '/', $key)) ? $nouns : [];
     }
 }
