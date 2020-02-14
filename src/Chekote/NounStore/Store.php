@@ -46,7 +46,7 @@ class Store
      *   retrieve("3rd Thing")
      *
      * @see    Key::build()
-     * @see    Key::parse()
+     * @see    Key::parseNoun()
      * @param  string                   $key The key to retrieve the value for. Supports nth notation.
      * @throws InvalidArgumentException if the key syntax is invalid.
      * @return mixed                    The value, or null if no value exists for the specified key/index combination.
@@ -57,7 +57,7 @@ class Store
             return;
         }
 
-        list($key, $index) = $this->keyService->parse($key);
+        list($key, $index) = $this->keyService->parseNoun($key);
 
         return $index !== null ? $this->nouns[$key][$index] : end($this->nouns[$key]);
     }
@@ -77,14 +77,14 @@ class Store
      * Determines if a value has been stored for the specified key.
      *
      * @see    Key::build()
-     * @see    Key::parse()
+     * @see    Key::parseNoun()
      * @param  string                   $key The key to check. Supports nth notation.
      * @throws InvalidArgumentException if the key syntax is invalid.
      * @return bool                     True if the a value has been stored, false if not.
      */
     public function keyExists($key)
     {
-        list($key, $index) = $this->keyService->parse($key);
+        list($key, $index) = $this->keyService->parseNoun($key);
 
         return $index !== null ? isset($this->nouns[$key][$index]) : isset($this->nouns[$key]);
     }
@@ -93,7 +93,7 @@ class Store
      * Asserts that the key's value contains the specified string.
      *
      * @see    Key::build()
-     * @see    Key::parse()
+     * @see    Key::parseNoun()
      * @param  string                   $key   The key to check.
      * @param  string                   $value The value expected to be contained within the key's value.
      * @throws InvalidArgumentException if the key syntax is invalid.
