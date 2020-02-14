@@ -26,7 +26,7 @@ class GetTest extends StoreTest
         /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::expect($this->store, 1)->keyExists($key)->thenReturn(true);
-            Phake::expect($this->key, 1)->parse($key)->thenReturn([$parsedKey, $parsedIndex]);
+            Phake::expect($this->key, 1)->parseNoun($key)->thenReturn([$parsedKey, $parsedIndex]);
         }
 
         $this->assertEquals(StoreTest::SECOND_VALUE, $this->store->get($key));
@@ -54,7 +54,7 @@ class GetTest extends StoreTest
         /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::expect($this->store, 1)->keyExists(KeyTest::INVALID_KEY)->thenReturn(true);
-            Phake::expect($this->key, 1)->parse(KeyTest::INVALID_KEY)->thenThrow($exception);
+            Phake::expect($this->key, 1)->parseNoun(KeyTest::INVALID_KEY)->thenThrow($exception);
         }
 
         $this->expectException(get_class($exception));
@@ -82,7 +82,7 @@ class GetTest extends StoreTest
         /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::expect($this->store, 1)->keyExists($key)->thenReturn(true);
-            Phake::expect($this->key, 1)->parse($key)->thenReturn([$parsedKey, $parsedIndex]);
+            Phake::expect($this->key, 1)->parseNoun($key)->thenReturn([$parsedKey, $parsedIndex]);
         }
 
         $this->assertEquals(StoreTest::SECOND_VALUE, $this->store->get($key));
@@ -97,7 +97,7 @@ class GetTest extends StoreTest
         /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::expect($this->store, 1)->keyExists($key)->thenReturn(true);
-            Phake::expect($this->key, 1)->parse($key)->thenReturn([$parsedKey, $parsedIndex]);
+            Phake::expect($this->key, 1)->parseNoun($key)->thenReturn([$parsedKey, $parsedIndex]);
         }
 
         $this->assertEquals(StoreTest::FIRST_VALUE, $this->store->get($key));
