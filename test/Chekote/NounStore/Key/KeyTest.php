@@ -6,7 +6,7 @@ use Chekote\Phake\Phake;
 
 abstract class KeyTest extends TestCase
 {
-    const INVALID_KEY = "It's invalid because of the apostrophe";
+    const INVALID_KEY = "It's's invalid because of the double apostrophe";
 
     /** @var KeyPhake */
     protected $key;

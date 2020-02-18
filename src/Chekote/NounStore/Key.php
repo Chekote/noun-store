@@ -69,6 +69,24 @@ class Key
     }
 
     /**
+     * Parses a key into dot-notation.
+     *
+     * @example parseNoun("Customer"): "Customer"
+     * @example parseNoun("2nd Customer"): "Customer.1"
+     * @example parseNoun("Customer's Car"): "Customer.Car"
+     * @example parseNoun("2nd Customer's Car"): "Customer.1.Car"
+     * @example parseNoun("4th Customer's 3rd Car"): "Customer.3.Car.2"
+     *
+     * @param  string                   $key the key to parse.
+     * @throws InvalidArgumentException if the key syntax is invalid.
+     * @return string                   the dot-notation string.
+     */
+    public function parse($key)
+    {
+        return implode('.', array_map([$this, 'parseNoun'], $this->splitPossessions($key)));
+    }
+
+    /**
      * Parses a single noun into dot-notation.
      *
      * @example parseNoun("Item"): "Item"
