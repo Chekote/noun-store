@@ -69,6 +69,26 @@ class Key
     }
 
     /**
+     * Parses a key into its individual nouns and indexes.
+     *
+     * @example parseNoun("Customer"): [["Customer", null]]
+     * @example parseNoun("2nd Customer"): [["Customer", 1]]
+     * @example parseNoun("Customer's Car"): [["Customer", null], ["Car", null]]
+     * @example parseNoun("2nd Customer's Car"): [["Customer", 1], ["Car", null]]
+     * @example parseNoun("4th Customer's 3rd Car"): [["Customer", 3], ["Car", 2]]
+     *
+     * @param  string                   $key the key to parse.
+     * @throws InvalidArgumentException if the key syntax is invalid.
+     * @return array[]                  a array of tuples. With each tuple have the noun with the nth removed as the
+     *                                      1st item, and the index that the nth translates to as the 2nd or null if no
+     *                                      nth was specified.
+     */
+    public function parse($key)
+    {
+        return array_map([$this, 'parseNoun'], $this->splitPossessions($key));
+    }
+
+    /**
      * Parses a noun into the separate key and index value.
      *
      * @example parseNoun("Item"): ["Item", null]
