@@ -101,7 +101,7 @@ class Key
      * @return array                    a tuple, the 1st being the key with the nth removed, and the 2nd being the
      *                                       index that the nth translates to, or null if no nth was specified.
      */
-    public function parseNoun($noun)
+    protected function parseNoun($noun)
     {
         if (!preg_match("/^(([1-9][0-9]*)(?:st|nd|rd|th) )?([^']+)$/", $noun, $matches)) {
             throw new InvalidArgumentException('Key syntax is invalid');

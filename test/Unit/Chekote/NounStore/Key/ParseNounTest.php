@@ -44,7 +44,11 @@ class ParseNounTest extends KeyTest
      */
     public function testSuccessScenario($key, $parsedKey, $parsedIndex)
     {
-        $this->assertEquals([$parsedKey, $parsedIndex], $this->key->parseNoun($key));
+        /* @noinspection PhpUndefinedMethodInspection */
+        $this->assertEquals(
+            [$parsedKey, $parsedIndex],
+            Phake::makeVisible($this->key)->parseNoun($key)
+        );
     }
 
     /**
@@ -71,6 +75,7 @@ class ParseNounTest extends KeyTest
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Key syntax is invalid');
 
-        $this->key->parseNoun($key);
+        /* @noinspection PhpUndefinedMethodInspection */
+        Phake::makeVisible($this->key)->parseNoun($key);
     }
 }
