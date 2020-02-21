@@ -57,9 +57,10 @@ class Store
             return;
         }
 
-        list($key, $index) = $this->keyService->parseNoun($key);
+        $nouns = $this->keyService->parse($key);
+        list($noun, $index) = $nouns[0];
 
-        return $index !== null ? $this->nouns[$key][$index] : end($this->nouns[$key]);
+        return $index !== null ? $this->nouns[$noun][$index] : end($this->nouns[$noun]);
     }
 
     /**
@@ -84,9 +85,10 @@ class Store
      */
     public function keyExists($key)
     {
-        list($key, $index) = $this->keyService->parseNoun($key);
+        $nouns = $this->keyService->parse($key);
+        list($noun, $index) = $nouns[0];
 
-        return $index !== null ? isset($this->nouns[$key][$index]) : isset($this->nouns[$key]);
+        return $index !== null ? isset($this->nouns[$noun][$index]) : isset($this->nouns[$noun]);
     }
 
     /**
