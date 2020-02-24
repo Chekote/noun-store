@@ -91,39 +91,4 @@ class Key
 
         return [$key, $index];
     }
-
-    /**
-     * Resolves an index and parsed nth value to an index.
-     *
-     * Ensures that if both an index and parsed nth value are provided, that they are equivalent. If only one is
-     * provided, then the appropriate index will be returned. e.g. if an index is provided, it is returned as-is, as
-     * it is already an index. If an nth is provided, it will be returned decremented by 1.
-     *
-     * @param  int|null                 $index the index to process
-     * @param  int|null                 $nth   the nth to process
-     * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
-     *                                        that does not match the index.
-     * @throws InvalidArgumentException if nth is not null and is less than 1
-     * @return int                      the resolved index.
-     */
-    protected function resolveIndex($index, $nth)
-    {
-        // If we don't have an nth, there's nothing to process. We'll just return the $index, even if it's null.
-        if ($nth === null) {
-            return $index;
-        }
-
-        $decrementedNth = $nth - 1;
-
-        // If both index and nth are provided, but they aren't equivalent, we need to error out.
-        if ($index !== null && $index !== $decrementedNth) {
-            throw new InvalidArgumentException("index $index was provided with nth $nth, but they are not equivalent");
-        }
-
-        if ($decrementedNth < 0) {
-            throw new InvalidArgumentException('nth must be equal to or larger than 1');
-        }
-
-        return $decrementedNth;
-    }
 }
