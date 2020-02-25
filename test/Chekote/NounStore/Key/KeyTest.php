@@ -3,13 +3,12 @@
 use Chekote\NounStore\Key;
 use Chekote\NounStore\TestCase;
 use Chekote\Phake\Phake;
-use Phake_IMock;
 
 abstract class KeyTest extends TestCase
 {
     const INVALID_KEY = "It's invalid because of the apostrophe";
 
-    /** @var Key|Phake_IMock */
+    /** @var KeyPhake */
     protected $key;
 
     /**

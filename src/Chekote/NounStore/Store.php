@@ -58,7 +58,13 @@ class Store
 
         $item = Arr::get($this->nouns, $dotPath);
 
-        return is_numeric(substr($dotPath, -1, 1)) ? $item : end($item);
+        // if the end of the dotpath references a specific instance of a noun, return it.
+        if (is_numeric(substr($dotPath, -1, 1))) {
+            return $item;
+        }
+
+        // otherwise, return the last referenced noun.
+        return is_array($item) ? end($item) : null;
     }
 
     /**
