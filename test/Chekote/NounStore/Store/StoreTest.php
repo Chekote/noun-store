@@ -13,9 +13,9 @@ abstract class StoreTest extends TestCase
     /** @var Store|\Phake_IMock */
     protected $store;
 
-    const KEY = 'Some Key';
-    const FIRST_VALUE = 'The First Value';
-    const SECOND_VALUE = 'The Second Value';
+    const KEY = 'Color';
+    const FIRST_VALUE = 'Red';
+    const SECOND_VALUE = 'Blue';
 
     const MOST_RECENT_VALUE = self::SECOND_VALUE;
 

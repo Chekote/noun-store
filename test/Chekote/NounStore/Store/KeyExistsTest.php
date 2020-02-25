@@ -47,7 +47,7 @@ class KeyExistsTest extends StoreTest
     public function testReturn($key, $expectedResult)
     {
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::expect($this->key, 1)->parse($key)->thenReturn([$key, null]);
+        Phake::expect($this->key, 1)->parse($key)->thenReturn($key);
 
         $this->assertEquals($expectedResult, $this->store->keyExists($key));
     }

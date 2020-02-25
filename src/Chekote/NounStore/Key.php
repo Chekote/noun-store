@@ -67,17 +67,16 @@ class Key
     }
 
     /**
-     * Parses a key into the separate key and index value.
+     * Parses a key into dot-notation.
      *
-     * @example parseKey("Item"): ["Item", null]
-     * @example parseKey("1st Item"): ["Item", 0]
-     * @example parseKey("2nd Item"): ["Item", 1]
-     * @example parseKey("3rd Item"): ["Item", 2]
+     * @example parseKey("Item"): "Item"
+     * @example parseKey("1st Item"): "Item.0"
+     * @example parseKey("2nd Item"): "Item.1"
+     * @example parseKey("3rd Item"): "Item.2"
      *
      * @param  string                   $key the key to parse.
      * @throws InvalidArgumentException if the key syntax is invalid.
-     * @return array                    a tuple, the 1st being the key with the nth removed, and the 2nd being the
-     *                                      index that the nth translates to, or null if no nth was specified.
+     * @return string                   the dot-notation string.
      */
     public function parse($key)
     {
@@ -89,6 +88,6 @@ class Key
         $index = isset($matches[2]) && $matches[2] !== '' ? $matches[2] - 1 : null;
         $key = $matches[3];
 
-        return [$key, $index];
+        return $index !== null ? "$key.$index" : $key;
     }
 }
