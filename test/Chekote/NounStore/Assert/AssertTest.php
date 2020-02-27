@@ -2,20 +2,21 @@
 
 use Chekote\NounStore\Assert;
 use Chekote\NounStore\Key;
+use Chekote\NounStore\Key\KeyPhake;
 use Chekote\NounStore\Store;
+use Chekote\NounStore\Store\StorePhake;
 use Chekote\NounStore\TestCase;
 use Chekote\Phake\Phake;
-use Phake_IMock;
 
 abstract class AssertTest extends TestCase
 {
-    /** @var Assert|Phake_IMock */
+    /** @var AssertPhake */
     protected $assert;
 
-    /** @var Store|Phake_IMock */
+    /** @var StorePhake */
     protected $store;
 
-    /** @var Key|Phake_IMock */
+    /** @var KeyPhake */
     protected $key;
 
     /**

@@ -17,20 +17,20 @@ class ParseTest extends KeyTest
     }
 
     /**
-     * Provides examples of valid key and index pairs with expected parse results.
+     * Provides examples of valid key and nth pairs with expected dotPath results.
      *
      * @return array
      */
     public function successScenarioDataProvider()
     {
         return [
-            // key          parsedKey,  parsedIndex
-            ['Thing',       'Thing',           null],
-            ['1st Thing',   'Thing',              0],
-            ['2nd Thing',   'Thing',              1],
-            ['3rd Thing',   'Thing',              2],
-            ['4th Thing',   'Thing',              3],
-            ['478th Thing', 'Thing',            477],
+            // key          dotPath
+            ['Thing',       'Thing'    ],
+            ['1st Thing',   'Thing.0'  ],
+            ['2nd Thing',   'Thing.1'  ],
+            ['3rd Thing',   'Thing.2'  ],
+            ['4th Thing',   'Thing.3'  ],
+            ['478th Thing', 'Thing.477'],
         ];
     }
 
@@ -38,13 +38,12 @@ class ParseTest extends KeyTest
      * Tests that calling Key::parse with valid key works correctly.
      *
      * @dataProvider successScenarioDataProvider
-     * @param string $key         the key to parse
-     * @param string $parsedKey   the expected resulting parsed key
-     * @param int    $parsedIndex the expected resulting parsed index
+     * @param string $key     the key to parse
+     * @param string $dotPath the expected resulting dot path
      */
-    public function testSuccessScenario($key, $parsedKey, $parsedIndex)
+    public function testSuccessScenario($key, $dotPath)
     {
-        $this->assertEquals([$parsedKey, $parsedIndex], $this->key->parse($key));
+        $this->assertEquals($dotPath, $this->key->parse($key));
     }
 
     /**

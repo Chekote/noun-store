@@ -1,21 +1,22 @@
 <?php namespace Chekote\NounStore\Store;
 
 use Chekote\NounStore\Key;
+use Chekote\NounStore\Key\KeyPhake;
 use Chekote\NounStore\Store;
 use Chekote\NounStore\TestCase;
 use Chekote\Phake\Phake;
 
 abstract class StoreTest extends TestCase
 {
-    /** @var Key|\Phake_IMock */
+    /** @var KeyPhake */
     protected $key;
 
-    /** @var Store|\Phake_IMock */
+    /** @var StorePhake */
     protected $store;
 
-    const KEY = 'Some Key';
-    const FIRST_VALUE = 'The First Value';
-    const SECOND_VALUE = 'The Second Value';
+    const KEY = 'Color';
+    const FIRST_VALUE = 'Red';
+    const SECOND_VALUE = 'Blue';
 
     const MOST_RECENT_VALUE = self::SECOND_VALUE;
 

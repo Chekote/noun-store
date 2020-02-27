@@ -1,5 +1,6 @@
 <?php namespace Chekote\NounStore;
 
+use Illuminate\Support\Arr;
 use InvalidArgumentException;
 
 class Store
@@ -53,13 +54,17 @@ class Store
      */
     public function get($key)
     {
-        if (!$this->keyExists($key)) {
-            return;
+        $dotPath = $this->keyService->parse($key);
+
+        $item = Arr::get($this->nouns, $dotPath);
+
+        // if the end of the dotpath references a specific instance of a noun, return it.
+        if (is_numeric(substr($dotPath, -1, 1))) {
+            return $item;
         }
 
-        list($key, $index) = $this->keyService->parse($key);
-
-        return $index !== null ? $this->nouns[$key][$index] : end($this->nouns[$key]);
+        // otherwise, return the last referenced noun.
+        return is_array($item) ? end($item) : null;
     }
 
     /**
@@ -84,9 +89,7 @@ class Store
      */
     public function keyExists($key)
     {
-        list($key, $index) = $this->keyService->parse($key);
-
-        return $index !== null ? isset($this->nouns[$key][$index]) : isset($this->nouns[$key]);
+        return Arr::has($this->nouns, $this->keyService->parse($key));
     }
 
     /**
