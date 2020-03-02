@@ -79,6 +79,24 @@ $store->get('2nd best friend');
 $store->get('1st best friend');
 ```
 
+### Retrieve the old thing's car
+
+```php
+$store->get("1st best friend's car");
+```
+
+### Retrieve the old thing's 2nd car
+
+```php
+$store->get("1st best friend's 2nd car");
+```
+
+### Retrieve the old thing's 2nd car's 3rd wheel
+
+```php
+$store->get("1st best friend's 2nd car's 3rd wheel");
+```
+
 ### Empty the store
 
 ```php
