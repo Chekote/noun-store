@@ -47,14 +47,14 @@ class Store
      *   retrieve("3rd Thing")
      *
      * @see    Key::build()
-     * @see    Key::parseNoun()
+     * @see    Key::parse()
      * @param  string                   $key The key to retrieve the value for. Supports nth notation.
      * @throws InvalidArgumentException if the key syntax is invalid.
      * @return mixed                    The value, or null if no value exists for the specified key/index combination.
      */
     public function get($key)
     {
-        $dotPath = $this->keyService->parseNoun($key);
+        $dotPath = $this->keyService->parse($key);
 
         $item = Arr::get($this->nouns, $dotPath);
 
@@ -82,21 +82,21 @@ class Store
      * Determines if a value has been stored for the specified key.
      *
      * @see    Key::build()
-     * @see    Key::parseNoun()
+     * @see    Key::parse()
      * @param  string                   $key The key to check. Supports nth notation.
      * @throws InvalidArgumentException if the key syntax is invalid.
      * @return bool                     True if the a value has been stored, false if not.
      */
     public function keyExists($key)
     {
-        return Arr::has($this->nouns, $this->keyService->parseNoun($key));
+        return Arr::has($this->nouns, $this->keyService->parse($key));
     }
 
     /**
      * Asserts that the key's value contains the specified string.
      *
      * @see    Key::build()
-     * @see    Key::parseNoun()
+     * @see    Key::parse()
      * @param  string                   $key   The key to check.
      * @param  string                   $value The value expected to be contained within the key's value.
      * @throws InvalidArgumentException if the key syntax is invalid.
