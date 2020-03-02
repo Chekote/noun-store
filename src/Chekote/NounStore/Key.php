@@ -98,7 +98,7 @@ class Key
      * @throws InvalidArgumentException if the key syntax is invalid.
      * @return string                   the dot-notation string.
      */
-    public function parseNoun($noun)
+    protected function parseNoun($noun)
     {
         if (!preg_match("/^(([1-9][0-9]*)(?:st|nd|rd|th) )?([^']+)$/", $noun, $matches)) {
             throw new InvalidArgumentException('Key syntax is invalid');
