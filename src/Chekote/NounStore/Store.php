@@ -54,10 +54,6 @@ class Store
      */
     public function get($key)
     {
-        if (!$this->keyExists($key)) {
-            return;
-        }
-
         return array_reduce(
             $this->keyService->parse($key),
             static function ($carry, $item) {
