@@ -96,10 +96,7 @@ class Store
      */
     public function keyExists($key)
     {
-        $nouns = $this->keyService->parse($key);
-        list($noun, $index) = $nouns[0];
-
-        return $index !== null ? isset($this->nouns[$noun][$index]) : isset($this->nouns[$noun]);
+        return $this->get($key) !== null;
     }
 
     /**

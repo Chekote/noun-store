@@ -17,12 +17,12 @@ class KeyExistsTest extends StoreTest
         Phake::when($this->store)->keyExists(Phake::anyParameters())->thenCallParent();
     }
 
-    public function testInvalidArgumentExceptionBubblesUpFromParse()
+    public function testInvalidArgumentExceptionBubblesUpFromGet()
     {
         $exception = new InvalidArgumentException('Key syntax is invalid');
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::expect($this->key, 1)->parse(KeyTest::INVALID_KEY)->thenThrow($exception);
+        Phake::expect($this->store, 1)->get(KeyTest::INVALID_KEY)->thenThrow($exception);
 
         $this->expectException(get_class($exception));
         $this->expectExceptionMessage($exception->getMessage());
@@ -33,22 +33,23 @@ class KeyExistsTest extends StoreTest
     public function returnDataProvider()
     {
         return [
-            // key,           expectedResult
-            [ 'No such key',  false ], // missing key
-            [ StoreTest::KEY, true  ], // present key
+            // key,           value                          exists?
+            [ 'No such key',  null,                          false ], // missing key
+            [ StoreTest::KEY, StoreTest::$MOST_RECENT_VALUE, true  ], // present key
         ];
     }
 
     /**
      * @dataProvider returnDataProvider
-     * @param string $key            the key to pass to keyExists, and which will be returned from the mocked parse()
-     * @param bool   $expectedResult the expected results from keyExists()
+     * @param string $key    the key to check for existence of.
+     * @param mixed  $value  the value that the mocked Store::get() should return.
+     * @param bool   $exists the expected result from keyExists().
      */
-    public function testReturn($key, $expectedResult)
+    public function testReturn($key, $value, $exists)
     {
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::expect($this->key, 1)->parse($key)->thenReturn([[$key, null]]);
+        Phake::expect($this->store, 1)->get($key)->thenReturn($value);
 
-        $this->assertEquals($expectedResult, $this->store->keyExists($key));
+        $this->assertEquals($exists, $this->store->keyExists($key));
     }
 }
