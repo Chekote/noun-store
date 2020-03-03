@@ -29,7 +29,7 @@ class GetTest extends StoreTest
             Phake::expect($this->key, 1)->parse($key)->thenReturn([[$parsedKey, $parsedIndex]]);
         }
 
-        $this->assertEquals(StoreTest::SECOND_VALUE, $this->store->get($key));
+        $this->assertEquals(StoreTest::$SECOND_VALUE, $this->store->get($key));
     }
 
     public function testInvalidArgumentExceptionBubblesUpFromKeyExists()
@@ -94,8 +94,8 @@ class GetTest extends StoreTest
     {
         return [
             //                                                key                      parsed key                expected
-            'Noun without index returns most recent noun' => [StoreTest::KEY,          [[StoreTest::KEY, null]], StoreTest::MOST_RECENT_VALUE],
-            'Noun with index returns specific noun'       => ['1st ' . StoreTest::KEY, [[StoreTest::KEY,    0]], StoreTest::FIRST_VALUE],
+            'Noun without index returns most recent noun' => [StoreTest::KEY,          [[StoreTest::KEY, null]], StoreTest::$MOST_RECENT_VALUE],
+            'Noun with index returns specific noun'       => ['1st ' . StoreTest::KEY, [[StoreTest::KEY,    0]], StoreTest::$FIRST_VALUE],
         ];
     }
 }
