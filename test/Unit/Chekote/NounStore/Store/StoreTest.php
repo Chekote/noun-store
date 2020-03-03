@@ -32,9 +32,11 @@ abstract class StoreTest extends TestCase
     {
         $car1 = new stdClass();
         $car1->color = 'Red';
+        $car1->option = ['GPS', 'Heated Seats'];
 
         $car2 = new stdClass();
         $car2->color = 'Blue';
+        $car2->option = ['Cruise Control', 'Air Conditioning'];
 
         self::$FIRST_VALUE = $car1;
         self::$SECOND_VALUE = $car2;

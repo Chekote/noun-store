@@ -1,5 +1,6 @@
 <?php namespace Chekote\NounStore;
 
+use Illuminate\Support\Arr;
 use InvalidArgumentException;
 
 class Store
@@ -57,10 +58,24 @@ class Store
             return;
         }
 
-        $nouns = $this->keyService->parse($key);
-        list($noun, $index) = $nouns[0];
+        return array_reduce(
+            $this->keyService->parse($key),
+            static function ($carry, $item) {
+                list($noun, $index) = $item;
 
-        return $index !== null ? $this->nouns[$noun][$index] : end($this->nouns[$noun]);
+                $carry = data_get($carry, $noun);
+
+                // Was a specific index requested?
+                if ($index !== null) {
+                    // Yes, fetch the specific index
+                    return data_get($carry, $index);
+                } else {
+                    // No, return the noun itself, or the latest noun if the noun is a collection
+                    return Arr::accessible($carry) ? end($carry) : $carry;
+                }
+            },
+            $this->nouns
+        );
     }
 
     /**
