@@ -73,33 +73,29 @@ class GetTest extends StoreTest
         $this->assertNull($this->store->get($key));
     }
 
-    public function testLastItemIsReturnedWhenParsedIndexIsNull()
+    /**
+     * @dataProvider happyPathProvider
+     * @param string  $key       the key to fetch.
+     * @param array[] $parsedKey the parsed key.
+     * @param mixed   $expected  the expected value.
+     */
+    public function testHappyPath($key, $parsedKey, $expected)
     {
-        $key = StoreTest::KEY;
-        $parsedKey = $key;
-        $parsedIndex = null;
-
         /* @noinspection PhpUndefinedMethodInspection */
         {
             Phake::expect($this->store, 1)->keyExists($key)->thenReturn(true);
-            Phake::expect($this->key, 1)->parse($key)->thenReturn([[$parsedKey, $parsedIndex]]);
+            Phake::expect($this->key, 1)->parse($key)->thenReturn($parsedKey);
         }
 
-        $this->assertEquals(StoreTest::SECOND_VALUE, $this->store->get($key));
+        $this->assertEquals($expected, $this->store->get($key));
     }
 
-    public function testIndexItemIsReturnedWhenParsedIndexIsNotNull()
+    public function happyPathProvider()
     {
-        $key = '1st ' . StoreTest::KEY;
-        $parsedKey = StoreTest::KEY;
-        $parsedIndex = 0;
-
-        /* @noinspection PhpUndefinedMethodInspection */
-        {
-            Phake::expect($this->store, 1)->keyExists($key)->thenReturn(true);
-            Phake::expect($this->key, 1)->parse($key)->thenReturn([[$parsedKey, $parsedIndex]]);
-        }
-
-        $this->assertEquals(StoreTest::FIRST_VALUE, $this->store->get($key));
+        return [
+            //                                                key                      parsed key                expected
+            'Noun without index returns most recent noun' => [StoreTest::KEY,          [[StoreTest::KEY, null]], StoreTest::MOST_RECENT_VALUE],
+            'Noun with index returns specific noun'       => ['1st ' . StoreTest::KEY, [[StoreTest::KEY,    0]], StoreTest::FIRST_VALUE],
+        ];
     }
 }
