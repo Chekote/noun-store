@@ -3,15 +3,17 @@
 use Chekote\NounStore\Key;
 use Chekote\NounStore\Store;
 use stdClass;
+use Unit\Chekote\NounStore\Assert\KeyPhake;
+use Unit\Chekote\NounStore\Assert\StorePhake;
 use Unit\Chekote\NounStore\TestCase;
 use Unit\Chekote\Phake\Phake;
 
 abstract class StoreTest extends TestCase
 {
-    /** @var Key|\Phake_IMock */
+    /** @var KeyPhake */
     protected $key;
 
-    /** @var Store|\Phake_IMock */
+    /** @var StorePhake */
     protected $store;
 
     /** @var stdClass the first value stored under self::KEY */
