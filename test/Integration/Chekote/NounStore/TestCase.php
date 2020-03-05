@@ -1,7 +1,7 @@
 <?php namespace Integration\Chekote\NounStore;
 
-use Unit\Chekote\Phake\Phake;
 use PHPUnit\Framework\TestCase as BaseTestCase;
+use Unit\Chekote\Phake\Phake;
 
 class TestCase extends BaseTestCase
 {
