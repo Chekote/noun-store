@@ -34,7 +34,7 @@ class Assert
      * Asserts that a value has been stored for the specified key.
      *
      * @see    Key::build()
-     * @see    Key::parse()
+     * @see    Key::parseNoun()
      * @param  string                   $key The key to check. Supports nth notation.
      * @throws OutOfBoundsException     if a value has not been stored for the specified key.
      * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
@@ -54,7 +54,7 @@ class Assert
      * Asserts that the key's value contains the specified string.
      *
      * @see    Key::build()
-     * @see    Key::parse()
+     * @see    Key::parseNoun()
      * @param  string                   $key   The key to check. Supports nth notation.
      * @param  string                   $value The value expected to be contained within the key's value.
      * @throws OutOfBoundsException     If a value has not been stored for the specified key.
@@ -74,7 +74,7 @@ class Assert
      * Asserts that the key's value matches the specified value.
      *
      * @see    Key::build()
-     * @see    Key::parse()
+     * @see    Key::parseNoun()
      * @param  string                   $key   The key to check. Supports nth notation.
      * @param  mixed                    $value The expected value.
      * @throws OutOfBoundsException     If a value has not been stored for the specified key.

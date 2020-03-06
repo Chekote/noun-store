@@ -24,6 +24,8 @@ class Key
         9 => self::ORDINAL_TH,
     ];
 
+    const POSSESSION = "'s ";
+
     /**
      * Builds a key from it's separate key and index values.
      *
@@ -67,28 +69,76 @@ class Key
     }
 
     /**
-     * Parses a key into the separate key and index value.
+     * Parses a key into its individual nouns and indexes.
      *
-     * @example parseKey("Item"): ["Item", null]
-     * @example parseKey("1st Item"): ["Item", 0]
-     * @example parseKey("2nd Item"): ["Item", 1]
-     * @example parseKey("3rd Item"): ["Item", 2]
+     * @example parseNoun("Customer"): [["Customer", null]]
+     * @example parseNoun("2nd Customer"): [["Customer", 1]]
+     * @example parseNoun("Customer's Car"): [["Customer", null], ["Car", null]]
+     * @example parseNoun("2nd Customer's Car"): [["Customer", 1], ["Car", null]]
+     * @example parseNoun("4th Customer's 3rd Car"): [["Customer", 3], ["Car", 2]]
      *
      * @param  string                   $key the key to parse.
      * @throws InvalidArgumentException if the key syntax is invalid.
-     * @return array                    a tuple, the 1st being the key with the nth removed, and the 2nd being the
-     *                                      index that the nth translates to, or null if no nth was specified.
+     * @return array[]                  a array of tuples. With each tuple have the noun with the nth removed as the
+     *                                      1st item, and the index that the nth translates to as the 2nd or null if no
+     *                                      nth was specified.
      */
     public function parse($key)
     {
-        if (!preg_match("/^(([1-9][0-9]*)(?:st|nd|rd|th) )?([^']+)$/", $key, $matches)) {
+        return array_map([$this, 'parseNoun'], $this->splitPossessions($key));
+    }
+
+    /**
+     * Parses a noun into the separate key and index value.
+     *
+     * @example parseNoun("Item"): ["Item", null]
+     * @example parseNoun("1st Item"): ["Item", 0]
+     * @example parseNoun("2nd Item"): ["Item", 1]
+     * @example parseNoun("3rd Item"): ["Item", 2]
+     *
+     * @param  string                   $noun the key to parse.
+     * @throws InvalidArgumentException if the key syntax is invalid.
+     * @return array                    a tuple, the 1st being the key with the nth removed, and the 2nd being the
+     *                                       index that the nth translates to, or null if no nth was specified.
+     */
+    protected function parseNoun($noun)
+    {
+        if (!preg_match("/^(([1-9][0-9]*)(?:st|nd|rd|th) )?([^']+)$/", $noun, $matches)) {
             throw new InvalidArgumentException('Key syntax is invalid');
         }
 
         // @todo use null coalescing operator when upgrading to PHP 7
         $index = isset($matches[2]) && $matches[2] !== '' ? $matches[2] - 1 : null;
-        $key = $matches[3];
+        $noun = $matches[3];
 
-        return [$key, $index];
+        return [$noun, $index];
+    }
+
+    /**
+     * Determines if the specified key is a possessive noun.
+     *
+     * @param  string $key
+     * @return bool   true if the key is possessive, false if not
+     */
+    protected function isPossessive($key)
+    {
+        return strpos($key, self::POSSESSION) !== false;
+    }
+
+    /**
+     * Splits a possessive key into its separate nouns.
+     *
+     * @example splitPossessions("Customer's Car"): ['Customer', 'Car']
+     * @example splitPossessions("8th Customer's Car"): ['8th Customer', 'Car']
+     * @example splitPossessions("Customer's 2nd Car"): ['Customer', '2nd Car']
+     * @example splitPossessions("7th Customer's 4th Car"): ['7th Customer', '4th Car']
+     * @example splitPossessions("7th Customer's 4th Car's 2nd Wheel"): ['7th Customer', '4th Car', '2nd Wheel']
+     *
+     * @param  string   $key the possessive key to parse
+     * @return string[] an array of nouns
+     */
+    protected function splitPossessions($key)
+    {
+        return ($nouns = preg_split('/' . self::POSSESSION . '/', $key)) ? $nouns : [];
     }
 }
