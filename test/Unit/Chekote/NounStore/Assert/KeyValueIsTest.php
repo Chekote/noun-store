@@ -35,7 +35,7 @@ class KeyValueIsTest extends AssertTest
 
     public function testMissingKeyThrowsOutOfBoundsException()
     {
-        $key = '10th Thing';
+        $key = '16th Thing';
         $value = 'Some Value';
         $exception = new OutOfBoundsException("Entry '$key' was not found in the store.");
 
@@ -50,7 +50,7 @@ class KeyValueIsTest extends AssertTest
 
     public function testFailedMatchThrowsRuntimeException()
     {
-        $key = '10th Thing';
+        $key = '17th Thing';
         $value = 'Some Value';
         $exception = new RuntimeException("Entry '$key' does not match '$value'");
 
@@ -65,7 +65,7 @@ class KeyValueIsTest extends AssertTest
 
     public function testSuccessfulMatchThrowsNoException()
     {
-        $key = '10th Thing';
+        $key = '18th Thing';
         $value = 'Some Value';
 
         /* @noinspection PhpUndefinedMethodInspection */
