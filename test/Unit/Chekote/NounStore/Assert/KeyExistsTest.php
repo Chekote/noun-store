@@ -80,7 +80,7 @@ class KeyExistsTest extends AssertTest
     public function testStoredValueIsReturned()
     {
         $key = '12th Thing';
-        $value = 'Some Value';
+        $value = 'Apple';
 
         /* @noinspection PhpUndefinedMethodInspection */
         {

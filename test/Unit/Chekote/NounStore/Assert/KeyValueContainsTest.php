@@ -21,7 +21,7 @@ class KeyValueContainsTest extends AssertTest
 
     public function testInvalidArgumentExceptionBubblesUpFromKeyExists()
     {
-        $value = 'Some Value';
+        $value = 'A Value';
         $exception = new InvalidArgumentException('Key syntax is invalid');
 
         /* @noinspection PhpUndefinedMethodInspection */
@@ -37,7 +37,7 @@ class KeyValueContainsTest extends AssertTest
     // the behavior here to ensure that our method behaves correctly should the impossible ever occur.
     public function testInvalidArgumentExceptionBubblesUpFromKeyValueContains()
     {
-        $value = 'Some Value';
+        $value = 'Grape';
         $exception = new InvalidArgumentException('Key syntax is invalid');
 
         /* @noinspection PhpUndefinedMethodInspection */
@@ -55,7 +55,7 @@ class KeyValueContainsTest extends AssertTest
     public function testMissingKeyThrowsOutOfBoundsException()
     {
         $key = '13th Thing';
-        $value = 'Some Value';
+        $value = 'Banana';
         $exception = new OutOfBoundsException("Entry '$key' was not found in the store.");
 
         /* @noinspection PhpUndefinedMethodInspection */
@@ -70,7 +70,7 @@ class KeyValueContainsTest extends AssertTest
     public function testFailedMatchThrowsRuntimeException()
     {
         $key = '14th Thing';
-        $value = 'Some Value';
+        $value = 'Strawberry';
         $exception = new RuntimeException("Entry '$key' does not contain '$value'");
 
         /* @noinspection PhpUndefinedMethodInspection */
@@ -88,7 +88,7 @@ class KeyValueContainsTest extends AssertTest
     public function testSuccessfulMatchThrowsNoException()
     {
         $key = '15th Thing';
-        $value = 'Some Value';
+        $value = 'Blackberry';
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
