@@ -35,10 +35,10 @@ class SplitPossessionsTest extends KeyTest
     public function nouns()
     {
         return [
-            ['Customer',                       ['Customer'                        ]],
-            ["Customer's Car",                 ['Customer',     'Car'             ]],
+            ['Frenchman',                      ['Frenchman'                       ]],
+            ["Dude's Car",                     ['Dude',         'Car'             ]],
             ["8th Customer's Car",             ['8th Customer', 'Car'             ]],
-            ["Customer's 2nd Car",             ['Customer',     '2nd Car'         ]],
+            ["Lad's 2nd Car",                  ['Lad',          '2nd Car'         ]],
             ["7th Customer's 4th Car",         ['7th Customer', '4th Car'         ]],
             ["7th Customer's 4th Car's Wheel", ['7th Customer', '4th Car', 'Wheel']],
         ];

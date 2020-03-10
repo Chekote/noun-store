@@ -18,9 +18,9 @@ class ParseTest extends KeyTest
 
     public function testHappyPath()
     {
-        $key = "2nd Customer's 4th Car";
-        $splitNouns = ['2nd Customer', '4th Car'];
-        $parsedKey = [['Customer', 1], ['Car', 3]];
+        $key = "2nd American's 4th Car";
+        $splitNouns = ['2nd American', '4th Car'];
+        $parsedKey = [['American', 1], ['Car', 3]];
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
