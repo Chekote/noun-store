@@ -54,12 +54,8 @@ class Expectation
             throw new ExpectationException('Expectation args were not set');
         }
 
-        $method = $this->method;
-
         /** @var Phake_Proxies_VerifierProxy $verifier */
-        $verifier = Phake::verify($this->mock, Phake::times($this->count))->$method(...$this->args);
-
-        return $verifier;
+        return Phake::verify($this->mock, Phake::times($this->count))->{$this->method}(...$this->args);
     }
 
     /**
