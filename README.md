@@ -5,6 +5,16 @@
 [![Codecov](https://img.shields.io/codecov/c/github/Chekote/noun-store/master.svg)](https://codecov.io/gh/Chekote/noun-store/tree/master)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/chekote/noun-store/master.svg)](https://scrutinizer-ci.com/g/Chekote/noun-store/?branch=master)
 [![StyleCI](https://styleci.io/repos/63828286/shield?style=plastic)](https://styleci.io/repos/63828286)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Chekote_noun-store&metric=alert_status)](https://sonarcloud.io/dashboard?id=Chekote_noun-store)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=Chekote_noun-store&metric=bugs)](https://sonarcloud.io/dashboard?id=Chekote_noun-store)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=Chekote_noun-store&metric=code_smells)](https://sonarcloud.io/dashboard?id=Chekote_noun-store)
+[![Duplicate Lines Density](https://sonarcloud.io/api/project_badges/measure?project=Chekote_noun-store&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=Chekote_noun-store)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=Chekote_noun-store&metric=ncloc)](https://sonarcloud.io/dashboard?id=Chekote_noun-store)
+[![Maintainability](https://sonarcloud.io/api/project_badges/measure?project=Chekote_noun-store&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=Chekote_noun-store)
+[![Reliability](https://sonarcloud.io/api/project_badges/measure?project=Chekote_noun-store&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=Chekote_noun-store)
+[![Security](https://sonarcloud.io/api/project_badges/measure?project=Chekote_noun-store&metric=security_rating)](https://sonarcloud.io/dashboard?id=Chekote_noun-store)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=Chekote_noun-store&metric=sqale_index)](https://sonarcloud.io/dashboard?id=Chekote_noun-store)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=Chekote_noun-store&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=Chekote_noun-store)
 
 # noun-store
 
