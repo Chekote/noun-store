@@ -26,13 +26,13 @@ class BuildTest extends KeyTest
     public function testNonNullIndexReturnsModifiedKey()
     {
         $key = 'Thing';
-        $index = 9;
+        $index = 18;
         $nth = $index + 1;
 
         /* @noinspection PhpUndefinedMethodInspection */
         Phake::expect($this->key, 1)->getOrdinal($nth)->thenReturn('th');
 
-        $this->assertEquals('10th Thing', $this->key->build($key, $index));
+        $this->assertEquals('19th Thing', $this->key->build($key, $index));
     }
 
     public function testInvalidArgumentExceptionBubblesUpFromGetOrdinal()

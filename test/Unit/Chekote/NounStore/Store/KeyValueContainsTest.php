@@ -49,7 +49,6 @@ class KeyValueContainsTest extends StoreTest
     {
         $key = StoreTest::KEY;
         $parsedKey = $key;
-        $parsedIndex = null;
 
         /* @noinspection PhpUndefinedMethodInspection */
         Phake::expect($this->store, 1)->get($parsedKey)->thenReturn($storedValue);

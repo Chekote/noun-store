@@ -21,7 +21,7 @@ class KeyValueIsTest extends AssertTest
 
     public function testInvalidArgumentExceptionBubblesUpFromKeyExists()
     {
-        $value = 'Some Value';
+        $value = 'Another Value';
         $exception = new InvalidArgumentException('Key syntax is invalid');
 
         /* @noinspection PhpUndefinedMethodInspection */
@@ -35,8 +35,8 @@ class KeyValueIsTest extends AssertTest
 
     public function testMissingKeyThrowsOutOfBoundsException()
     {
-        $key = '10th Thing';
-        $value = 'Some Value';
+        $key = '16th Thing';
+        $value = 'Kiwi';
         $exception = new OutOfBoundsException("Entry '$key' was not found in the store.");
 
         /* @noinspection PhpUndefinedMethodInspection */
@@ -50,8 +50,8 @@ class KeyValueIsTest extends AssertTest
 
     public function testFailedMatchThrowsRuntimeException()
     {
-        $key = '10th Thing';
-        $value = 'Some Value';
+        $key = '17th Thing';
+        $value = 'Orange';
         $exception = new RuntimeException("Entry '$key' does not match '$value'");
 
         /* @noinspection PhpUndefinedMethodInspection */
@@ -65,8 +65,8 @@ class KeyValueIsTest extends AssertTest
 
     public function testSuccessfulMatchThrowsNoException()
     {
-        $key = '10th Thing';
-        $value = 'Some Value';
+        $key = '18th Thing';
+        $value = 'Pear';
 
         /* @noinspection PhpUndefinedMethodInspection */
         Phake::expect($this->assert, 1)->keyExists($key)->thenReturn($value);

@@ -64,7 +64,7 @@ class KeyExistsTest extends AssertTest
 
     public function testMissingKeyThrowsOutOfBoundsException()
     {
-        $key = '10th Thing';
+        $key = '11th Thing';
 
         $exception = new OutOfBoundsException("Entry '$key' was not found in the store.");
 
@@ -79,8 +79,8 @@ class KeyExistsTest extends AssertTest
 
     public function testStoredValueIsReturned()
     {
-        $key = '10th Thing';
-        $value = 'Some Value';
+        $key = '12th Thing';
+        $value = 'Apple';
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
