@@ -3,7 +3,7 @@
 use Phake_IMock;
 use Phake_Proxies_StubberProxy;
 use Phake_Proxies_VerifierProxy;
-use RuntimeException;
+use Unit\Chekote\Phake\Exception\ExpectationException;
 
 /**
  * Combines a Phake Stubber and Verifier to create an expectation.
@@ -40,18 +40,18 @@ class Expectation
     /**
      * Verifies that the expected method was called.
      *
-     * @throws RuntimeException            if a method has not been set for the expectation.
-     * @throws RuntimeException            if args have not been set for the expectation.
+     * @throws ExpectationException        if a method has not been set for the expectation.
+     * @throws ExpectationException        if args have not been set for the expectation.
      * @return Phake_Proxies_VerifierProxy
      */
     public function verify()
     {
         if (!isset($this->method)) {
-            throw new RuntimeException('Expectation method was not set');
+            throw new ExpectationException('Expectation method was not set');
         }
 
         if (!isset($this->args)) {
-            throw new RuntimeException('Expectation args were not set');
+            throw new ExpectationException('Expectation args were not set');
         }
 
         $method = $this->method;
