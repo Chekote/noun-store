@@ -54,20 +54,27 @@ class Store
      */
     public function get($key)
     {
+        $i = 0;
+
         return array_reduce(
             $this->keyService->parse($key),
-            static function ($carry, $item) {
+            static function ($carry, $item) use (&$i) {
                 list($noun, $index) = $item;
 
                 $carry = data_get($carry, $noun);
 
-                // Was a specific index requested?
-                if ($index !== null) {
-                    // Yes, fetch the specific index
-                    return data_get($carry, $index);
-                } else {
-                    // No, return the noun itself, or the latest noun if the noun is a collection
-                    return Arr::accessible($carry) ? end($carry) : $carry;
+                try {
+                    // Was a specific index requested?
+                    if ($index !== null) {
+                        // Yes, fetch the specific index
+                        return data_get($carry, $index);
+                    } else {
+                        // No, return the noun itself, or the latest noun if this is the
+                        // first component of the key, and the noun is a collection
+                        return $i === 0 && Arr::accessible($carry) ? end($carry) : $carry;
+                    }
+                } finally {
+                    ++$i;
                 }
             },
             $this->nouns

@@ -75,15 +75,15 @@ class GetTest extends TestCase
     public function happyPathDataProvider()
     {
         return [
-            'Noun'                       => ['Person',               self::$alice,  'Alice is the most recent Person in the store'],
-            'Nth Noun'                   => ['1st Person',           self::$bob,    'Bob is the 1st Person in the store'],
-            'Related Noun'               => ["Person's car",         self::$chevy,  'Alice is the most recent Person in the store, and her most recent car is the Chevrolet'],
-            'Related Nth Noun'           => ["Person's 1st car",     self::$ford,   'Alice is the most recent Person in the store, and her 1st car is the Ford'],
-            'Nth Nouns Related Noun'     => ["1st Person's car",     self::$toyota, 'Bob is the 1st Person in the store, and his most recent car is the Toyota'],
-            'Nth Nouns Related Nth Noun' => ["1st Person's 1st car", self::$kia,    'Bob is the 1st Person in the store, and his 1st car is the Kia'],
-            'Missing Noun'               => ['Dog',                  null,          'Dog does not exist in the store'],
-            'Missing Nth Noun'           => ['3rd Person',           null,          '3rd Person does not exist in the store'],
-            'Missing Related Noun'       => ["Person's dog",         null,          'Alice is the most recent Person in the store, but has no dog'],
+            'Noun'                       => ['Person',               self::$alice,                'Alice is the most recent Person in the store'],
+            'Nth Noun'                   => ['1st Person',           self::$bob,                  'Bob is the 1st Person in the store'],
+            'Related Noun'               => ["Person's car",         [self::$ford, self::$chevy], 'Alice is the most recent Person in the store, and cars are Ford and Chevrolet'],
+            'Related Nth Noun'           => ["Person's 1st car",     self::$ford,                 'Alice is the most recent Person in the store, and her 1st car is the Ford'],
+            'Nth Nouns Related Noun'     => ["1st Person's car",     [self::$kia, self::$toyota], 'Bob is the 1st Person in the store, and his cars are Kia and Toyota'],
+            'Nth Nouns Related Nth Noun' => ["1st Person's 1st car", self::$kia,                  'Bob is the 1st Person in the store, and his 1st car is the Kia'],
+            'Missing Noun'               => ['Dog',                  null,                        'Dog does not exist in the store'],
+            'Missing Nth Noun'           => ['3rd Person',           null,                        '3rd Person does not exist in the store'],
+            'Missing Related Noun'       => ["Person's dog",         null,                        'Alice is the most recent Person in the store, but has no dog'],
         ];
     }
 
