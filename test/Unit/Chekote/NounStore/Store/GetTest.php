@@ -65,8 +65,8 @@ class GetTest extends StoreTest
             'Non-existent noun returns null'                   => ['3rd ' . StoreTest::KEY,                   [[StoreTest::KEY,    2]],                   null],
             'Possessive noun w/o index string property'        => [StoreTest::KEY . "'s color",               [[StoreTest::KEY, null], ['color', null]],  'Blue'],
             'Possessive noun with index string property'       => ['1st ' . StoreTest::KEY . "'s color",      [[StoreTest::KEY, 0], ['color', null]],     'Red'],
-            'Possessive noun w/o index collection w/o index'   => [StoreTest::KEY . "'s option",              [[StoreTest::KEY, null], ['option', null]], 'Air Conditioning'],
-            'Possessive noun with index collection w/o index'  => ['1st ' . StoreTest::KEY . "'s option",     [[StoreTest::KEY, 0], ['option', null]],    'Heated Seats'],
+            'Possessive noun w/o index collection w/o index'   => [StoreTest::KEY . "'s option",              [[StoreTest::KEY, null], ['option', null]], ['Cruise Control', 'Air Conditioning']],
+            'Possessive noun with index collection w/o index'  => ['1st ' . StoreTest::KEY . "'s option",     [[StoreTest::KEY, 0], ['option', null]],    ['GPS', 'Heated Seats']],
             'Possessive noun w/o index collection with index'  => [StoreTest::KEY . "'s 1st option",          [[StoreTest::KEY, null], ['option', 0]],    'Cruise Control'],
             'Possessive noun with index collection with index' => ['1st ' . StoreTest::KEY . "'s 1st option", [[StoreTest::KEY, 0], ['option', 0]],       'GPS'],
         ];
