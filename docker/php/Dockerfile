@@ -1,5 +1,5 @@
 # chekote/noun-store-php
-FROM chekote/php:5-phpunit5
+FROM chekote/php:7-phpunit5
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \

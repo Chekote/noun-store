@@ -12,4 +12,4 @@ docker run \
     ${TTY} \
     -v $(pwd):/workdir \
     -v ~/.composer:/home/user/.composer \
-    chekote/noun-store-php:2018-08-20 php "$@"
+    chekote/noun-store-php:2020-05-11 php "$@"
