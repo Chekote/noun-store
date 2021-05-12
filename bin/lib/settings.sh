@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-COMPOSER_VERSION=1.9.3
+COMPOSER_VERSION=2.0.13
