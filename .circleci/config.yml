@@ -37,7 +37,7 @@ jobs:
 
       - run:
           name: PHPUnit Tests
-          command: ./bin/phpunit --coverage-clover=coverage.clover
+          command: php -d xdebug.mode=coverage ./bin/phpunit --coverage-clover=coverage.clover
 
       - run:
           name: Upload code coverage to Codecov
