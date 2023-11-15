@@ -87,4 +87,20 @@ class Assert
             throw new RuntimeException("Entry '$key' does not match '" . print_r($value, true) . "'");
         }
     }
+
+    /**
+     * Asserts that the key's value matches the specified class instance.
+     *
+     * @see    Key::build()
+     * @see    Key::parseNoun()
+     * @param  string $key          The key to check. Supports nth notation.
+     * @param  string $class        The expected class instance.
+     * @throws OutOfBoundsException If a value has not been stored for the specified key.
+     */
+    public function keyIsClass($key, $class)
+    {
+        if ($this->keyExists($key) && !$this->store->keyIsClass($key, $class)) {
+            throw new RuntimeException("Entry '$key' does not match instance of '$class'");
+        }
+    }
 }
