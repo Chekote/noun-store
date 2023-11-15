@@ -38,7 +38,7 @@ class Assert
      * @param  string                   $key The key to check. Supports nth notation.
      * @throws OutOfBoundsException     if a value has not been stored for the specified key.
      * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
-     *                                      that does not match the index.
+     *                                  that does not match the index.
      * @return mixed                    The value.
      */
     public function keyExists($key)
@@ -59,7 +59,7 @@ class Assert
      * @param  string                   $value The value expected to be contained within the key's value.
      * @throws OutOfBoundsException     If a value has not been stored for the specified key.
      * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
-     *                                        that does not match the index.
+     *                                  that does not match the index.
      */
     public function keyValueContains($key, $value)
     {
@@ -79,7 +79,7 @@ class Assert
      * @param  mixed                    $value The expected value.
      * @throws OutOfBoundsException     If a value has not been stored for the specified key.
      * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
-     *                                        that does not match the index.
+     *                                  that does not match the index.
      */
     public function keyValueIs($key, $value)
     {
@@ -93,8 +93,8 @@ class Assert
      *
      * @see    Key::build()
      * @see    Key::parseNoun()
-     * @param  string $key          The key to check. Supports nth notation.
-     * @param  string $class        The expected class instance.
+     * @param  string               $key   The key to check. Supports nth notation.
+     * @param  string               $class The expected class instance.
      * @throws OutOfBoundsException If a value has not been stored for the specified key.
      */
     public function keyIsClass($key, $class)

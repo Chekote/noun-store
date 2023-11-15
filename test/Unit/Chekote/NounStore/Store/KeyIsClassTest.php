@@ -1,9 +1,9 @@
 <?php namespace Unit\Chekote\NounStore\Store;
 
 use InvalidArgumentException;
+use stdClass;
 use Unit\Chekote\NounStore\Key\KeyTest;
 use Unit\Chekote\Phake\Phake;
-use stdClass;
 
 /**
  * @covers \Chekote\NounStore\Store::keyIsClass()

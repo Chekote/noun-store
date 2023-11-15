@@ -141,10 +141,10 @@ class Store
      *
      * @see    Key::build()
      * @see    Key::parseNoun()
-     * @param  string                   $key The key to check.
+     * @param  string                   $key   The key to check.
      * @param  string                   $class The class instance expected to be contained within the key's value.
-     * @return bool                     True if the key's value contains the specified class instance, false if not.
      * @throws InvalidArgumentException if the key syntax is invalid.
+     * @return bool                     True if the key's value contains the specified class instance, false if not.
      */
     public function keyIsClass($key, $class)
     {

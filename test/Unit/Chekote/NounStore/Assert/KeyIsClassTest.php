@@ -3,9 +3,9 @@
 use InvalidArgumentException;
 use OutOfBoundsException;
 use RuntimeException;
+use stdClass;
 use Unit\Chekote\NounStore\Key\KeyTest;
 use Unit\Chekote\Phake\Phake;
-use stdClass;
 
 /**
  * @covers \Chekote\NounStore\Assert::keyIsClass()
