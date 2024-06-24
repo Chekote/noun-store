@@ -38,7 +38,7 @@ class Key
      * @param  int|null                 $index The index (zero indexed) value for the key. If not specified, the method
      *                                         will not add an index notation to the key.
      * @throws InvalidArgumentException if $index is less than -1. Note: It should really be zero or higher, but this
-     *                                        method does not assert that. The error is bubbling up from getOrdinal()
+     *                                  method does not assert that. The error is bubbling up from getOrdinal()
      * @return string                   the key with the index, or just the key if index is null.
      */
     public function build($key, $index)
@@ -80,8 +80,8 @@ class Key
      * @param  string                   $key the key to parse.
      * @throws InvalidArgumentException if the key syntax is invalid.
      * @return array[]                  a array of tuples. With each tuple have the noun with the nth removed as the
-     *                                      1st item, and the index that the nth translates to as the 2nd or null if no
-     *                                      nth was specified.
+     *                                  1st item, and the index that the nth translates to as the 2nd or null if no
+     *                                  nth was specified.
      */
     public function parse($key)
     {
@@ -99,7 +99,7 @@ class Key
      * @param  string                   $noun the key to parse.
      * @throws InvalidArgumentException if the key syntax is invalid.
      * @return array                    a tuple, the 1st being the key with the nth removed, and the 2nd being the
-     *                                       index that the nth translates to, or null if no nth was specified.
+     *                                  index that the nth translates to, or null if no nth was specified.
      */
     protected function parseNoun($noun)
     {
