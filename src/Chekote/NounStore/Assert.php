@@ -98,11 +98,14 @@ class Assert
      * @param  string               $key   The key to check. Supports nth notation.
      * @param  string               $class The expected class instance.
      * @throws OutOfBoundsException If a value has not been stored for the specified key.
+     * @return mixed                The key's value.
      */
     public function keyIsClass($key, $class)
     {
         if ($this->keyExists($key) && !$this->store->keyIsClass($key, $class)) {
             throw new RuntimeException("Entry '$key' does not match instance of '$class'");
         }
+
+        return $this->store->get($key);
     }
 }
