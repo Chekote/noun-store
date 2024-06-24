@@ -90,13 +90,31 @@ class KeyIsClassTest extends AssertTest
     {
         $key = '15th Thing';
         $value = stdClass::class;
+        $instance = new $value();
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
-            Phake::expect($this->assert, 1)->keyExists($key)->thenReturn(new $value());
+            Phake::expect($this->assert, 1)->keyExists($key)->thenReturn($instance);
             Phake::expect($this->store, 1)->keyIsClass($key, $value)->thenReturn(true);
+            Phake::expect($this->store, 1)->get($key)->thenReturn($instance);
         }
 
         $this->assert->keyIsClass($key, $value);
+    }
+
+    public function testSuccessfulMatchReturnsValue()
+    {
+        $key = '16th Thing';
+        $value = stdClass::class;
+        $instance = new $value();
+
+        /* @noinspection PhpUndefinedMethodInspection */
+        {
+            Phake::expect($this->assert, 1)->keyExists($key)->thenReturn($instance);
+            Phake::expect($this->store, 1)->keyIsClass($key, $value)->thenReturn(true);
+            Phake::expect($this->store, 1)->get($key)->thenReturn($instance);
+        }
+
+        $this->assertSame($instance, $this->assert->keyIsClass($key, $value));
     }
 }

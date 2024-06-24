@@ -98,4 +98,18 @@ class KeyValueContainsTest extends AssertTest
 
         $this->assert->keyValueContains($key, $value);
     }
+
+    public function testSuccessfulMatchReturnsValue()
+    {
+        $key = '16th Thing';
+        $value = 'Raspberry';
+
+        /* @noinspection PhpUndefinedMethodInspection */
+        {
+            Phake::expect($this->assert, 1)->keyExists($key)->thenReturn($value);
+            Phake::expect($this->store, 1)->keyValueContains($key, $value)->thenReturn(true);
+        }
+
+        $this->assertSame($value, $this->assert->keyValueContains($key, $value));
+    }
 }
