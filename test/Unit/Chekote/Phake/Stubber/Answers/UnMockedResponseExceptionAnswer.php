@@ -1,12 +1,12 @@
 <?php namespace Unit\Chekote\Phake\Stubber\Answers;
 
-use Phake_Stubber_IAnswer;
+use Phake\Stubber\IAnswer;
 use Unit\Chekote\Phake\Exception\UnMockedResponseException;
 
 /**
  * Throws an Exception stating the class and method name that was called.
  */
-class UnMockedResponseExceptionAnswer implements Phake_Stubber_IAnswer
+class UnMockedResponseExceptionAnswer implements IAnswer
 {
     /**
      * {@inheritdoc}

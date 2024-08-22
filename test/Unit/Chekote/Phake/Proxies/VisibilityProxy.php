@@ -1,13 +1,13 @@
 <?php namespace Unit\Chekote\Phake\Proxies;
 
 use InvalidArgumentException;
-use Phake_Proxies_VisibilityProxy;
+use Phake\Proxies\VisibilityProxy as BaseVisibilityProxy;
 use ReflectionProperty;
 
 /**
- * Extends the Phake_Proxies_VisibilityProxy to allow accessing private or protected properties.
+ * Extends the base VisibilityProxy to allow accessing private or protected properties.
  */
-class VisibilityProxy extends Phake_Proxies_VisibilityProxy
+class VisibilityProxy extends BaseVisibilityProxy
 {
     /** @var object the object being proxied */
     protected $proxied;
