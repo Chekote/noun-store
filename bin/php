@@ -12,4 +12,4 @@ docker run \
     ${TTY} \
     -v $(pwd):/workdir \
     -v ~/.composer:/home/user/.composer \
-    chekote/php:7-phpunit5 php "$@"
+    chekote/phpunit10:php8.1 php "$@"
