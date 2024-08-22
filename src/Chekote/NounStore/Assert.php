@@ -57,6 +57,7 @@ class Assert
      * @see    Key::parseNoun()
      * @param  string                   $key    The key to check. Supports nth notation.
      * @param  string                   $needle The value expected to be contained within the key's value.
+     * @throws AssertionFailedException If the key's value does not contain the specified string.
      * @throws OutOfBoundsException     If a value has not been stored for the specified key.
      * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
      *                                  that does not match the index.
@@ -66,7 +67,7 @@ class Assert
         $haystack = $this->keyExists($key);
 
         if (!$this->store->keyValueContains($key, $needle)) {
-            throw new RuntimeException("Entry '$key' does not contain '$needle'");
+            throw new AssertionFailedException("Entry '$key' does not contain '$needle'");
         }
 
         return $haystack;
