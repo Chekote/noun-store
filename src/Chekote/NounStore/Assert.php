@@ -2,7 +2,6 @@
 
 use InvalidArgumentException;
 use OutOfBoundsException;
-use RuntimeException;
 
 /**
  * Makes assertions regarding store data.
@@ -57,6 +56,7 @@ class Assert
      * @see    Key::parseNoun()
      * @param  string                   $key    The key to check. Supports nth notation.
      * @param  string                   $needle The value expected to be contained within the key's value.
+     * @throws AssertionFailedException If the key's value does not contain the specified string.
      * @throws OutOfBoundsException     If a value has not been stored for the specified key.
      * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
      *                                  that does not match the index.
@@ -66,7 +66,7 @@ class Assert
         $haystack = $this->keyExists($key);
 
         if (!$this->store->keyValueContains($key, $needle)) {
-            throw new RuntimeException("Entry '$key' does not contain '$needle'");
+            throw new AssertionFailedException("Entry '$key' does not contain '$needle'");
         }
 
         return $haystack;
@@ -79,6 +79,7 @@ class Assert
      * @see    Key::parseNoun()
      * @param  string                   $key   The key to check. Supports nth notation.
      * @param  mixed                    $value The expected value.
+     * @throws AssertionFailedException If the key's value does not match the specified value.
      * @throws OutOfBoundsException     If a value has not been stored for the specified key.
      * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
      *                                  that does not match the index.
@@ -86,7 +87,7 @@ class Assert
     public function keyValueIs($key, $value)
     {
         if ($this->keyExists($key) != $value) {
-            throw new RuntimeException("Entry '$key' does not match '" . print_r($value, true) . "'");
+            throw new AssertionFailedException("Entry '$key' does not match '" . print_r($value, true) . "'");
         }
     }
 
@@ -95,15 +96,16 @@ class Assert
      *
      * @see    Key::build()
      * @see    Key::parseNoun()
-     * @param  string               $key   The key to check. Supports nth notation.
-     * @param  string               $class The expected class instance.
-     * @throws OutOfBoundsException If a value has not been stored for the specified key.
-     * @return mixed                The key's value.
+     * @param  string                   $key   The key to check. Supports nth notation.
+     * @param  string                   $class The expected class instance.
+     * @throws AssertionFailedException If the key's value is not an instance of the specified class.
+     * @throws OutOfBoundsException     If a value has not been stored for the specified key.
+     * @return mixed                    The key's value.
      */
     public function keyIsClass($key, $class)
     {
         if ($this->keyExists($key) && !$this->store->keyIsClass($key, $class)) {
-            throw new RuntimeException("Entry '$key' does not match instance of '$class'");
+            throw new AssertionFailedException("Entry '$key' does not match instance of '$class'");
         }
 
         return $this->store->get($key);
