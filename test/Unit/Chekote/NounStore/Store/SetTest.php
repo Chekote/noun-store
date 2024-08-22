@@ -4,7 +4,7 @@ use Unit\Chekote\Phake\Phake;
 
 class SetTest extends StoreTest
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -15,7 +15,7 @@ class SetTest extends StoreTest
     /**
      * Tests that calling store::set once stores the value correctly.
      */
-    public function testSetOnceStoresValue()
+    public function testSetOnceStoresValue(): void
     {
         $key = 'My Key';
         $value = 'My Value';
@@ -33,7 +33,7 @@ class SetTest extends StoreTest
     /**
      * Tests that calling store::set twice for the same key stores both values correctly.
      */
-    public function testSetTwiceForSameKeyStoresMultipleValues()
+    public function testSetTwiceForSameKeyStoresMultipleValues(): void
     {
         $key = 'My Key';
         $value1 = 'My Value';

@@ -26,7 +26,7 @@ class VisibilityProxy extends Phake_Proxies_VisibilityProxy
      * @throws InvalidArgumentException if the specified property does not exist on the proxied class.
      * @return mixed                    the value of the property.
      */
-    public function __get($property)
+    public function __get($property): mixed
     {
         return $this->makePropertyAccessible($property)->getValue($this->proxied);
     }
@@ -38,7 +38,7 @@ class VisibilityProxy extends Phake_Proxies_VisibilityProxy
      * @param  mixed                    $value    the value to set
      * @throws InvalidArgumentException if the specified property does not exist on the proxied class.
      */
-    public function __set($property, $value)
+    public function __set($property, $value): void
     {
         $this->makePropertyAccessible($property)->setValue($this->proxied, $value);
     }
@@ -50,7 +50,7 @@ class VisibilityProxy extends Phake_Proxies_VisibilityProxy
      * @throws InvalidArgumentException if the specified property does not exist on the proxied class.
      * @return ReflectionProperty       the property.
      */
-    protected function makePropertyAccessible($name)
+    protected function makePropertyAccessible($name): ReflectionProperty
     {
         if (!property_exists($this->proxied, $name)) {
             throw new InvalidArgumentException(

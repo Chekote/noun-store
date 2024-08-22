@@ -12,7 +12,7 @@ use Unit\Chekote\Phake\Phake;
  */
 class KeyIsClassTest extends AssertTest
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -35,7 +35,7 @@ class KeyIsClassTest extends AssertTest
 
     // An invalid key should not get past keyExists(), so this should never actually be possible. But we test
     // the behavior here to ensure that our method behaves correctly should the impossible ever occur.
-    public function testInvalidArgumentExceptionBubblesUpFromKeyValueContains()
+    public function testInvalidArgumentExceptionBubblesUpFromKeyValueContains(): void
     {
         $value = stdClass::class;
         $exception = new InvalidArgumentException('Key syntax is invalid');
@@ -52,7 +52,7 @@ class KeyIsClassTest extends AssertTest
         $this->assert->keyIsClass(KeyTest::INVALID_KEY, $value);
     }
 
-    public function testMissingKeyThrowsOutOfBoundsException()
+    public function testMissingKeyThrowsOutOfBoundsException(): void
     {
         $key = '13th Thing';
         $value = stdClass::class;
@@ -67,7 +67,7 @@ class KeyIsClassTest extends AssertTest
         $this->assert->keyIsClass($key, $value);
     }
 
-    public function testFailedMatchThrowsRuntimeException()
+    public function testFailedMatchThrowsRuntimeException(): void
     {
         $key = '14th Thing';
         $value = stdClass::class;
@@ -102,7 +102,7 @@ class KeyIsClassTest extends AssertTest
         $this->assert->keyIsClass($key, $value);
     }
 
-    public function testSuccessfulMatchReturnsValue()
+    public function testSuccessfulMatchReturnsValue(): void
     {
         $key = '16th Thing';
         $value = stdClass::class;

@@ -8,7 +8,7 @@ use Unit\Chekote\Phake\Phake;
  */
 class GetOrdinalTest extends KeyTest
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -16,7 +16,7 @@ class GetOrdinalTest extends KeyTest
         Phake::when($this->key)->getOrdinal(Phake::anyParameters())->thenCallParent();
     }
 
-    public function successScenariosDataProvider()
+    public function successScenariosDataProvider(): array
     {
         return [
             [0,   'th'], [1,   'st'], [2,   'nd'], [3,   'rd'],
@@ -28,7 +28,7 @@ class GetOrdinalTest extends KeyTest
         ];
     }
 
-    public function failureScenariosDataProvider()
+    public function failureScenariosDataProvider(): array
     {
         return [
             //nth  exception class                  exception message
@@ -43,7 +43,7 @@ class GetOrdinalTest extends KeyTest
      * @param int    $nth      the nth to pass to the method.
      * @param string $expected the ordinal expected from the method.
      */
-    public function testSuccessScenario($nth, $expected)
+    public function testSuccessScenario($nth, $expected): void
     {
         $this->assertEquals($expected, $this->key->getOrdinal($nth));
     }
@@ -56,7 +56,7 @@ class GetOrdinalTest extends KeyTest
      * @param string $exceptionClass   the expected class of the exception.
      * @param string $exceptionMessage the expected message of the exception.
      */
-    public function testFailureScenario($nth, $exceptionClass, $exceptionMessage)
+    public function testFailureScenario($nth, $exceptionClass, $exceptionMessage): void
     {
         $this->expectException($exceptionClass);
         $this->expectExceptionMessage($exceptionMessage);

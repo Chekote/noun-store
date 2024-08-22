@@ -7,7 +7,7 @@ use Unit\Chekote\Phake\Phake;
  */
 class IsPossessiveTest extends KeyTest
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -18,7 +18,7 @@ class IsPossessiveTest extends KeyTest
     /**
      * @dataProvider possessiveNouns
      */
-    public function testReturnsTrueForPossessiveNoun($noun)
+    public function testReturnsTrueForPossessiveNoun($noun): void
     {
         /* @noinspection PhpUndefinedMethodInspection */
         $this->assertTrue(
@@ -32,7 +32,7 @@ class IsPossessiveTest extends KeyTest
      *
      * @return array[]
      */
-    public function possessiveNouns()
+    public function possessiveNouns(): array
     {
         return [
             ["Customer's Car"],
@@ -45,7 +45,7 @@ class IsPossessiveTest extends KeyTest
     /**
      * @dataProvider nonPossessiveNouns
      */
-    public function testReturnsFalseForNonPossessiveNoun($noun)
+    public function testReturnsFalseForNonPossessiveNoun($noun): void
     {
         /* @noinspection PhpUndefinedMethodInspection */
         $this->assertFalse(
@@ -59,7 +59,7 @@ class IsPossessiveTest extends KeyTest
      *
      * @return array[]
      */
-    public function nonPossessiveNouns()
+    public function nonPossessiveNouns(): array
     {
         return [
             ['Item'],

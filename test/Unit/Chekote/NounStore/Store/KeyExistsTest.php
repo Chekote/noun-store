@@ -9,7 +9,7 @@ use Unit\Chekote\Phake\Phake;
  */
 class KeyExistsTest extends StoreTest
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -17,7 +17,7 @@ class KeyExistsTest extends StoreTest
         Phake::when($this->store)->keyExists(Phake::anyParameters())->thenCallParent();
     }
 
-    public function testInvalidArgumentExceptionBubblesUpFromGet()
+    public function testInvalidArgumentExceptionBubblesUpFromGet(): void
     {
         $exception = new InvalidArgumentException('Key syntax is invalid');
 
@@ -30,7 +30,7 @@ class KeyExistsTest extends StoreTest
         $this->store->keyExists(KeyTest::INVALID_KEY);
     }
 
-    public function returnDataProvider()
+    public function returnDataProvider(): array
     {
         return [
             // key,           value                          exists?
@@ -45,7 +45,7 @@ class KeyExistsTest extends StoreTest
      * @param mixed  $value  the value that the mocked Store::get() should return.
      * @param bool   $exists the expected result from keyExists().
      */
-    public function testReturn($key, $value, $exists)
+    public function testReturn($key, $value, $exists): void
     {
         /* @noinspection PhpUndefinedMethodInspection */
         Phake::expect($this->store, 1)->get($key)->thenReturn($value);

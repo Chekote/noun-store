@@ -42,9 +42,9 @@ class Expectation
      *
      * @throws ExpectationException        if a method has not been set for the expectation.
      * @throws ExpectationException        if args have not been set for the expectation.
-     * @return Phake_Proxies_VerifierProxy
+     * @return array|Phake_Proxies_VerifierProxy
      */
-    public function verify()
+    public function verify(): array|Phake_Proxies_VerifierProxy
     {
         if (!isset($this->method)) {
             throw new ExpectationException('Expectation method was not set');
@@ -63,9 +63,9 @@ class Expectation
      *
      * @param  string                     $method the method that is expected to be called.
      * @param  array                      $args   the args that are expected to be passed to the method.
-     * @return Phake_Proxies_StubberProxy
+     * @return Phake_Proxies_AnswerBinderProxy|Phake_Proxies_StubberProxy
      */
-    public function __call($method, array $args)
+    public function __call($method, array $args): Phake_Proxies_AnswerBinderProxy|Phake_Proxies_StubberProxy
     {
         // record the method and args for verification later
         $this->method = $method;

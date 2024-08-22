@@ -30,7 +30,7 @@ abstract class StoreTest extends TestCase
     /**
      * Sets up the classes initial static state.
      */
-    public static function initialize()
+    public static function initialize(): void
     {
         $car1 = new stdClass();
         $car1->color = 'Red';
@@ -48,7 +48,7 @@ abstract class StoreTest extends TestCase
     /**
      * Sets up the environment before each test.
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->key = Phake::strictMock(Key::class);
         $this->store = Phake::strictMockWithConstructor(Store::class, $this->key);
@@ -60,7 +60,7 @@ abstract class StoreTest extends TestCase
     /**
      * Tears down the environment after each test.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->key = null;
         $this->store = null;

@@ -15,7 +15,7 @@ abstract class KeyTest extends TestCase
     /**
      * Sets up the environment before each test.
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->key = Phake::strictMock(Key::class);
     }
@@ -23,7 +23,7 @@ abstract class KeyTest extends TestCase
     /**
      * Tears down the environment after each test.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->key = null;
 

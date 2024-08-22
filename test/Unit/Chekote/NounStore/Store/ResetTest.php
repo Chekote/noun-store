@@ -7,7 +7,7 @@ use Unit\Chekote\Phake\Phake;
  */
 class ResetTest extends StoreTest
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -15,7 +15,7 @@ class ResetTest extends StoreTest
         Phake::when($this->store)->reset()->thenCallParent();
     }
 
-    public function testResetSetsNounsToEmptyArray()
+    public function testResetSetsNounsToEmptyArray(): void
     {
         $this->store->reset();
 

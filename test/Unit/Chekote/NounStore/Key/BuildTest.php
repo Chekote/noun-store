@@ -8,7 +8,7 @@ use Unit\Chekote\Phake\Phake;
  */
 class BuildTest extends KeyTest
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -16,14 +16,14 @@ class BuildTest extends KeyTest
         Phake::when($this->key)->build(Phake::anyParameters())->thenCallParent();
     }
 
-    public function testNullIndexReturnsUnmodifiedKey()
+    public function testNullIndexReturnsUnmodifiedKey(): void
     {
         $key = 'Thing';
 
         $this->assertEquals($key, $this->key->build($key, null));
     }
 
-    public function testNonNullIndexReturnsModifiedKey()
+    public function testNonNullIndexReturnsModifiedKey(): void
     {
         $key = 'Thing';
         $index = 18;
@@ -35,7 +35,7 @@ class BuildTest extends KeyTest
         $this->assertEquals('19th Thing', $this->key->build($key, $index));
     }
 
-    public function testInvalidArgumentExceptionBubblesUpFromGetOrdinal()
+    public function testInvalidArgumentExceptionBubblesUpFromGetOrdinal(): void
     {
         $key = 'Thing';
         $index = -2;

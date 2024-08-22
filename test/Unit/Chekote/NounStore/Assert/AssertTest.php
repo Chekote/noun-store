@@ -20,7 +20,7 @@ abstract class AssertTest extends TestCase
     /**
      * Sets up the environment before each test.
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->key = Phake::strictMock(Key::class);
         $this->store = Phake::strictMockWithConstructor(Store::class, $this->key);
@@ -30,7 +30,7 @@ abstract class AssertTest extends TestCase
     /**
      * Tears down the environment after each test.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->assert = null;
         $this->key = null;

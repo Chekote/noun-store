@@ -10,7 +10,7 @@ use Unit\Chekote\Phake\Phake;
  */
 class KeyIsClassTest extends StoreTest
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -18,7 +18,7 @@ class KeyIsClassTest extends StoreTest
         Phake::when($this->store)->keyIsClass(Phake::anyParameters())->thenCallParent();
     }
 
-    public function testInvalidArgumentExceptionBubblesUpFromGet()
+    public function testInvalidArgumentExceptionBubblesUpFromGet(): void
     {
         $exception = new InvalidArgumentException('Key syntax is invalid');
 
@@ -31,7 +31,7 @@ class KeyIsClassTest extends StoreTest
         $this->store->keyIsClass(KeyTest::INVALID_KEY, stdClass::class);
     }
 
-    public function returnDataProvider()
+    public function returnDataProvider(): array
     {
         return [
             // storedValue,      checkedValue, expectedResult
@@ -46,7 +46,7 @@ class KeyIsClassTest extends StoreTest
      * @param string $checkedValue   the value that will be passed to keyIsClass()
      * @param bool   $expectedResult the expected results from keyIsClass()
      */
-    public function testReturn($storedValue, $checkedValue, $expectedResult)
+    public function testReturn($storedValue, $checkedValue, $expectedResult): void
     {
         $key = StoreTest::KEY;
         $parsedKey = $key;

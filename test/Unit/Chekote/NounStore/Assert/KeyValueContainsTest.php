@@ -11,7 +11,7 @@ use Unit\Chekote\Phake\Phake;
  */
 class KeyValueContainsTest extends AssertTest
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -19,7 +19,7 @@ class KeyValueContainsTest extends AssertTest
         Phake::when($this->assert)->keyValueContains(Phake::anyParameters())->thenCallParent();
     }
 
-    public function testInvalidArgumentExceptionBubblesUpFromKeyExists()
+    public function testInvalidArgumentExceptionBubblesUpFromKeyExists(): void
     {
         $value = 'A Value';
         $exception = new InvalidArgumentException('Key syntax is invalid');
@@ -35,7 +35,7 @@ class KeyValueContainsTest extends AssertTest
 
     // An invalid key should not get past keyExists(), so this should never actually be possible. But we test
     // the behavior here to ensure that our method behaves correctly should the impossible ever occur.
-    public function testInvalidArgumentExceptionBubblesUpFromKeyValueContains()
+    public function testInvalidArgumentExceptionBubblesUpFromKeyValueContains(): void
     {
         $value = 'Grape';
         $exception = new InvalidArgumentException('Key syntax is invalid');
@@ -52,7 +52,7 @@ class KeyValueContainsTest extends AssertTest
         $this->assert->keyValueContains(KeyTest::INVALID_KEY, $value);
     }
 
-    public function testMissingKeyThrowsOutOfBoundsException()
+    public function testMissingKeyThrowsOutOfBoundsException(): void
     {
         $key = '13th Thing';
         $value = 'Banana';
@@ -67,7 +67,7 @@ class KeyValueContainsTest extends AssertTest
         $this->assert->keyValueContains($key, $value);
     }
 
-    public function testFailedMatchThrowsRuntimeException()
+    public function testFailedMatchThrowsRuntimeException(): void
     {
         $key = '14th Thing';
         $value = 'Strawberry';
@@ -85,7 +85,7 @@ class KeyValueContainsTest extends AssertTest
         $this->assert->keyValueContains($key, $value);
     }
 
-    public function testSuccessfulMatchThrowsNoException()
+    public function testSuccessfulMatchThrowsNoException(): void
     {
         $key = '15th Thing';
         $value = 'Blackberry';
@@ -99,7 +99,7 @@ class KeyValueContainsTest extends AssertTest
         $this->assert->keyValueContains($key, $value);
     }
 
-    public function testSuccessfulMatchReturnsValue()
+    public function testSuccessfulMatchReturnsValue(): void
     {
         $key = '16th Thing';
         $value = 'Raspberry';

@@ -9,7 +9,7 @@ use Unit\Chekote\Phake\Phake;
  */
 class GetTest extends StoreTest
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -17,7 +17,7 @@ class GetTest extends StoreTest
         Phake::when($this->store)->get(Phake::anyParameters())->thenCallParent();
     }
 
-    public function testKeyIsParsedAndParsedValuesAreUsed()
+    public function testKeyIsParsedAndParsedValuesAreUsed(): void
     {
         $key = '2nd ' . StoreTest::KEY;
         $parsedKey = StoreTest::KEY;
@@ -48,7 +48,7 @@ class GetTest extends StoreTest
      * @param array[] $parsedKey the parsed key.
      * @param mixed   $expected  the expected value.
      */
-    public function testHappyPath($key, $parsedKey, $expected)
+    public function testHappyPath($key, $parsedKey, $expected): void
     {
         /* @noinspection PhpUndefinedMethodInspection */
         Phake::expect($this->key, 1)->parse($key)->thenReturn($parsedKey);
@@ -56,7 +56,7 @@ class GetTest extends StoreTest
         $this->assertEquals($expected, $this->store->get($key));
     }
 
-    public function happyPathProvider()
+    public function happyPathProvider(): array
     {
         return [
             //                                                     key                                        parsed key                                  expected

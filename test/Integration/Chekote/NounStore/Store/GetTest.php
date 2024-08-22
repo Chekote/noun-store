@@ -33,7 +33,7 @@ class GetTest extends TestCase
     /**
      * Sets up the classes initial static state.
      */
-    public static function initialize()
+    public static function initialize(): void
     {
         self::$store = new Store();
 
@@ -67,12 +67,12 @@ class GetTest extends TestCase
      * @param mixed  $expectedValue the expected value for the key.
      * @param string $message       the message to pass to the assertion, for reporting if the test fails.
      */
-    public function testHappyPath($key, $expectedValue, $message)
+    public function testHappyPath($key, $expectedValue, $message): void
     {
         $this->assertSame($expectedValue, self::$store->get($key), $message);
     }
 
-    public function happyPathDataProvider()
+    public function happyPathDataProvider(): array
     {
         return [
             'Noun'                       => ['Person',               self::$alice,                'Alice is the most recent Person in the store'],
@@ -87,7 +87,7 @@ class GetTest extends TestCase
         ];
     }
 
-    public function testInvalidKeyThrowsInvalidArgumentException()
+    public function testInvalidKeyThrowsInvalidArgumentException(): void
     {
         $invalidKey = "Customer's's Car";
 

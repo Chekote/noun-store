@@ -8,7 +8,7 @@ use Unit\Chekote\Phake\Phake;
  */
 class ParseNounTest extends KeyTest
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -21,7 +21,7 @@ class ParseNounTest extends KeyTest
      *
      * @return array
      */
-    public function successScenarioDataProvider()
+    public function successScenarioDataProvider(): array
     {
         return [
             // key          parsedKey,  parsedIndex
@@ -43,7 +43,7 @@ class ParseNounTest extends KeyTest
      * @param string $parsedKey   the expected resulting parsed key
      * @param int    $parsedIndex the expected resulting parsed index
      */
-    public function testSuccessScenario($key, $parsedKey, $parsedIndex)
+    public function testSuccessScenario($key, $parsedKey, $parsedIndex): void
     {
         /* @noinspection PhpUndefinedMethodInspection */
         $this->assertEquals(
@@ -57,7 +57,7 @@ class ParseNounTest extends KeyTest
      *
      * @return array
      */
-    public function invalidKeyDataProvider()
+    public function invalidKeyDataProvider(): array
     {
         return [
             ["Thing's stuff"],
@@ -71,7 +71,7 @@ class ParseNounTest extends KeyTest
      * @dataProvider invalidKeyDataProvider
      * @param string $key the key to parse
      */
-    public function testParseKeyThrowsExceptionIfKeyAndIndexMismatch($key)
+    public function testParseKeyThrowsExceptionIfKeyAndIndexMismatch($key): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Key syntax is invalid');

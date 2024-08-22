@@ -9,7 +9,7 @@ use Unit\Chekote\Phake\Phake;
  */
 class KeyValueContainsTest extends StoreTest
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -17,7 +17,7 @@ class KeyValueContainsTest extends StoreTest
         Phake::when($this->store)->keyValueContains(Phake::anyParameters())->thenCallParent();
     }
 
-    public function testInvalidArgumentExceptionBubblesUpFromGet()
+    public function testInvalidArgumentExceptionBubblesUpFromGet(): void
     {
         $exception = new InvalidArgumentException('Key syntax is invalid');
 
@@ -30,7 +30,7 @@ class KeyValueContainsTest extends StoreTest
         $this->store->keyValueContains(KeyTest::INVALID_KEY, "Doesn't matter");
     }
 
-    public function returnDataProvider()
+    public function returnDataProvider(): array
     {
         return [
             // storedValue,      checkedValue, expectedResult
@@ -45,7 +45,7 @@ class KeyValueContainsTest extends StoreTest
      * @param string $checkedValue   the value that will be passed to keyValueContains()
      * @param bool   $expectedResult the expected results from keyExists()
      */
-    public function testReturn($storedValue, $checkedValue, $expectedResult)
+    public function testReturn($storedValue, $checkedValue, $expectedResult): void
     {
         $key = StoreTest::KEY;
         $parsedKey = $key;

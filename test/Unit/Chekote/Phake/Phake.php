@@ -21,7 +21,7 @@ abstract class Phake extends BasePhake
     /** @var Expectation[] */
     protected static $expectations;
 
-    public static function clearExpectations()
+    public static function clearExpectations(): void
     {
         self::$expectations = [];
     }
@@ -37,7 +37,7 @@ abstract class Phake extends BasePhake
      * @param  int         $count the expected call count.
      * @return Expectation the expectation.
      */
-    public static function expect(Phake_IMock $mock, $count)
+    public static function expect(Phake_IMock $mock, $count): Expectation
     {
         $expectation = new Expectation($mock, $count);
         self::$expectations[] = $expectation;
@@ -51,7 +51,7 @@ abstract class Phake extends BasePhake
      * @throws RuntimeException if a method has not been set for the expectation.
      * @throws RuntimeException if args have not been set for the expectation.
      */
-    public static function verifyExpectations()
+    public static function verifyExpectations(): void
     {
         foreach (self::$expectations as $expectation) {
             $expectation->verify();
@@ -75,7 +75,7 @@ abstract class Phake extends BasePhake
      * @param  string      $className the name of the class to mock.
      * @return Phake_IMock the mocked class instance.
      */
-    public static function strictMock($className)
+    public static function strictMock($className): Phake_IMock
     {
         return self::mock($className, new Phake_Stubber_AnswerCollection(new UnMockedResponseExceptionAnswer()));
     }
@@ -92,7 +92,7 @@ abstract class Phake extends BasePhake
      * @param  mixed       ...$args   arguments for the classes constructor.
      * @return Phake_IMock the mocked class instance.
      */
-    public static function strictMockWithConstructor($className, ...$args)
+    public static function strictMockWithConstructor($className, ...$args): Phake_IMock
     {
         return self::getPhake()->mock(
             $className,

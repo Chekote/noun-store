@@ -11,7 +11,7 @@ class UnMockedResponseExceptionAnswer implements Phake_Stubber_IAnswer
     /**
      * {@inheritdoc}
      */
-    public function getAnswerCallback($context, $method)
+    public function getAnswerCallback($context, $method): callable
     {
         $class = get_parent_class($context);
 
@@ -25,7 +25,7 @@ class UnMockedResponseExceptionAnswer implements Phake_Stubber_IAnswer
     /**
      * {@inheritdoc}
      */
-    public function processAnswer($answer)
+    public function processAnswer($answer): void
     {
     }
 }

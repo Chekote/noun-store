@@ -25,7 +25,7 @@ class Store
      *
      * @return void
      */
-    public function reset()
+    public function reset(): void
     {
         $this->nouns = [];
     }
@@ -52,7 +52,7 @@ class Store
      * @throws InvalidArgumentException if the key syntax is invalid.
      * @return mixed                    The value, or null if no value exists for the specified key/index combination.
      */
-    public function get($key)
+    public function get($key): mixed
     {
         $i = 0;
 
@@ -87,7 +87,7 @@ class Store
      * @param  string $key The key to retrieve the values for. Does not support nth notation.
      * @return array  The values, or an empty array if no value exists for the specified key.
      */
-    public function getAll($key)
+    public function getAll($key): array
     {
         return isset($this->nouns[$key]) ? $this->nouns[$key] : [];
     }
@@ -101,7 +101,7 @@ class Store
      * @throws InvalidArgumentException if the key syntax is invalid.
      * @return bool                     True if the a value has been stored, false if not.
      */
-    public function keyExists($key)
+    public function keyExists($key): bool
     {
         return $this->get($key) !== null;
     }
@@ -116,7 +116,7 @@ class Store
      * @throws InvalidArgumentException if the key syntax is invalid.
      * @return bool                     True if the key's value contains the specified string, false if not.
      */
-    public function keyValueContains($key, $value)
+    public function keyValueContains($key, $value): bool
     {
         $actual = $this->get($key);
 
@@ -131,7 +131,7 @@ class Store
      * @param string $key   The key to store the value under. Does not support nth notation.
      * @param mixed  $value The value to store.
      */
-    public function set($key, $value)
+    public function set($key, $value): void
     {
         $this->nouns[$key][] = $value;
     }
@@ -146,7 +146,7 @@ class Store
      * @throws InvalidArgumentException if the key syntax is invalid.
      * @return bool                     True if the key's value contains the specified class instance, false if not.
      */
-    public function keyIsClass($key, $class)
+    public function keyIsClass($key, $class): bool
     {
         $actual = $this->get($key);
 

@@ -10,7 +10,7 @@ use Unit\Chekote\Phake\Phake;
  */
 class KeyExistsTest extends AssertTest
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -18,7 +18,7 @@ class KeyExistsTest extends AssertTest
         Phake::when($this->assert)->keyExists(Phake::anyParameters())->thenCallParent();
     }
 
-    public function testKeyIsParsedAndParsedValuesAreUsed()
+    public function testKeyIsParsedAndParsedValuesAreUsed(): void
     {
         $key = '10th Thing';
 
@@ -31,7 +31,7 @@ class KeyExistsTest extends AssertTest
         $this->assert->keyExists($key);
     }
 
-    public function testInvalidArgumentExceptionBubblesUpFromKeyExists()
+    public function testInvalidArgumentExceptionBubblesUpFromKeyExists(): void
     {
         $exception = new InvalidArgumentException('Key syntax is invalid');
 
@@ -46,7 +46,7 @@ class KeyExistsTest extends AssertTest
 
     // An invalid key should not get past keyExists(), so this should never actually be possible. But we test
     // the behavior here to ensure that our method behaves correctly should the impossible ever occur.
-    public function testInvalidArgumentExceptionBubblesUpFromGet()
+    public function testInvalidArgumentExceptionBubblesUpFromGet(): void
     {
         $exception = new InvalidArgumentException('Key syntax is invalid');
 
@@ -62,7 +62,7 @@ class KeyExistsTest extends AssertTest
         $this->assert->keyExists(KeyTest::INVALID_KEY);
     }
 
-    public function testMissingKeyThrowsOutOfBoundsException()
+    public function testMissingKeyThrowsOutOfBoundsException(): void
     {
         $key = '11th Thing';
 
@@ -77,7 +77,7 @@ class KeyExistsTest extends AssertTest
         $this->assert->keyExists($key);
     }
 
-    public function testStoredValueIsReturned()
+    public function testStoredValueIsReturned(): void
     {
         $key = '12th Thing';
         $value = 'Apple';

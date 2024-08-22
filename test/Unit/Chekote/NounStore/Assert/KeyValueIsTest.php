@@ -11,7 +11,7 @@ use Unit\Chekote\Phake\Phake;
  */
 class KeyValueIsTest extends AssertTest
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -19,7 +19,7 @@ class KeyValueIsTest extends AssertTest
         Phake::when($this->assert)->keyValueIs(Phake::anyParameters())->thenCallParent();
     }
 
-    public function testInvalidArgumentExceptionBubblesUpFromKeyExists()
+    public function testInvalidArgumentExceptionBubblesUpFromKeyExists(): void
     {
         $value = 'Another Value';
         $exception = new InvalidArgumentException('Key syntax is invalid');
@@ -33,7 +33,7 @@ class KeyValueIsTest extends AssertTest
         $this->assert->keyValueIs(KeyTest::INVALID_KEY, $value);
     }
 
-    public function testMissingKeyThrowsOutOfBoundsException()
+    public function testMissingKeyThrowsOutOfBoundsException(): void
     {
         $key = '16th Thing';
         $value = 'Kiwi';
@@ -48,7 +48,7 @@ class KeyValueIsTest extends AssertTest
         $this->assert->keyValueIs($key, $value);
     }
 
-    public function testFailedMatchThrowsRuntimeException()
+    public function testFailedMatchThrowsRuntimeException(): void
     {
         $key = '17th Thing';
         $value = 'Orange';
@@ -63,7 +63,7 @@ class KeyValueIsTest extends AssertTest
         $this->assert->keyValueIs($key, $value);
     }
 
-    public function testSuccessfulMatchThrowsNoException()
+    public function testSuccessfulMatchThrowsNoException(): void
     {
         $key = '18th Thing';
         $value = 'Pear';
