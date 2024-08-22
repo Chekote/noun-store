@@ -1,8 +1,8 @@
 <?php namespace Unit\Chekote\NounStore\Assert;
 
+use Chekote\NounStore\AssertionFailedException;
 use InvalidArgumentException;
 use OutOfBoundsException;
-use RuntimeException;
 use Unit\Chekote\NounStore\Key\KeyTest;
 use Unit\Chekote\Phake\Phake;
 
@@ -71,7 +71,7 @@ class KeyValueContainsTest extends AssertTest
     {
         $key = '14th Thing';
         $value = 'Strawberry';
-        $exception = new RuntimeException("Entry '$key' does not contain '$value'");
+        $exception = new AssertionFailedException("Entry '$key' does not contain '$value'");
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
