@@ -1,8 +1,8 @@
 <?php namespace Unit\Chekote\NounStore\Assert;
 
+use Chekote\NounStore\AssertionFailedException;
 use InvalidArgumentException;
 use OutOfBoundsException;
-use RuntimeException;
 use Unit\Chekote\NounStore\Key\KeyTest;
 use Unit\Chekote\Phake\Phake;
 
@@ -52,7 +52,7 @@ class KeyValueIsTest extends AssertTest
     {
         $key = '17th Thing';
         $value = 'Orange';
-        $exception = new RuntimeException("Entry '$key' does not match '$value'");
+        $exception = new AssertionFailedException("Entry '$key' does not match '$value'");
 
         /* @noinspection PhpUndefinedMethodInspection */
         Phake::expect($this->assert, 1)->keyExists($key)->thenReturn('Some Other Value');
