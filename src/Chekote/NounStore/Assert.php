@@ -80,6 +80,7 @@ class Assert
      * @see    Key::parseNoun()
      * @param  string                   $key   The key to check. Supports nth notation.
      * @param  mixed                    $value The expected value.
+     * @throws AssertionFailedException If the key's value does not match the specified value.
      * @throws OutOfBoundsException     If a value has not been stored for the specified key.
      * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
      *                                  that does not match the index.
@@ -87,7 +88,7 @@ class Assert
     public function keyValueIs($key, $value)
     {
         if ($this->keyExists($key) != $value) {
-            throw new RuntimeException("Entry '$key' does not match '" . print_r($value, true) . "'");
+            throw new AssertionFailedException("Entry '$key' does not match '" . print_r($value, true) . "'");
         }
     }
 
