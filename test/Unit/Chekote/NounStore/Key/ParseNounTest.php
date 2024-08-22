@@ -30,6 +30,7 @@ class ParseNounTest extends KeyTest
             ['2nd Thing',   'Thing',              1],
             ['3rd Thing',   'Thing',              2],
             ['4th Thing',   'Thing',              3],
+            ['10th Thing',  'Thing',              9],
             ['478th Thing', 'Thing',            477],
         ];
     }

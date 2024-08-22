@@ -103,7 +103,7 @@ class Key
      */
     protected function parseNoun($noun)
     {
-        if (!preg_match("/^(([1-9][0-9]*)(?:st|nd|rd|th) )?([^']+)$/", $noun, $matches)) {
+        if (!preg_match("/^(([1-9]\d*)(?:st|nd|rd|th) )?([^']+)$/", $noun, $matches)) {
             throw new InvalidArgumentException('Key syntax is invalid');
         }
 
