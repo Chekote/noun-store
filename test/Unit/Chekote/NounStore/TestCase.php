@@ -3,7 +3,7 @@
 use PHPUnit\Framework\TestCase as BaseTestCase;
 use Unit\Chekote\Phake\Phake;
 
-class TestCase extends BaseTestCase
+abstract class TestCase extends BaseTestCase
 {
     /**
      * @before
