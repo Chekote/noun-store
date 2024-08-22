@@ -59,7 +59,7 @@ abstract class Phake extends BasePhake
     }
 
     /**
-     * Increases allows calling private and protected instance methods on the given mock.
+     * Overrides the base method to use our custom VisibilityProxy.
      *
      * @param  Phake_IMock     $mock
      * @return VisibilityProxy $mock
