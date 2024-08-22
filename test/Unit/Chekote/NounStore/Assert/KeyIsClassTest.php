@@ -1,8 +1,8 @@
 <?php namespace Unit\Chekote\NounStore\Assert;
 
+use Chekote\NounStore\AssertionFailedException;
 use InvalidArgumentException;
 use OutOfBoundsException;
-use RuntimeException;
 use stdClass;
 use Unit\Chekote\NounStore\Key\KeyTest;
 use Unit\Chekote\Phake\Phake;
@@ -71,7 +71,7 @@ class KeyIsClassTest extends AssertTest
     {
         $key = '14th Thing';
         $value = stdClass::class;
-        $exception = new RuntimeException("Entry '$key' does not match instance of '$value'");
+        $exception = new AssertionFailedException("Entry '$key' does not match instance of '$value'");
         $randomClass = $this;
 
         /* @noinspection PhpUndefinedMethodInspection */
