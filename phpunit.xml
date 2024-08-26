@@ -7,8 +7,7 @@
          bootstrap="vendor/autoload.php"
          colors="true"
          processIsolation="false"
-         stopOnFailure="false"
-         verbose="true">
+         stopOnFailure="false">
     <testsuites>
         <testsuite name="All">
             <directory>./test</directory>
