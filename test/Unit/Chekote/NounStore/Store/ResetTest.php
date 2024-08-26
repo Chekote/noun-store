@@ -5,7 +5,7 @@ use Unit\Chekote\Phake\Phake;
 /**
  * @covers \Chekote\NounStore\Store::reset()
  */
-class ResetTest extends StoreTest
+class ResetTest extends StoreTestCase
 {
     public function setUp(): void
     {

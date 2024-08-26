@@ -2,7 +2,7 @@
 
 use InvalidArgumentException;
 use OutOfBoundsException;
-use Unit\Chekote\NounStore\Key\KeyTest;
+use Unit\Chekote\NounStore\Key\KeyTestCase;
 use Unit\Chekote\Phake\Phake;
 
 /**
@@ -36,12 +36,12 @@ class KeyExistsTest extends AssertTestCase
         $exception = new InvalidArgumentException('Key syntax is invalid');
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::expect($this->store, 1)->keyExists(KeyTest::INVALID_KEY)->thenThrow($exception);
+        Phake::expect($this->store, 1)->keyExists(KeyTestCase::INVALID_KEY)->thenThrow($exception);
 
         $this->expectException(get_class($exception));
         $this->expectExceptionMessage($exception->getMessage());
 
-        $this->assert->keyExists(KeyTest::INVALID_KEY);
+        $this->assert->keyExists(KeyTestCase::INVALID_KEY);
     }
 
     // An invalid key should not get past keyExists(), so this should never actually be possible. But we test
@@ -52,14 +52,14 @@ class KeyExistsTest extends AssertTestCase
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
-            Phake::expect($this->store, 1)->keyExists(KeyTest::INVALID_KEY)->thenReturn(true);
-            Phake::expect($this->store, 1)->get(KeyTest::INVALID_KEY)->thenThrow($exception);
+            Phake::expect($this->store, 1)->keyExists(KeyTestCase::INVALID_KEY)->thenReturn(true);
+            Phake::expect($this->store, 1)->get(KeyTestCase::INVALID_KEY)->thenThrow($exception);
         }
 
         $this->expectException(get_class($exception));
         $this->expectExceptionMessage($exception->getMessage());
 
-        $this->assert->keyExists(KeyTest::INVALID_KEY);
+        $this->assert->keyExists(KeyTestCase::INVALID_KEY);
     }
 
     public function testMissingKeyThrowsOutOfBoundsException(): void

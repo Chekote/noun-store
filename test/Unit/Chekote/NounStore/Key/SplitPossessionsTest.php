@@ -5,7 +5,7 @@ use Unit\Chekote\Phake\Phake;
 /**
  * @covers \Chekote\NounStore\Key::splitPossessions()
  */
-class SplitPossessionsTest extends KeyTest
+class SplitPossessionsTest extends KeyTestCase
 {
     public function setUp(): void
     {

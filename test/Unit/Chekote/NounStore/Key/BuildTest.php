@@ -6,7 +6,7 @@ use Unit\Chekote\Phake\Phake;
 /**
  * @covers \Chekote\NounStore\Key::build()
  */
-class BuildTest extends KeyTest
+class BuildTest extends KeyTestCase
 {
     public function setUp(): void
     {

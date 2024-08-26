@@ -8,7 +8,7 @@ use Unit\Chekote\NounStore\Assert\StorePhake;
 use Unit\Chekote\NounStore\TestCase;
 use Unit\Chekote\Phake\Phake;
 
-abstract class StoreTest extends TestCase
+abstract class StoreTestCase extends TestCase
 {
     /** @var KeyPhake */
     protected $key;
@@ -23,7 +23,7 @@ abstract class StoreTest extends TestCase
     protected static $SECOND_VALUE;
 
     /** @var stdClass the most recent value stored under self::KEY */
-    protected static $MOST_RECENT_VALUE;
+    public static $MOST_RECENT_VALUE;
 
     const KEY = 'Car';
 
@@ -69,4 +69,4 @@ abstract class StoreTest extends TestCase
     }
 }
 
-StoreTest::initialize();
+StoreTestCase::initialize();

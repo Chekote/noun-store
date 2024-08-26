@@ -2,7 +2,7 @@
 
 use Unit\Chekote\Phake\Phake;
 
-class SetTest extends StoreTest
+class SetTest extends StoreTestCase
 {
     public function setUp(): void
     {

@@ -5,7 +5,7 @@ use Unit\Chekote\Phake\Phake;
 /**
  * @covers \Chekote\NounStore\Store::getAll()
  */
-class GetAllTest extends StoreTest
+class GetAllTest extends StoreTestCase
 {
     public function setUp(): void
     {

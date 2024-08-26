@@ -5,7 +5,7 @@ use Unit\Chekote\Phake\Phake;
 /**
  * @covers \Chekote\NounStore\Key::isPossessive()
  */
-class IsPossessiveTest extends KeyTest
+class IsPossessiveTest extends KeyTestCase
 {
     public function setUp(): void
     {

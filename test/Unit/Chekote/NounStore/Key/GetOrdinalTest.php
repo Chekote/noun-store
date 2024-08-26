@@ -6,7 +6,7 @@ use Unit\Chekote\Phake\Phake;
 /**
  * @covers \Chekote\NounStore\Key::getOrdinal()
  */
-class GetOrdinalTest extends KeyTest
+class GetOrdinalTest extends KeyTestCase
 {
     public function setUp(): void
     {

@@ -6,7 +6,7 @@ use Unit\Chekote\Phake\Phake;
 /**
  * @covers \Chekote\NounStore\Key::parseNoun()
  */
-class ParseNounTest extends KeyTest
+class ParseNounTest extends KeyTestCase
 {
     public function setUp(): void
     {

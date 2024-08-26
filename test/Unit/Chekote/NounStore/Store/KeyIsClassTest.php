@@ -2,13 +2,13 @@
 
 use InvalidArgumentException;
 use stdClass;
-use Unit\Chekote\NounStore\Key\KeyTest;
+use Unit\Chekote\NounStore\Key\KeyTestCase;
 use Unit\Chekote\Phake\Phake;
 
 /**
  * @covers \Chekote\NounStore\Store::keyIsClass()
  */
-class KeyIsClassTest extends StoreTest
+class KeyIsClassTest extends StoreTestCase
 {
     public function setUp(): void
     {
@@ -23,18 +23,18 @@ class KeyIsClassTest extends StoreTest
         $exception = new InvalidArgumentException('Key syntax is invalid');
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::expect($this->store, 1)->get(KeyTest::INVALID_KEY)->thenThrow($exception);
+        Phake::expect($this->store, 1)->get(KeyTestCase::INVALID_KEY)->thenThrow($exception);
 
         $this->expectException(get_class($exception));
         $this->expectExceptionMessage($exception->getMessage());
 
-        $this->store->keyIsClass(KeyTest::INVALID_KEY, stdClass::class);
+        $this->store->keyIsClass(KeyTestCase::INVALID_KEY, stdClass::class);
     }
 
     public static function returnDataProvider(): array
     {
         return [
-            // storedValue,      checkedValue, expectedResult
+            // storedValue,   checkedValue,           expectedResult
             [ new stdClass(), stdClass::class,        true   ],
             [ new stdClass(), KeyIsClassTest::class,  false  ],
         ];
@@ -48,7 +48,7 @@ class KeyIsClassTest extends StoreTest
      */
     public function testReturn($storedValue, $checkedValue, $expectedResult): void
     {
-        $key = StoreTest::KEY;
+        $key = StoreTestCase::KEY;
         $parsedKey = $key;
 
         /* @noinspection PhpUndefinedMethodInspection */

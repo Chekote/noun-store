@@ -3,7 +3,7 @@
 use Chekote\NounStore\AssertionFailedException;
 use InvalidArgumentException;
 use OutOfBoundsException;
-use Unit\Chekote\NounStore\Key\KeyTest;
+use Unit\Chekote\NounStore\Key\KeyTestCase;
 use Unit\Chekote\Phake\Phake;
 
 /**
@@ -25,12 +25,12 @@ class KeyValueIsTest extends AssertTestCase
         $exception = new InvalidArgumentException('Key syntax is invalid');
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::expect($this->assert, 1)->keyExists(KeyTest::INVALID_KEY)->thenThrow($exception);
+        Phake::expect($this->assert, 1)->keyExists(KeyTestCase::INVALID_KEY)->thenThrow($exception);
 
         $this->expectException(get_class($exception));
         $this->expectExceptionMessage($exception->getMessage());
 
-        $this->assert->keyValueIs(KeyTest::INVALID_KEY, $value);
+        $this->assert->keyValueIs(KeyTestCase::INVALID_KEY, $value);
     }
 
     public function testMissingKeyThrowsOutOfBoundsException(): void

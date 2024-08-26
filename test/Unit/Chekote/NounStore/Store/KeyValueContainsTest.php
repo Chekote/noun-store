@@ -1,13 +1,13 @@
 <?php namespace Unit\Chekote\NounStore\Store;
 
 use InvalidArgumentException;
-use Unit\Chekote\NounStore\Key\KeyTest;
+use Unit\Chekote\NounStore\Key\KeyTestCase;
 use Unit\Chekote\Phake\Phake;
 
 /**
  * @covers \Chekote\NounStore\Store::keyValueContains()
  */
-class KeyValueContainsTest extends StoreTest
+class KeyValueContainsTest extends StoreTestCase
 {
     public function setUp(): void
     {
@@ -22,12 +22,12 @@ class KeyValueContainsTest extends StoreTest
         $exception = new InvalidArgumentException('Key syntax is invalid');
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::expect($this->store, 1)->get(KeyTest::INVALID_KEY)->thenThrow($exception);
+        Phake::expect($this->store, 1)->get(KeyTestCase::INVALID_KEY)->thenThrow($exception);
 
         $this->expectException(get_class($exception));
         $this->expectExceptionMessage($exception->getMessage());
 
-        $this->store->keyValueContains(KeyTest::INVALID_KEY, "Doesn't matter");
+        $this->store->keyValueContains(KeyTestCase::INVALID_KEY, "Doesn't matter");
     }
 
     public static function returnDataProvider(): array
@@ -47,7 +47,7 @@ class KeyValueContainsTest extends StoreTest
      */
     public function testReturn($storedValue, $checkedValue, $expectedResult): void
     {
-        $key = StoreTest::KEY;
+        $key = StoreTestCase::KEY;
         $parsedKey = $key;
 
         /* @noinspection PhpUndefinedMethodInspection */
