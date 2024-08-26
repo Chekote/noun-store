@@ -14,17 +14,17 @@ use Unit\Chekote\Phake\Exception\ExpectationException;
  */
 class Expectation
 {
-    /** @var IMock the mock object */
-    protected $mock;
+    /** the mock object */
+    protected IMock $mock;
 
-    /** @var string the method expected to be called */
-    protected $method;
+    /** the method expected to be called */
+    protected string $method;
 
-    /** @var array the arguments expected to be passed to the method */
-    protected $args;
+    /** the arguments expected to be passed to the method */
+    protected array $args;
 
-    /** @var int the number of times the method is expected to be called */
-    protected $count;
+    /** the number of times the method is expected to be called */
+    protected int $count;
 
     /**
      * Expectation constructor.

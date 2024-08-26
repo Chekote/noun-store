@@ -8,11 +8,9 @@ use OutOfBoundsException;
  */
 class Assert
 {
-    /** @var Store */
-    protected $store;
+    protected Store $store;
 
-    /** @var Key */
-    protected $keyService;
+    protected Key $keyService;
 
     /**
      * Assert constructor.

@@ -2,6 +2,7 @@
 
 use Chekote\NounStore\Key;
 use Chekote\NounStore\Store;
+use Phake\IMock;
 use stdClass;
 use Unit\Chekote\NounStore\Assert\KeyPhake;
 use Unit\Chekote\NounStore\Assert\StorePhake;
@@ -10,20 +11,18 @@ use Unit\Chekote\Phake\Phake;
 
 abstract class StoreTestCase extends TestCase
 {
-    /** @var KeyPhake */
-    protected $key;
+    protected IMock|KeyPhake|null $key;
 
-    /** @var StorePhake */
-    protected $store;
+    protected IMock|StorePhake|null $store;
 
-    /** @var stdClass the first value stored under self::KEY */
-    protected static $FIRST_VALUE;
+    /** the first value stored under self::KEY */
+    protected static stdClass $FIRST_VALUE;
 
-    /** @var stdClass the second value stored under self::KEY */
-    protected static $SECOND_VALUE;
+    /** the second value stored under self::KEY */
+    protected static stdClass $SECOND_VALUE;
 
-    /** @var stdClass the most recent value stored under self::KEY */
-    public static $MOST_RECENT_VALUE;
+    /** the most recent value stored under self::KEY */
+    public static stdClass $MOST_RECENT_VALUE;
 
     const KEY = 'Car';
 

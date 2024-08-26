@@ -5,11 +5,9 @@ use InvalidArgumentException;
 
 class Store
 {
-    /** @var Key */
-    protected $keyService;
+    protected Key $keyService;
 
-    /** @var array */
-    protected $nouns;
+    protected array $nouns;
 
     /**
      * @param Key $keyService the key service to use for parsing and building keys

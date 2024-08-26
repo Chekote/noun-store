@@ -19,7 +19,7 @@ use Unit\Chekote\Phake\Stubber\Answers\UnMockedResponseExceptionAnswer;
 abstract class Phake extends BasePhake
 {
     /** @var Expectation[] */
-    protected static $expectations;
+    protected static array $expectations;
 
     public static function clearExpectations(): void
     {

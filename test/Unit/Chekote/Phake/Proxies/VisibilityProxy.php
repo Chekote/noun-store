@@ -9,8 +9,8 @@ use ReflectionProperty;
  */
 class VisibilityProxy extends BaseVisibilityProxy
 {
-    /** @var object the object being proxied */
-    protected $proxied;
+    /** the object being proxied */
+    protected object $proxied;
 
     public function __construct($proxied)
     {

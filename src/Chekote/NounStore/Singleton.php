@@ -5,8 +5,7 @@
  */
 trait Singleton
 {
-    /** @var self */
-    protected static $instance;
+    protected static self $instance;
 
     /**
      * Singleton constructor.
@@ -29,7 +28,7 @@ trait Singleton
      */
     public static function getInstance(): self
     {
-        if (!self::$instance) {
+        if (!isset(self::$instance)) {
             self::$instance = new self();
         }
 

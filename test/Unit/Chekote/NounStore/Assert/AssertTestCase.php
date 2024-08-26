@@ -3,19 +3,17 @@
 use Chekote\NounStore\Assert;
 use Chekote\NounStore\Key;
 use Chekote\NounStore\Store;
+use Phake\IMock;
 use Unit\Chekote\NounStore\TestCase;
 use Unit\Chekote\Phake\Phake;
 
 abstract class AssertTestCase extends TestCase
 {
-    /** @var AssertPhake */
-    protected $assert;
+    protected IMock|AssertPhake|null $assert;
 
-    /** @var StorePhake */
-    protected $store;
+    protected IMock|StorePhake|null $store;
 
-    /** @var KeyPhake */
-    protected $key;
+    protected IMock|KeyPhake|null $key;
 
     /**
      * Sets up the environment before each test.
