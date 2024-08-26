@@ -30,7 +30,7 @@ class KeyExistsTest extends StoreTest
         $this->store->keyExists(KeyTest::INVALID_KEY);
     }
 
-    public function returnDataProvider(): array
+    public static function returnDataProvider(): array
     {
         return [
             // key,           value                          exists?

@@ -30,7 +30,7 @@ class KeyValueContainsTest extends StoreTest
         $this->store->keyValueContains(KeyTest::INVALID_KEY, "Doesn't matter");
     }
 
-    public function returnDataProvider(): array
+    public static function returnDataProvider(): array
     {
         return [
             // storedValue,      checkedValue, expectedResult

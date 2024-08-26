@@ -21,7 +21,7 @@ class ParseNounTest extends KeyTest
      *
      * @return array
      */
-    public function successScenarioDataProvider(): array
+    public static function successScenarioDataProvider(): array
     {
         return [
             // key          parsedKey,  parsedIndex
@@ -57,7 +57,7 @@ class ParseNounTest extends KeyTest
      *
      * @return array
      */
-    public function invalidKeyDataProvider(): array
+    public static function invalidKeyDataProvider(): array
     {
         return [
             ["Thing's stuff"],

@@ -56,7 +56,7 @@ class GetTest extends StoreTest
         $this->assertEquals($expected, $this->store->get($key));
     }
 
-    public function happyPathProvider(): array
+    public static function happyPathProvider(): array
     {
         return [
             //                                                     key                                        parsed key                                  expected

@@ -72,7 +72,7 @@ class GetTest extends TestCase
         $this->assertSame($expectedValue, self::$store->get($key), $message);
     }
 
-    public function happyPathDataProvider(): array
+    public static function happyPathDataProvider(): array
     {
         return [
             'Noun'                       => ['Person',               self::$alice,                'Alice is the most recent Person in the store'],

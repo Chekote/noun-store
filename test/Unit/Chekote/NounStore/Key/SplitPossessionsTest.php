@@ -32,7 +32,7 @@ class SplitPossessionsTest extends KeyTest
      *
      * @return array[]
      */
-    public function nouns(): array
+    public static function nouns(): array
     {
         return [
             ['Frenchman',                      ['Frenchman'                       ]],

@@ -31,7 +31,7 @@ class KeyIsClassTest extends StoreTest
         $this->store->keyIsClass(KeyTest::INVALID_KEY, stdClass::class);
     }
 
-    public function returnDataProvider(): array
+    public static function returnDataProvider(): array
     {
         return [
             // storedValue,      checkedValue, expectedResult

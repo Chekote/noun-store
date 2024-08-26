@@ -32,7 +32,7 @@ class IsPossessiveTest extends KeyTest
      *
      * @return array[]
      */
-    public function possessiveNouns(): array
+    public static function possessiveNouns(): array
     {
         return [
             ["Customer's Car"],
@@ -59,7 +59,7 @@ class IsPossessiveTest extends KeyTest
      *
      * @return array[]
      */
-    public function nonPossessiveNouns(): array
+    public static function nonPossessiveNouns(): array
     {
         return [
             ['Item'],

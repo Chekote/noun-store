@@ -16,7 +16,7 @@ class GetOrdinalTest extends KeyTest
         Phake::when($this->key)->getOrdinal(Phake::anyParameters())->thenCallParent();
     }
 
-    public function successScenariosDataProvider(): array
+    public static function successScenariosDataProvider(): array
     {
         return [
             [0,   'th'], [1,   'st'], [2,   'nd'], [3,   'rd'],
@@ -28,7 +28,7 @@ class GetOrdinalTest extends KeyTest
         ];
     }
 
-    public function failureScenariosDataProvider(): array
+    public static function failureScenariosDataProvider(): array
     {
         return [
             //nth  exception class                  exception message
