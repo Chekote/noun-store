@@ -9,7 +9,7 @@ use Unit\Chekote\Phake\Phake;
 /**
  * @covers \Chekote\NounStore\Assert::keyValueContains()
  */
-class KeyValueContainsTest extends AssertTest
+class KeyValueContainsTest extends AssertTestCase
 {
     public function setUp(): void
     {

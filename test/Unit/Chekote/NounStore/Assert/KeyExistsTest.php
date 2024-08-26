@@ -8,7 +8,7 @@ use Unit\Chekote\Phake\Phake;
 /**
  * @covers \Chekote\NounStore\Assert::keyExists()
  */
-class KeyExistsTest extends AssertTest
+class KeyExistsTest extends AssertTestCase
 {
     public function setUp(): void
     {

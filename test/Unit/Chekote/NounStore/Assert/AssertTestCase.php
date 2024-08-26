@@ -6,7 +6,7 @@ use Chekote\NounStore\Store;
 use Unit\Chekote\NounStore\TestCase;
 use Unit\Chekote\Phake\Phake;
 
-abstract class AssertTest extends TestCase
+abstract class AssertTestCase extends TestCase
 {
     /** @var AssertPhake */
     protected $assert;
