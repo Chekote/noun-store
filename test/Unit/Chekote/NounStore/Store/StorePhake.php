@@ -1,6 +1,6 @@
 <?php
 
-namespace Unit\Chekote\NounStore\Assert;
+namespace Unit\Chekote\NounStore\Store;
 
 use Chekote\NounStore\Store;
 use Phake\IMock;

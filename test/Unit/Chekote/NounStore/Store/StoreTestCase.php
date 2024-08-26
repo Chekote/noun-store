@@ -5,7 +5,6 @@ use Chekote\NounStore\Store;
 use Phake\IMock;
 use stdClass;
 use Unit\Chekote\NounStore\Assert\KeyPhake;
-use Unit\Chekote\NounStore\Assert\StorePhake;
 use Unit\Chekote\NounStore\TestCase;
 use Unit\Chekote\Phake\Phake;
 

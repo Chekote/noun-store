@@ -4,6 +4,7 @@ use Chekote\NounStore\Assert;
 use Chekote\NounStore\Key;
 use Chekote\NounStore\Store;
 use Phake\IMock;
+use Unit\Chekote\NounStore\Store\StorePhake;
 use Unit\Chekote\NounStore\TestCase;
 use Unit\Chekote\Phake\Phake;
 
