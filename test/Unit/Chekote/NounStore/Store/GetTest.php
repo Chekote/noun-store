@@ -26,7 +26,7 @@ class GetTest extends StoreTestCase
         /* @noinspection PhpUndefinedMethodInspection */
         Phake::expect($this->key, 1)->parse($key)->thenReturn([[$parsedKey, $parsedIndex]]);
 
-        $this->assertEquals(StoreTestCase::$SECOND_VALUE, $this->store->get($key));
+        $this->assertEquals(StoreTestCase::$secondValue, $this->store->get($key));
     }
 
     public function testInvalidArgumentExceptionBubblesUpFromParse()
@@ -60,8 +60,8 @@ class GetTest extends StoreTestCase
     {
         return [
             //                                                     key                                             parsed key                                     expected
-            'Noun without index returns most recent noun'      => [StoreTestCase::KEY,                            [[StoreTestCase::KEY, null]],                   StoreTestCase::$MOST_RECENT_VALUE],
-            'Noun with index returns specific noun'            => ['1st ' . StoreTestCase::KEY,                   [[StoreTestCase::KEY,    0]],                   StoreTestCase::$FIRST_VALUE],
+            'Noun without index returns most recent noun'      => [StoreTestCase::KEY,                            [[StoreTestCase::KEY, null]],                   StoreTestCase::$mostRecentValue],
+            'Noun with index returns specific noun'            => ['1st ' . StoreTestCase::KEY,                   [[StoreTestCase::KEY,    0]],                   StoreTestCase::$firstValue],
             'Non-existent noun returns null'                   => ['3rd ' . StoreTestCase::KEY,                   [[StoreTestCase::KEY,    2]],                   null],
             'Possessive noun w/o index string property'        => [StoreTestCase::KEY . "'s color",               [[StoreTestCase::KEY, null], ['color', null]],  'Blue'],
             'Possessive noun with index string property'       => ['1st ' . StoreTestCase::KEY . "'s color",      [[StoreTestCase::KEY, 0], ['color', null]],     'Red'],

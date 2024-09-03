@@ -31,7 +31,7 @@ class GetAllTest extends StoreTestCase
         $values = $this->store->getAll(self::KEY);
 
         $this->assertCount(2, $values);
-        $this->assertEquals(self::$FIRST_VALUE, $values[0]);
-        $this->assertEquals(self::$SECOND_VALUE, $values[1]);
+        $this->assertEquals(self::$firstValue, $values[0]);
+        $this->assertEquals(self::$secondValue, $values[1]);
     }
 }

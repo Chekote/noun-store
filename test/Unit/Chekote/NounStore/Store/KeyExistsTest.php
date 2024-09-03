@@ -35,7 +35,7 @@ class KeyExistsTest extends StoreTestCase
         return [
             // key,               value                              exists?
             [ 'No such key',      null,                              false ], // missing key
-            [ StoreTestCase::KEY, StoreTestCase::$MOST_RECENT_VALUE, true  ], // present key
+            [ StoreTestCase::KEY, StoreTestCase::$mostRecentValue, true  ], // present key
         ];
     }
 

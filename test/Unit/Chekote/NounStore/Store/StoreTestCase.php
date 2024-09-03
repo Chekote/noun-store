@@ -15,13 +15,13 @@ abstract class StoreTestCase extends TestCase
     protected IMock|StorePhake|null $store;
 
     /** the first value stored under self::KEY */
-    protected static stdClass $FIRST_VALUE;
+    protected static stdClass $firstValue;
 
     /** the second value stored under self::KEY */
-    protected static stdClass $SECOND_VALUE;
+    protected static stdClass $secondValue;
 
     /** the most recent value stored under self::KEY */
-    public static stdClass $MOST_RECENT_VALUE;
+    public static stdClass $mostRecentValue;
 
     const KEY = 'Car';
 
@@ -38,9 +38,9 @@ abstract class StoreTestCase extends TestCase
         $car2->color = 'Blue';
         $car2->option = ['Cruise Control', 'Air Conditioning'];
 
-        self::$FIRST_VALUE = $car1;
-        self::$SECOND_VALUE = $car2;
-        self::$MOST_RECENT_VALUE = $car2;
+        self::$firstValue = $car1;
+        self::$secondValue = $car2;
+        self::$mostRecentValue = $car2;
     }
 
     /**
@@ -52,7 +52,7 @@ abstract class StoreTestCase extends TestCase
         $this->store = Phake::strictMockWithConstructor(Store::class, $this->key);
 
         /* @noinspection PhpUndefinedFieldInspection */
-        Phake::makeVisible($this->store)->nouns = [self::KEY => [self::$FIRST_VALUE, self::$SECOND_VALUE]];
+        Phake::makeVisible($this->store)->nouns = [self::KEY => [self::$firstValue, self::$secondValue]];
     }
 
     /**
