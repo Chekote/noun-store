@@ -8,10 +8,10 @@ ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../" && pwd )"
 # Determine which sed to use to extract the composer version
 if [ "$(uname)" == 'Darwin' ]; then
   # We're on Mac OS  X, so we need to use linux-sed
-  SED=linux-sed
+  SED="linux-sed"
 else
   # We're on Linux, so we can use the native sed
-  SED=sed
+  SED="sed"
 fi
 
 # Check for existing installation
