@@ -1,4 +1,5 @@
 .idea/
+.phpunit.cache/
 bin/composer
 coverage.clover
 vendor/
