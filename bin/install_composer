@@ -17,7 +17,7 @@ fi
 # Check for existing installation
 if [ -e "$ROOT"/bin/composer ]; then
     echo "Checking Composer version..."
-    FOUND_VERSION=$(composer --version | tail -1 | awk '{print $3}' | ${SED} -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g")
+    FOUND_VERSION=$(composer --version | tail -1 | awk '{print $3}' | $SED -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g")
 
     # Check version of installed composer
     if [ "$FOUND_VERSION" == "$COMPOSER_VERSION" ]; then
@@ -26,15 +26,15 @@ if [ -e "$ROOT"/bin/composer ]; then
         exit 0
     else
         # Version does not match. Remove it.
-        echo "Removing Composer version ${FOUND_VERSION}..."
+        echo "Removing Composer version $FOUND_VERSION..."
         rm "$ROOT"/bin/composer
         exitCheck $?
     fi
 fi
 
 # Install composer
-echo "Installing Composer ${COMPOSER_VERSION}..."
-curl -L  "https://getcomposer.org/download/${COMPOSER_VERSION}/composer.phar" > "$ROOT"/bin/composer
+echo "Installing Composer $COMPOSER_VERSION..."
+curl -L  "https://getcomposer.org/download/$COMPOSER_VERSION/composer.phar" > "$ROOT"/bin/composer
 exitCheck $?
 
 # Fix permissions
