@@ -5,11 +5,13 @@ ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../" && pwd )"
 . "$ROOT"/docker/lib/docker_host_user_id.sh
 . "$ROOT"/docker/lib/tty.sh
 
+# shellcheck disable=SC2086
+# We need the var, if defined, to be parsed as an option, not a param.
 docker run \
     --rm \
-    -e LOCAL_USER_ID=${DOCKER_HOST_USER_ID} \
+    -e "LOCAL_USER_ID=${DOCKER_HOST_USER_ID}" \
     -i \
     ${TTY} \
-    -v $(pwd):/workdir \
+    -v "$(pwd):/workdir" \
     -v ~/.composer:/home/user/.composer \
     chekote/phpunit10:php8.1 php "$@"

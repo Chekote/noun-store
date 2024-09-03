@@ -6,7 +6,7 @@ ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../" && pwd )"
 . "$ROOT"/bin/lib/settings.sh
 
 # Determine which sed to use to extract the composer version
-if [ `uname` == 'Darwin' ]; then
+if [ "`uname`" == 'Darwin' ]; then
   # We're on Mac OS  X, so we need to use linux-sed
   SED=linux-sed
 else
@@ -34,7 +34,7 @@ fi
 
 # Install composer
 echo "Installing Composer ${COMPOSER_VERSION}..."
-curl -L https://getcomposer.org/download/${COMPOSER_VERSION}/composer.phar > "$ROOT"/bin/composer
+curl -L  "https://getcomposer.org/download/${COMPOSER_VERSION}/composer.phar" > "$ROOT"/bin/composer
 exitCheck $?
 
 # Fix permissions

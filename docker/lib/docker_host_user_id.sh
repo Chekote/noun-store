@@ -4,7 +4,7 @@
 # This is useful for ensuring the user in the Docker container has the correct access levels to mounted volumes.
 
 # Determine the UID of the user running the Docker container.
-if [ `uname` == 'Darwin' ]; then
+if [ "`uname`" == 'Darwin' ]; then
   # We're on Mac OS  X. We're virtualized using xhyve, and will have a UID of 1000.
   export DOCKER_HOST_USER_ID=1000
 else
