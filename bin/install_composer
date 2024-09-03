@@ -2,8 +2,8 @@
 
 ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../" && pwd )"
 
-. "$ROOT"/bin/lib/exitCheck.sh
-. "$ROOT"/bin/lib/settings.sh
+. "$ROOT/bin/lib/exitCheck.sh"
+. "$ROOT/bin/lib/settings.sh"
 
 # Determine which sed to use to extract the composer version
 if [ "$(uname)" == 'Darwin' ]; then
@@ -15,7 +15,7 @@ else
 fi
 
 # Check for existing installation
-if [ -e "$ROOT"/bin/composer ]; then
+if [ -e "$ROOT/bin/composer" ]; then
     echo "Checking Composer version..."
     FOUND_VERSION=$(composer --version | tail -1 | awk '{print $3}' | $SED -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g")
 
@@ -27,19 +27,19 @@ if [ -e "$ROOT"/bin/composer ]; then
     else
         # Version does not match. Remove it.
         echo "Removing Composer version $FOUND_VERSION..."
-        rm "$ROOT"/bin/composer
+        rm "$ROOT/bin/composer"
         exitCheck $?
     fi
 fi
 
 # Install composer
 echo "Installing Composer $COMPOSER_VERSION..."
-curl -L  "https://getcomposer.org/download/$COMPOSER_VERSION/composer.phar" > "$ROOT"/bin/composer
+curl -L  "https://getcomposer.org/download/$COMPOSER_VERSION/composer.phar" > "$ROOT/bin/composer"
 exitCheck $?
 
 # Fix permissions
 echo "Setting permissions on composer file.."
-chmod 700 "$ROOT"/bin/composer
+chmod 700 "$ROOT/bin/composer"
 exitCheck $?
 
 # Ensure ~/.composer is initialized

@@ -2,8 +2,8 @@
 
 ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../" && pwd )"
 
-. "$ROOT"/docker/lib/tty.sh
+. "$ROOT/docker/lib/tty.sh"
 
 # shellcheck disable=SC2086
 # We need the var, if defined, to be parsed as an option, not a param.
-docker run --env-file "$ROOT"/docker/.env -i $TTY --rm alpine:edge sed "$@"
+docker run --env-file "$ROOT/docker/.env" -i $TTY --rm alpine:edge sed "$@"
