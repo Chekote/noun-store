@@ -32,7 +32,7 @@ class Expectation
      * @param IMock $mock  the mock object
      * @param int   $count number of times the method is expected to be called
      */
-    public function __construct(IMock $mock, $count)
+    public function __construct(IMock $mock, int $count)
     {
         $this->mock = $mock;
         $this->count = $count;
@@ -66,7 +66,7 @@ class Expectation
      * @param  array                      $args   the args that are expected to be passed to the method.
      * @return AnswerBinderProxy|StubberProxy
      */
-    public function __call($method, array $args): AnswerBinderProxy|StubberProxy
+    public function __call(string $method, array $args): AnswerBinderProxy|StubberProxy
     {
         // record the method and args for verification later
         $this->method = $method;

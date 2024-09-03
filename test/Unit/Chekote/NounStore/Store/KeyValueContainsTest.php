@@ -45,7 +45,7 @@ class KeyValueContainsTest extends StoreTestCase
      * @param string $checkedValue   the value that will be passed to keyValueContains()
      * @param bool   $expectedResult the expected results from keyExists()
      */
-    public function testReturn($storedValue, $checkedValue, $expectedResult): void
+    public function testReturn(string $storedValue, string $checkedValue, bool $expectedResult): void
     {
         $key = StoreTestCase::KEY;
         $parsedKey = $key;

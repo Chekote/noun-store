@@ -137,7 +137,7 @@ class Key
      * @param  string   $key the possessive key to parse
      * @return string[] an array of nouns
      */
-    protected function splitPossessions($key): array
+    protected function splitPossessions(string $key): array
     {
         return ($nouns = preg_split('/' . self::POSSESSION . '/', $key)) ? $nouns : [];
     }

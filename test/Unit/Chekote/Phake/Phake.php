@@ -37,7 +37,7 @@ abstract class Phake extends BasePhake
      * @param  int         $count the expected call count.
      * @return Expectation the expectation.
      */
-    public static function expect(IMock $mock, $count): Expectation
+    public static function expect(IMock $mock, int $count): Expectation
     {
         $expectation = new Expectation($mock, $count);
         self::$expectations[] = $expectation;
@@ -72,10 +72,10 @@ abstract class Phake extends BasePhake
     /**
      * Creates a strict mock.
      *
-     * @param  string $className the name of the class to mock.
-     * @return IMock  the mocked class instance.
+     * @param  class-string $className the name of the class to mock.
+     * @return IMock        the mocked class instance.
      */
-    public static function strictMock($className): IMock
+    public static function strictMock(string $className): IMock
     {
         return self::mock($className, new AnswerCollection(new UnMockedResponseExceptionAnswer()));
     }
@@ -88,11 +88,11 @@ abstract class Phake extends BasePhake
      * of the mocked class (as Phake::partialMock does). However, the returned mock will NOT thenCallParent() for every
      * mocked method in the way that a partial mock would.
      *
-     * @param  string $className the name of the class to mock.
-     * @param  mixed  ...$args   arguments for the classes constructor.
-     * @return IMock  the mocked class instance.
+     * @param  class-string $className the name of the class to mock.
+     * @param  mixed        ...$args   arguments for the classes constructor.
+     * @return IMock        the mocked class instance.
      */
-    public static function strictMockWithConstructor($className, ...$args): IMock
+    public static function strictMockWithConstructor(string $className, ...$args): IMock
     {
         return self::getPhake()->mock(
             $className,

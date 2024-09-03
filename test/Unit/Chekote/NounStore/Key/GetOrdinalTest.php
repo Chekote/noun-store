@@ -43,7 +43,7 @@ class GetOrdinalTest extends KeyTestCase
      * @param int    $nth      the nth to pass to the method.
      * @param string $expected the ordinal expected from the method.
      */
-    public function testSuccessScenario($nth, $expected): void
+    public function testSuccessScenario(int $nth, string $expected): void
     {
         $this->assertEquals($expected, $this->key->getOrdinal($nth));
     }
@@ -56,7 +56,7 @@ class GetOrdinalTest extends KeyTestCase
      * @param string $exceptionClass   the expected class of the exception.
      * @param string $exceptionMessage the expected message of the exception.
      */
-    public function testFailureScenario($nth, $exceptionClass, $exceptionMessage): void
+    public function testFailureScenario(int $nth, string $exceptionClass, string $exceptionMessage): void
     {
         $this->expectException($exceptionClass);
         $this->expectExceptionMessage($exceptionMessage);

@@ -26,7 +26,7 @@ class VisibilityProxy extends BaseVisibilityProxy
      * @throws InvalidArgumentException if the specified property does not exist on the proxied class.
      * @return mixed                    the value of the property.
      */
-    public function __get($property): mixed
+    public function __get(string $property): mixed
     {
         return $this->makePropertyAccessible($property)->getValue($this->proxied);
     }
@@ -38,7 +38,7 @@ class VisibilityProxy extends BaseVisibilityProxy
      * @param  mixed                    $value    the value to set
      * @throws InvalidArgumentException if the specified property does not exist on the proxied class.
      */
-    public function __set($property, $value): void
+    public function __set(string $property, mixed $value): void
     {
         $this->makePropertyAccessible($property)->setValue($this->proxied, $value);
     }
@@ -50,7 +50,7 @@ class VisibilityProxy extends BaseVisibilityProxy
      * @throws InvalidArgumentException if the specified property does not exist on the proxied class.
      * @return ReflectionProperty       the property.
      */
-    protected function makePropertyAccessible($name): ReflectionProperty
+    protected function makePropertyAccessible(string $name): ReflectionProperty
     {
         if (!property_exists($this->proxied, $name)) {
             throw new InvalidArgumentException(

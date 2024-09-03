@@ -10,7 +10,7 @@ class Store
     protected array $nouns;
 
     /**
-     * @param Key $keyService the key service to use for parsing and building keys
+     * @param Key|null $keyService the key service to use for parsing and building keys
      * @codeCoverageIgnore
      */
     public function __construct(Key $keyService = null)
@@ -50,7 +50,7 @@ class Store
      * @throws InvalidArgumentException if the key syntax is invalid.
      * @return mixed                    The value, or null if no value exists for the specified key/index combination.
      */
-    public function get($key): mixed
+    public function get(string $key): mixed
     {
         $i = 0;
 
@@ -85,7 +85,7 @@ class Store
      * @param  string $key The key to retrieve the values for. Does not support nth notation.
      * @return array  The values, or an empty array if no value exists for the specified key.
      */
-    public function getAll($key): array
+    public function getAll(string $key): array
     {
         return isset($this->nouns[$key]) ? $this->nouns[$key] : [];
     }
@@ -99,7 +99,7 @@ class Store
      * @throws InvalidArgumentException if the key syntax is invalid.
      * @return bool                     True if the a value has been stored, false if not.
      */
-    public function keyExists($key): bool
+    public function keyExists(string $key): bool
     {
         return $this->get($key) !== null;
     }
@@ -114,7 +114,7 @@ class Store
      * @throws InvalidArgumentException if the key syntax is invalid.
      * @return bool                     True if the key's value contains the specified string, false if not.
      */
-    public function keyValueContains($key, $value): bool
+    public function keyValueContains(string $key, string $value): bool
     {
         $actual = $this->get($key);
 
@@ -129,7 +129,7 @@ class Store
      * @param string $key   The key to store the value under. Does not support nth notation.
      * @param mixed  $value The value to store.
      */
-    public function set($key, $value): void
+    public function set(string $key, mixed $value): void
     {
         $this->nouns[$key][] = $value;
     }
@@ -140,11 +140,11 @@ class Store
      * @see    Key::build()
      * @see    Key::parseNoun()
      * @param  string                   $key   The key to check.
-     * @param  string                   $class The class instance expected to be contained within the key's value.
+     * @param  class-string             $class The class instance expected to be contained within the key's value.
      * @throws InvalidArgumentException if the key syntax is invalid.
      * @return bool                     True if the key's value contains the specified class instance, false if not.
      */
-    public function keyIsClass($key, $class): bool
+    public function keyIsClass(string $key, string $class): bool
     {
         $actual = $this->get($key);
 

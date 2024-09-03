@@ -45,7 +45,7 @@ class KeyExistsTest extends StoreTestCase
      * @param mixed  $value  the value that the mocked Store::get() should return.
      * @param bool   $exists the expected result from keyExists().
      */
-    public function testReturn($key, $value, $exists): void
+    public function testReturn(string $key, mixed $value, bool $exists): void
     {
         /* @noinspection PhpUndefinedMethodInspection */
         Phake::expect($this->store, 1)->get($key)->thenReturn($value);

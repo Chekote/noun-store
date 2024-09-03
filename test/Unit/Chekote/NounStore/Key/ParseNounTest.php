@@ -39,11 +39,11 @@ class ParseNounTest extends KeyTestCase
      * Tests that calling Key::parse with valid key works correctly.
      *
      * @dataProvider successScenarioDataProvider
-     * @param string $key         the key to parse
-     * @param string $parsedKey   the expected resulting parsed key
-     * @param int    $parsedIndex the expected resulting parsed index
+     * @param string   $key         the key to parse
+     * @param string   $parsedKey   the expected resulting parsed key
+     * @param int|null $parsedIndex the expected resulting parsed index
      */
-    public function testSuccessScenario($key, $parsedKey, $parsedIndex): void
+    public function testSuccessScenario(string $key, string $parsedKey, ?int $parsedIndex): void
     {
         /* @noinspection PhpUndefinedMethodInspection */
         $this->assertEquals(
@@ -71,7 +71,7 @@ class ParseNounTest extends KeyTestCase
      * @dataProvider invalidKeyDataProvider
      * @param string $key the key to parse
      */
-    public function testParseKeyThrowsExceptionIfKeyAndIndexMismatch($key): void
+    public function testParseKeyThrowsExceptionIfKeyAndIndexMismatch(string $key): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Key syntax is invalid');

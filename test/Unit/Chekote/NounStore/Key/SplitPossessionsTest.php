@@ -18,7 +18,7 @@ class SplitPossessionsTest extends KeyTestCase
     /**
      * @dataProvider nouns
      */
-    public function testSuccessScenario($key, array $parts): void
+    public function testSuccessScenario(string $key, array $parts): void
     {
         /* @noinspection PhpUndefinedMethodInspection */
         $this->assertSame(

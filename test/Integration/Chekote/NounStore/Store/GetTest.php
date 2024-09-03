@@ -67,7 +67,7 @@ class GetTest extends TestCase
      * @param mixed  $expectedValue the expected value for the key.
      * @param string $message       the message to pass to the assertion, for reporting if the test fails.
      */
-    public function testHappyPath($key, $expectedValue, $message): void
+    public function testHappyPath(string $key, mixed $expectedValue, string $message): void
     {
         $this->assertSame($expectedValue, self::$store->get($key), $message);
     }

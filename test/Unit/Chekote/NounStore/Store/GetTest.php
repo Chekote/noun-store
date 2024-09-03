@@ -48,7 +48,7 @@ class GetTest extends StoreTestCase
      * @param array[] $parsedKey the parsed key.
      * @param mixed   $expected  the expected value.
      */
-    public function testHappyPath($key, $parsedKey, $expected): void
+    public function testHappyPath(string $key, array $parsedKey, mixed $expected): void
     {
         /* @noinspection PhpUndefinedMethodInspection */
         Phake::expect($this->key, 1)->parse($key)->thenReturn($parsedKey);

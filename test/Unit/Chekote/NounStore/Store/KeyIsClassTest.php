@@ -42,11 +42,11 @@ class KeyIsClassTest extends StoreTestCase
 
     /**
      * @dataProvider returnDataProvider
-     * @param string $storedValue    the value that should be in the store and will be returned by the mocked get()
-     * @param string $checkedValue   the value that will be passed to keyIsClass()
-     * @param bool   $expectedResult the expected results from keyIsClass()
+     * @param mixed        $storedValue    the value that should be in the store and be returned by the mocked get()
+     * @param class-string $checkedValue   the value that will be passed to keyIsClass()
+     * @param bool         $expectedResult the expected results from keyIsClass()
      */
-    public function testReturn($storedValue, $checkedValue, $expectedResult): void
+    public function testReturn(mixed $storedValue, string $checkedValue, bool $expectedResult): void
     {
         $key = StoreTestCase::KEY;
         $parsedKey = $key;
