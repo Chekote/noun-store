@@ -6,7 +6,7 @@ ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../" && pwd )"
 . "$ROOT"/bin/lib/settings.sh
 
 # Determine which sed to use to extract the composer version
-if [ "`uname`" == 'Darwin' ]; then
+if [ "$(uname)" == 'Darwin' ]; then
   # We're on Mac OS  X, so we need to use linux-sed
   SED=linux-sed
 else
@@ -17,7 +17,7 @@ fi
 # Check for existing installation
 if [ -e "$ROOT"/bin/composer ]; then
     echo "Checking Composer version..."
-    FOUND_VERSION=`composer --version | tail -1 | awk '{print $3}' | ${SED} -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g"`
+    FOUND_VERSION=$(composer --version | tail -1 | awk '{print $3}' | ${SED} -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g")
 
     # Check version of installed composer
     if [ "$FOUND_VERSION" == "$COMPOSER_VERSION" ]; then
