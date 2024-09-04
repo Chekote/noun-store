@@ -1,15 +1,15 @@
 <?php namespace Unit\Chekote\NounStore\Store;
 
 use InvalidArgumentException;
-use Unit\Chekote\NounStore\Key\KeyTest;
+use Unit\Chekote\NounStore\Key\KeyTestCase;
 use Unit\Chekote\Phake\Phake;
 
 /**
  * @covers \Chekote\NounStore\Store::keyExists()
  */
-class KeyExistsTest extends StoreTest
+class KeyExistsTest extends StoreTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -17,25 +17,25 @@ class KeyExistsTest extends StoreTest
         Phake::when($this->store)->keyExists(Phake::anyParameters())->thenCallParent();
     }
 
-    public function testInvalidArgumentExceptionBubblesUpFromGet()
+    public function testInvalidArgumentExceptionBubblesUpFromGet(): void
     {
         $exception = new InvalidArgumentException('Key syntax is invalid');
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::expect($this->store, 1)->get(KeyTest::INVALID_KEY)->thenThrow($exception);
+        Phake::expect($this->store, 1)->get(KeyTestCase::INVALID_KEY)->thenThrow($exception);
 
         $this->expectException(get_class($exception));
         $this->expectExceptionMessage($exception->getMessage());
 
-        $this->store->keyExists(KeyTest::INVALID_KEY);
+        $this->store->keyExists(KeyTestCase::INVALID_KEY);
     }
 
-    public function returnDataProvider()
+    public static function returnDataProvider(): array
     {
         return [
-            // key,           value                          exists?
-            [ 'No such key',  null,                          false ], // missing key
-            [ StoreTest::KEY, StoreTest::$MOST_RECENT_VALUE, true  ], // present key
+            // key,               value                              exists?
+            [ 'No such key',      null,                              false ], // missing key
+            [ StoreTestCase::KEY, StoreTestCase::$mostRecentValue, true  ], // present key
         ];
     }
 
@@ -45,7 +45,7 @@ class KeyExistsTest extends StoreTest
      * @param mixed  $value  the value that the mocked Store::get() should return.
      * @param bool   $exists the expected result from keyExists().
      */
-    public function testReturn($key, $value, $exists)
+    public function testReturn(string $key, mixed $value, bool $exists): void
     {
         /* @noinspection PhpUndefinedMethodInspection */
         Phake::expect($this->store, 1)->get($key)->thenReturn($value);

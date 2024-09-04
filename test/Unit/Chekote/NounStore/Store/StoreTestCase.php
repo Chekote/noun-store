@@ -2,35 +2,33 @@
 
 use Chekote\NounStore\Key;
 use Chekote\NounStore\Store;
+use Phake\IMock;
 use stdClass;
 use Unit\Chekote\NounStore\Assert\KeyPhake;
-use Unit\Chekote\NounStore\Assert\StorePhake;
 use Unit\Chekote\NounStore\TestCase;
 use Unit\Chekote\Phake\Phake;
 
-abstract class StoreTest extends TestCase
+abstract class StoreTestCase extends TestCase
 {
-    /** @var KeyPhake */
-    protected $key;
+    protected IMock|KeyPhake|null $key;
 
-    /** @var StorePhake */
-    protected $store;
+    protected IMock|StorePhake|null $store;
 
-    /** @var stdClass the first value stored under self::KEY */
-    protected static $FIRST_VALUE;
+    /** the first value stored under self::KEY */
+    protected static stdClass $firstValue;
 
-    /** @var stdClass the second value stored under self::KEY */
-    protected static $SECOND_VALUE;
+    /** the second value stored under self::KEY */
+    protected static stdClass $secondValue;
 
-    /** @var stdClass the most recent value stored under self::KEY */
-    protected static $MOST_RECENT_VALUE;
+    /** the most recent value stored under self::KEY */
+    public static stdClass $mostRecentValue;
 
     const KEY = 'Car';
 
     /**
      * Sets up the classes initial static state.
      */
-    public static function initialize()
+    public static function initialize(): void
     {
         $car1 = new stdClass();
         $car1->color = 'Red';
@@ -40,27 +38,27 @@ abstract class StoreTest extends TestCase
         $car2->color = 'Blue';
         $car2->option = ['Cruise Control', 'Air Conditioning'];
 
-        self::$FIRST_VALUE = $car1;
-        self::$SECOND_VALUE = $car2;
-        self::$MOST_RECENT_VALUE = $car2;
+        self::$firstValue = $car1;
+        self::$secondValue = $car2;
+        self::$mostRecentValue = $car2;
     }
 
     /**
      * Sets up the environment before each test.
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->key = Phake::strictMock(Key::class);
         $this->store = Phake::strictMockWithConstructor(Store::class, $this->key);
 
         /* @noinspection PhpUndefinedFieldInspection */
-        Phake::makeVisible($this->store)->nouns = [self::KEY => [self::$FIRST_VALUE, self::$SECOND_VALUE]];
+        Phake::makeVisible($this->store)->nouns = [self::KEY => [self::$firstValue, self::$secondValue]];
     }
 
     /**
      * Tears down the environment after each test.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->key = null;
         $this->store = null;
@@ -69,4 +67,4 @@ abstract class StoreTest extends TestCase
     }
 }
 
-StoreTest::initialize();
+StoreTestCase::initialize();

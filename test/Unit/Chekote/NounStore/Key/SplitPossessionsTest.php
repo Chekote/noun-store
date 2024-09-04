@@ -5,9 +5,9 @@ use Unit\Chekote\Phake\Phake;
 /**
  * @covers \Chekote\NounStore\Key::splitPossessions()
  */
-class SplitPossessionsTest extends KeyTest
+class SplitPossessionsTest extends KeyTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -18,7 +18,7 @@ class SplitPossessionsTest extends KeyTest
     /**
      * @dataProvider nouns
      */
-    public function testSuccessScenario($key, array $parts)
+    public function testSuccessScenario(string $key, array $parts): void
     {
         /* @noinspection PhpUndefinedMethodInspection */
         $this->assertSame(
@@ -32,7 +32,7 @@ class SplitPossessionsTest extends KeyTest
      *
      * @return array[]
      */
-    public function nouns()
+    public static function nouns(): array
     {
         return [
             ['Frenchman',                      ['Frenchman'                       ]],

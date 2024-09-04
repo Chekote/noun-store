@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-COMPOSER_VERSION=2.0.13
+COMPOSER_VERSION=2.7.8
+
+export COMPOSER_VERSION

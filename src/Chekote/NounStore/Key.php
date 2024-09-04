@@ -41,7 +41,7 @@ class Key
      *                                  method does not assert that. The error is bubbling up from getOrdinal()
      * @return string                   the key with the index, or just the key if index is null.
      */
-    public function build($key, $index)
+    public function build($key, $index): string
     {
         if ($index === null) {
             return $key;
@@ -59,7 +59,7 @@ class Key
      * @throws InvalidArgumentException if $nth is not a positive number.
      * @return string                   the ordinal
      */
-    public function getOrdinal($nth)
+    public function getOrdinal($nth): string
     {
         if ($nth < 0) {
             throw new InvalidArgumentException('$nth must be a positive number');
@@ -83,7 +83,7 @@ class Key
      *                                  1st item, and the index that the nth translates to as the 2nd or null if no
      *                                  nth was specified.
      */
-    public function parse($key)
+    public function parse($key): array
     {
         return array_map([$this, 'parseNoun'], $this->splitPossessions($key));
     }
@@ -101,7 +101,7 @@ class Key
      * @return array                    a tuple, the 1st being the key with the nth removed, and the 2nd being the
      *                                  index that the nth translates to, or null if no nth was specified.
      */
-    protected function parseNoun($noun)
+    protected function parseNoun($noun): array
     {
         if (!preg_match("/^(([1-9]\d*)(?:st|nd|rd|th) )?([^']+)$/", $noun, $matches)) {
             throw new InvalidArgumentException('Key syntax is invalid');
@@ -120,7 +120,7 @@ class Key
      * @param  string $key
      * @return bool   true if the key is possessive, false if not
      */
-    protected function isPossessive($key)
+    protected function isPossessive($key): bool
     {
         return strpos($key, self::POSSESSION) !== false;
     }
@@ -137,7 +137,7 @@ class Key
      * @param  string   $key the possessive key to parse
      * @return string[] an array of nouns
      */
-    protected function splitPossessions($key)
+    protected function splitPossessions(string $key): array
     {
         return ($nouns = preg_split('/' . self::POSSESSION . '/', $key)) ? $nouns : [];
     }

@@ -3,15 +3,15 @@
 use Chekote\NounStore\AssertionFailedException;
 use InvalidArgumentException;
 use OutOfBoundsException;
-use Unit\Chekote\NounStore\Key\KeyTest;
+use Unit\Chekote\NounStore\Key\KeyTestCase;
 use Unit\Chekote\Phake\Phake;
 
 /**
  * @covers \Chekote\NounStore\Assert::keyValueContains()
  */
-class KeyValueContainsTest extends AssertTest
+class KeyValueContainsTest extends AssertTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -19,40 +19,40 @@ class KeyValueContainsTest extends AssertTest
         Phake::when($this->assert)->keyValueContains(Phake::anyParameters())->thenCallParent();
     }
 
-    public function testInvalidArgumentExceptionBubblesUpFromKeyExists()
+    public function testInvalidArgumentExceptionBubblesUpFromKeyExists(): void
     {
         $value = 'A Value';
         $exception = new InvalidArgumentException('Key syntax is invalid');
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::expect($this->assert, 1)->keyExists(KeyTest::INVALID_KEY)->thenThrow($exception);
+        Phake::expect($this->assert, 1)->keyExists(KeyTestCase::INVALID_KEY)->thenThrow($exception);
 
         $this->expectException(get_class($exception));
         $this->expectExceptionMessage($exception->getMessage());
 
-        $this->assert->keyValueContains(KeyTest::INVALID_KEY, $value);
+        $this->assert->keyValueContains(KeyTestCase::INVALID_KEY, $value);
     }
 
     // An invalid key should not get past keyExists(), so this should never actually be possible. But we test
     // the behavior here to ensure that our method behaves correctly should the impossible ever occur.
-    public function testInvalidArgumentExceptionBubblesUpFromKeyValueContains()
+    public function testInvalidArgumentExceptionBubblesUpFromKeyValueContains(): void
     {
         $value = 'Grape';
         $exception = new InvalidArgumentException('Key syntax is invalid');
 
         /* @noinspection PhpUndefinedMethodInspection */
         {
-            Phake::expect($this->assert, 1)->keyExists(KeyTest::INVALID_KEY)->thenReturn(true);
-            Phake::expect($this->store, 1)->keyValueContains(KeyTest::INVALID_KEY, $value)->thenThrow($exception);
+            Phake::expect($this->assert, 1)->keyExists(KeyTestCase::INVALID_KEY)->thenReturn(true);
+            Phake::expect($this->store, 1)->keyValueContains(KeyTestCase::INVALID_KEY, $value)->thenThrow($exception);
         }
 
         $this->expectException(get_class($exception));
         $this->expectExceptionMessage($exception->getMessage());
 
-        $this->assert->keyValueContains(KeyTest::INVALID_KEY, $value);
+        $this->assert->keyValueContains(KeyTestCase::INVALID_KEY, $value);
     }
 
-    public function testMissingKeyThrowsOutOfBoundsException()
+    public function testMissingKeyThrowsOutOfBoundsException(): void
     {
         $key = '13th Thing';
         $value = 'Banana';
@@ -67,7 +67,7 @@ class KeyValueContainsTest extends AssertTest
         $this->assert->keyValueContains($key, $value);
     }
 
-    public function testFailedMatchThrowsRuntimeException()
+    public function testFailedMatchThrowsRuntimeException(): void
     {
         $key = '14th Thing';
         $value = 'Strawberry';
@@ -85,7 +85,7 @@ class KeyValueContainsTest extends AssertTest
         $this->assert->keyValueContains($key, $value);
     }
 
-    public function testSuccessfulMatchThrowsNoException()
+    public function testSuccessfulMatchThrowsNoException(): void
     {
         $key = '15th Thing';
         $value = 'Blackberry';
@@ -99,7 +99,7 @@ class KeyValueContainsTest extends AssertTest
         $this->assert->keyValueContains($key, $value);
     }
 
-    public function testSuccessfulMatchReturnsValue()
+    public function testSuccessfulMatchReturnsValue(): void
     {
         $key = '16th Thing';
         $value = 'Raspberry';

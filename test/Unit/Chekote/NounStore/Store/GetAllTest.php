@@ -5,9 +5,9 @@ use Unit\Chekote\Phake\Phake;
 /**
  * @covers \Chekote\NounStore\Store::getAll()
  */
-class GetAllTest extends StoreTest
+class GetAllTest extends StoreTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -18,7 +18,7 @@ class GetAllTest extends StoreTest
     /**
      * Tests that Store::getAll returns an empty array the specified $key does not exist.
      */
-    public function testGetAllReturnsEmptyArrayWhenKeyDoesNotExist()
+    public function testGetAllReturnsEmptyArrayWhenKeyDoesNotExist(): void
     {
         $this->assertEquals([], $this->store->getAll('Thing'));
     }
@@ -26,12 +26,12 @@ class GetAllTest extends StoreTest
     /**
      * Tests that Store::getAll returns all values for specified key.
      */
-    public function testGetAllReturnsAllValuesForSpecifiedKey()
+    public function testGetAllReturnsAllValuesForSpecifiedKey(): void
     {
         $values = $this->store->getAll(self::KEY);
 
         $this->assertCount(2, $values);
-        $this->assertEquals(self::$FIRST_VALUE, $values[0]);
-        $this->assertEquals(self::$SECOND_VALUE, $values[1]);
+        $this->assertEquals(self::$firstValue, $values[0]);
+        $this->assertEquals(self::$secondValue, $values[1]);
     }
 }

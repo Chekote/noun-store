@@ -6,9 +6,9 @@ use Unit\Chekote\Phake\Phake;
 /**
  * @covers \Chekote\NounStore\Key::parseNoun()
  */
-class ParseNounTest extends KeyTest
+class ParseNounTest extends KeyTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -21,7 +21,7 @@ class ParseNounTest extends KeyTest
      *
      * @return array
      */
-    public function successScenarioDataProvider()
+    public static function successScenarioDataProvider(): array
     {
         return [
             // key          parsedKey,  parsedIndex
@@ -39,11 +39,11 @@ class ParseNounTest extends KeyTest
      * Tests that calling Key::parse with valid key works correctly.
      *
      * @dataProvider successScenarioDataProvider
-     * @param string $key         the key to parse
-     * @param string $parsedKey   the expected resulting parsed key
-     * @param int    $parsedIndex the expected resulting parsed index
+     * @param string   $key         the key to parse
+     * @param string   $parsedKey   the expected resulting parsed key
+     * @param int|null $parsedIndex the expected resulting parsed index
      */
-    public function testSuccessScenario($key, $parsedKey, $parsedIndex)
+    public function testSuccessScenario(string $key, string $parsedKey, ?int $parsedIndex): void
     {
         /* @noinspection PhpUndefinedMethodInspection */
         $this->assertEquals(
@@ -57,7 +57,7 @@ class ParseNounTest extends KeyTest
      *
      * @return array
      */
-    public function invalidKeyDataProvider()
+    public static function invalidKeyDataProvider(): array
     {
         return [
             ["Thing's stuff"],
@@ -71,7 +71,7 @@ class ParseNounTest extends KeyTest
      * @dataProvider invalidKeyDataProvider
      * @param string $key the key to parse
      */
-    public function testParseKeyThrowsExceptionIfKeyAndIndexMismatch($key)
+    public function testParseKeyThrowsExceptionIfKeyAndIndexMismatch(string $key): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Key syntax is invalid');

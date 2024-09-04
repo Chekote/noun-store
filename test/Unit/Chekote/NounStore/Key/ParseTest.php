@@ -6,9 +6,9 @@ use Unit\Chekote\Phake\Phake;
 /**
  * @covers \Chekote\NounStore\Key::parse()
  */
-class ParseTest extends KeyTest
+class ParseTest extends KeyTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -16,7 +16,7 @@ class ParseTest extends KeyTest
         Phake::when($this->key)->parse(Phake::anyParameters())->thenCallParent();
     }
 
-    public function testHappyPath()
+    public function testHappyPath(): void
     {
         $key = "2nd American's 4th Car";
         $splitNouns = ['2nd American', '4th Car'];
@@ -32,7 +32,7 @@ class ParseTest extends KeyTest
         $this->assertEquals($parsedKey, $this->key->parse($key));
     }
 
-    public function testInvalidArgumentExceptionBubblesUpFromParseNoun()
+    public function testInvalidArgumentExceptionBubblesUpFromParseNoun(): void
     {
         $invalidKey = "Customer's's Car";
         $splitNouns = ["Customer's", 'Car'];
