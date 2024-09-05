@@ -41,8 +41,8 @@ class Expectation
     /**
      * Verifies that the expected method was called.
      *
-     * @throws ExpectationException        if a method has not been set for the expectation.
-     * @throws ExpectationException        if args have not been set for the expectation.
+     * @throws ExpectationException if a method has not been set for the expectation.
+     * @throws ExpectationException if args have not been set for the expectation.
      * @return array|VerifierProxy
      */
     public function verify(): array|VerifierProxy
@@ -62,8 +62,9 @@ class Expectation
     /**
      * Sets the expected method to be called.
      *
-     * @param  string                     $method the method that is expected to be called.
-     * @param  array                      $args   the args that are expected to be passed to the method.
+     * @param string $method the method that is expected to be called.
+     * @param array  $args   the args that are expected to be passed to the method.
+     *
      * @return AnswerBinderProxy|StubberProxy
      */
     public function __call(string $method, array $args): AnswerBinderProxy|StubberProxy
