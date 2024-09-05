@@ -10,11 +10,11 @@ use Unit\Chekote\Phake\Phake;
 
 abstract class AssertTestCase extends TestCase
 {
-    protected IMock|AssertPhake|null $assert;
+    protected IMock|AssertPhake $assert;
 
-    protected IMock|StorePhake|null $store;
+    protected IMock|StorePhake $store;
 
-    protected IMock|KeyPhake|null $key;
+    protected IMock|KeyPhake $key;
 
     /**
      * Sets up the environment before each test.
@@ -31,8 +31,8 @@ abstract class AssertTestCase extends TestCase
      */
     public function tearDown(): void
     {
-        $this->assert = null;
-        $this->key = null;
-        $this->store = null;
+        unset($this->assert);
+        unset($this->key);
+        unset($this->store);
     }
 }

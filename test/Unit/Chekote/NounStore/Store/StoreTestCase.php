@@ -10,9 +10,9 @@ use Unit\Chekote\Phake\Phake;
 
 abstract class StoreTestCase extends TestCase
 {
-    protected IMock|KeyPhake|null $key;
+    protected IMock|KeyPhake $key;
 
-    protected IMock|StorePhake|null $store;
+    protected IMock|StorePhake $store;
 
     /** the first value stored under self::KEY */
     protected static stdClass $firstValue;
@@ -60,8 +60,8 @@ abstract class StoreTestCase extends TestCase
      */
     public function tearDown(): void
     {
-        $this->key = null;
-        $this->store = null;
+        unset($this->key);
+        unset($this->store);
 
         Phake::verifyExpectations();
     }

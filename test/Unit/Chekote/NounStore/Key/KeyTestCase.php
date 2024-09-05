@@ -10,7 +10,7 @@ abstract class KeyTestCase extends TestCase
 {
     const INVALID_KEY = "It's's invalid because of the double apostrophe";
 
-    protected IMock|KeyPhake|null $key;
+    protected IMock|KeyPhake $key;
 
     /**
      * Sets up the environment before each test.
@@ -25,7 +25,7 @@ abstract class KeyTestCase extends TestCase
      */
     public function tearDown(): void
     {
-        $this->key = null;
+        unset($this->key);
 
         Phake::verifyExpectations();
     }
