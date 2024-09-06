@@ -3,15 +3,15 @@
 use Chekote\NounStore\AssertionFailedException;
 use InvalidArgumentException;
 use OutOfBoundsException;
-use Unit\Chekote\NounStore\Key\KeyTest;
+use Unit\Chekote\NounStore\Key\KeyTestCase;
 use Unit\Chekote\Phake\Phake;
 
 /**
  * @covers \Chekote\NounStore\Assert::keyValueIs()
  */
-class KeyValueIsTest extends AssertTest
+class KeyValueIsTest extends AssertTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -19,21 +19,21 @@ class KeyValueIsTest extends AssertTest
         Phake::when($this->assert)->keyValueIs(Phake::anyParameters())->thenCallParent();
     }
 
-    public function testInvalidArgumentExceptionBubblesUpFromKeyExists()
+    public function testInvalidArgumentExceptionBubblesUpFromKeyExists(): void
     {
         $value = 'Another Value';
         $exception = new InvalidArgumentException('Key syntax is invalid');
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::expect($this->assert, 1)->keyExists(KeyTest::INVALID_KEY)->thenThrow($exception);
+        Phake::expect($this->assert, 1)->keyExists(KeyTestCase::INVALID_KEY)->thenThrow($exception);
 
         $this->expectException(get_class($exception));
         $this->expectExceptionMessage($exception->getMessage());
 
-        $this->assert->keyValueIs(KeyTest::INVALID_KEY, $value);
+        $this->assert->keyValueIs(KeyTestCase::INVALID_KEY, $value);
     }
 
-    public function testMissingKeyThrowsOutOfBoundsException()
+    public function testMissingKeyThrowsOutOfBoundsException(): void
     {
         $key = '16th Thing';
         $value = 'Kiwi';
@@ -48,7 +48,7 @@ class KeyValueIsTest extends AssertTest
         $this->assert->keyValueIs($key, $value);
     }
 
-    public function testFailedMatchThrowsRuntimeException()
+    public function testFailedMatchThrowsRuntimeException(): void
     {
         $key = '17th Thing';
         $value = 'Orange';
@@ -63,7 +63,7 @@ class KeyValueIsTest extends AssertTest
         $this->assert->keyValueIs($key, $value);
     }
 
-    public function testSuccessfulMatchThrowsNoException()
+    public function testSuccessfulMatchThrowsNoException(): void
     {
         $key = '18th Thing';
         $value = 'Pear';

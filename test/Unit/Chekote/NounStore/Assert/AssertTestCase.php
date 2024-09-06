@@ -3,24 +3,23 @@
 use Chekote\NounStore\Assert;
 use Chekote\NounStore\Key;
 use Chekote\NounStore\Store;
+use Phake\IMock;
+use Unit\Chekote\NounStore\Store\StorePhake;
 use Unit\Chekote\NounStore\TestCase;
 use Unit\Chekote\Phake\Phake;
 
-abstract class AssertTest extends TestCase
+abstract class AssertTestCase extends TestCase
 {
-    /** @var AssertPhake */
-    protected $assert;
+    protected IMock|AssertPhake $assert;
 
-    /** @var StorePhake */
-    protected $store;
+    protected IMock|StorePhake $store;
 
-    /** @var KeyPhake */
-    protected $key;
+    protected IMock|KeyPhake $key;
 
     /**
      * Sets up the environment before each test.
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->key = Phake::strictMock(Key::class);
         $this->store = Phake::strictMockWithConstructor(Store::class, $this->key);
@@ -30,10 +29,10 @@ abstract class AssertTest extends TestCase
     /**
      * Tears down the environment after each test.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
-        $this->assert = null;
-        $this->key = null;
-        $this->store = null;
+        unset($this->assert);
+        unset($this->key);
+        unset($this->store);
     }
 }

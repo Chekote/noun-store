@@ -1,13 +1,13 @@
-# PHP CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-php/ for more details
-#
-version: 2
+version: 2.1
+
+orbs:
+  codecov: codecov/codecov@4.1.0
+
 jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: chekote/php:7-phpunit5
+      - image: chekote/phpunit10:php8.1
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -39,6 +39,4 @@ jobs:
           name: PHPUnit Tests
           command: php -d xdebug.mode=coverage ./vendor/bin/phpunit --coverage-clover=coverage.clover
 
-      - run:
-          name: Upload code coverage to Codecov
-          command: bash <(curl -s https://codecov.io/bash)
+      - codecov/upload

@@ -1,16 +1,16 @@
 <?php namespace Unit\Chekote\Phake\Proxies;
 
 use InvalidArgumentException;
-use Phake_Proxies_VisibilityProxy;
+use Phake\Proxies\VisibilityProxy as BaseVisibilityProxy;
 use ReflectionProperty;
 
 /**
- * Extends the Phake_Proxies_VisibilityProxy to allow accessing private or protected properties.
+ * Extends the base VisibilityProxy to allow accessing private or protected properties.
  */
-class VisibilityProxy extends Phake_Proxies_VisibilityProxy
+class VisibilityProxy extends BaseVisibilityProxy
 {
-    /** @var object the object being proxied */
-    protected $proxied;
+    /** the object being proxied */
+    protected object $proxied;
 
     public function __construct($proxied)
     {
@@ -26,7 +26,7 @@ class VisibilityProxy extends Phake_Proxies_VisibilityProxy
      * @throws InvalidArgumentException if the specified property does not exist on the proxied class.
      * @return mixed                    the value of the property.
      */
-    public function __get($property)
+    public function __get(string $property): mixed
     {
         return $this->makePropertyAccessible($property)->getValue($this->proxied);
     }
@@ -38,7 +38,7 @@ class VisibilityProxy extends Phake_Proxies_VisibilityProxy
      * @param  mixed                    $value    the value to set
      * @throws InvalidArgumentException if the specified property does not exist on the proxied class.
      */
-    public function __set($property, $value)
+    public function __set(string $property, mixed $value): void
     {
         $this->makePropertyAccessible($property)->setValue($this->proxied, $value);
     }
@@ -50,7 +50,7 @@ class VisibilityProxy extends Phake_Proxies_VisibilityProxy
      * @throws InvalidArgumentException if the specified property does not exist on the proxied class.
      * @return ReflectionProperty       the property.
      */
-    protected function makePropertyAccessible($name)
+    protected function makePropertyAccessible(string $name): ReflectionProperty
     {
         if (!property_exists($this->proxied, $name)) {
             throw new InvalidArgumentException(

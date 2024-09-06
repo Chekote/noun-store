@@ -8,11 +8,9 @@ use OutOfBoundsException;
  */
 class Assert
 {
-    /** @var Store */
-    protected $store;
+    protected Store $store;
 
-    /** @var Key */
-    protected $keyService;
+    protected Key $keyService;
 
     /**
      * Assert constructor.
@@ -40,7 +38,7 @@ class Assert
      *                                  that does not match the index.
      * @return mixed                    The value.
      */
-    public function keyExists($key)
+    public function keyExists($key): mixed
     {
         if (!$this->store->keyExists($key)) {
             throw new OutOfBoundsException("Entry '$key' was not found in the store.");
@@ -60,8 +58,9 @@ class Assert
      * @throws OutOfBoundsException     If a value has not been stored for the specified key.
      * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
      *                                  that does not match the index.
+     * @return mixed                    The key's value.
      */
-    public function keyValueContains($key, $needle)
+    public function keyValueContains($key, $needle): mixed
     {
         $haystack = $this->keyExists($key);
 
@@ -84,7 +83,7 @@ class Assert
      * @throws InvalidArgumentException if both an $index and $key are provided, but the $key contains an nth value
      *                                  that does not match the index.
      */
-    public function keyValueIs($key, $value)
+    public function keyValueIs($key, $value): void
     {
         if ($this->keyExists($key) != $value) {
             throw new AssertionFailedException("Entry '$key' does not match '" . print_r($value, true) . "'");
@@ -97,12 +96,12 @@ class Assert
      * @see    Key::build()
      * @see    Key::parseNoun()
      * @param  string                   $key   The key to check. Supports nth notation.
-     * @param  string                   $class The expected class instance.
+     * @param  class-string             $class The expected class instance.
      * @throws AssertionFailedException If the key's value is not an instance of the specified class.
      * @throws OutOfBoundsException     If a value has not been stored for the specified key.
      * @return mixed                    The key's value.
      */
-    public function keyIsClass($key, $class)
+    public function keyIsClass(string $key, string $class): mixed
     {
         if ($this->keyExists($key) && !$this->store->keyIsClass($key, $class)) {
             throw new AssertionFailedException("Entry '$key' does not match instance of '$class'");

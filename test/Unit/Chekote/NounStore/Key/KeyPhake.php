@@ -3,11 +3,11 @@
 namespace Unit\Chekote\NounStore\Assert;
 
 use Chekote\NounStore\Key;
-use Phake_IMock;
+use Phake\IMock;
 
 /**
  * @mixin Key
  */
-class KeyPhake implements Phake_IMock
+class KeyPhake implements IMock
 {
 }

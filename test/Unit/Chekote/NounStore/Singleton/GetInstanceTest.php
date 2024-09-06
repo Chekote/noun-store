@@ -13,14 +13,14 @@ class SingletonClass
  */
 class GetInstanceTest extends TestCase
 {
-    public function testGetInstanceReturnsInstanceOfSingleton()
+    public function testGetInstanceReturnsInstanceOfSingleton(): void
     {
         $instance = SingletonClass::getInstance();
 
         $this->assertInstanceOf(SingletonClass::class, $instance);
     }
 
-    public function testSubsequentCallsToGetInstanceReturnSameInstance()
+    public function testSubsequentCallsToGetInstanceReturnSameInstance(): void
     {
         $instance1 = SingletonClass::getInstance();
         $instance2 = SingletonClass::getInstance();

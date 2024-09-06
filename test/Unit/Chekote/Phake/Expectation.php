@@ -1,8 +1,9 @@
 <?php namespace Unit\Chekote\Phake;
 
-use Phake_IMock;
-use Phake_Proxies_StubberProxy;
-use Phake_Proxies_VerifierProxy;
+use Phake\IMock;
+use Phake\Proxies\AnswerBinderProxy;
+use Phake\Proxies\StubberProxy;
+use Phake\Proxies\VerifierProxy;
 use Unit\Chekote\Phake\Exception\ExpectationException;
 
 /**
@@ -13,25 +14,25 @@ use Unit\Chekote\Phake\Exception\ExpectationException;
  */
 class Expectation
 {
-    /** @var Phake_IMock the mock object */
-    protected $mock;
+    /** the mock object */
+    protected IMock $mock;
 
-    /** @var string the method expected to be called */
-    protected $method;
+    /** the method expected to be called */
+    protected string $method;
 
-    /** @var array the arguments expected to be passed to the method */
-    protected $args;
+    /** the arguments expected to be passed to the method */
+    protected array $args;
 
-    /** @var int the number of times the method is expected to be called */
-    protected $count;
+    /** the number of times the method is expected to be called */
+    protected int $count;
 
     /**
      * Expectation constructor.
      *
-     * @param Phake_IMock $mock  the mock object
-     * @param int         $count number of times the method is expected to be called
+     * @param IMock $mock  the mock object
+     * @param int   $count number of times the method is expected to be called
      */
-    public function __construct(Phake_IMock $mock, $count)
+    public function __construct(IMock $mock, int $count)
     {
         $this->mock = $mock;
         $this->count = $count;
@@ -40,11 +41,11 @@ class Expectation
     /**
      * Verifies that the expected method was called.
      *
-     * @throws ExpectationException        if a method has not been set for the expectation.
-     * @throws ExpectationException        if args have not been set for the expectation.
-     * @return Phake_Proxies_VerifierProxy
+     * @throws ExpectationException if a method has not been set for the expectation.
+     * @throws ExpectationException if args have not been set for the expectation.
+     * @return array|VerifierProxy
      */
-    public function verify()
+    public function verify(): array|VerifierProxy
     {
         if (!isset($this->method)) {
             throw new ExpectationException('Expectation method was not set');
@@ -54,18 +55,19 @@ class Expectation
             throw new ExpectationException('Expectation args were not set');
         }
 
-        /** @var Phake_Proxies_VerifierProxy $verifier */
+        /** @var VerifierProxy $verifier */
         return Phake::verify($this->mock, Phake::times($this->count))->{$this->method}(...$this->args);
     }
 
     /**
      * Sets the expected method to be called.
      *
-     * @param  string                     $method the method that is expected to be called.
-     * @param  array                      $args   the args that are expected to be passed to the method.
-     * @return Phake_Proxies_StubberProxy
+     * @param string $method the method that is expected to be called.
+     * @param array  $args   the args that are expected to be passed to the method.
+     *
+     * @return AnswerBinderProxy|StubberProxy
      */
-    public function __call($method, array $args)
+    public function __call(string $method, array $args): AnswerBinderProxy|StubberProxy
     {
         // record the method and args for verification later
         $this->method = $method;

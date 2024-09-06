@@ -2,15 +2,15 @@
 
 use InvalidArgumentException;
 use stdClass;
-use Unit\Chekote\NounStore\Key\KeyTest;
+use Unit\Chekote\NounStore\Key\KeyTestCase;
 use Unit\Chekote\Phake\Phake;
 
 /**
  * @covers \Chekote\NounStore\Store::keyIsClass()
  */
-class KeyIsClassTest extends StoreTest
+class KeyIsClassTest extends StoreTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -18,23 +18,23 @@ class KeyIsClassTest extends StoreTest
         Phake::when($this->store)->keyIsClass(Phake::anyParameters())->thenCallParent();
     }
 
-    public function testInvalidArgumentExceptionBubblesUpFromGet()
+    public function testInvalidArgumentExceptionBubblesUpFromGet(): void
     {
         $exception = new InvalidArgumentException('Key syntax is invalid');
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Phake::expect($this->store, 1)->get(KeyTest::INVALID_KEY)->thenThrow($exception);
+        Phake::expect($this->store, 1)->get(KeyTestCase::INVALID_KEY)->thenThrow($exception);
 
         $this->expectException(get_class($exception));
         $this->expectExceptionMessage($exception->getMessage());
 
-        $this->store->keyIsClass(KeyTest::INVALID_KEY, stdClass::class);
+        $this->store->keyIsClass(KeyTestCase::INVALID_KEY, stdClass::class);
     }
 
-    public function returnDataProvider()
+    public static function returnDataProvider(): array
     {
         return [
-            // storedValue,      checkedValue, expectedResult
+            // storedValue,   checkedValue,           expectedResult
             [ new stdClass(), stdClass::class,        true   ],
             [ new stdClass(), KeyIsClassTest::class,  false  ],
         ];
@@ -42,13 +42,13 @@ class KeyIsClassTest extends StoreTest
 
     /**
      * @dataProvider returnDataProvider
-     * @param string $storedValue    the value that should be in the store and will be returned by the mocked get()
-     * @param string $checkedValue   the value that will be passed to keyIsClass()
-     * @param bool   $expectedResult the expected results from keyIsClass()
+     * @param mixed        $storedValue    the value that should be in the store and be returned by the mocked get()
+     * @param class-string $checkedValue   the value that will be passed to keyIsClass()
+     * @param bool         $expectedResult the expected results from keyIsClass()
      */
-    public function testReturn($storedValue, $checkedValue, $expectedResult)
+    public function testReturn(mixed $storedValue, string $checkedValue, bool $expectedResult): void
     {
-        $key = StoreTest::KEY;
+        $key = StoreTestCase::KEY;
         $parsedKey = $key;
 
         /* @noinspection PhpUndefinedMethodInspection */

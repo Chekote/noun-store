@@ -8,7 +8,7 @@ abstract class TestCase extends BaseTestCase
     /**
      * @before
      */
-    public function clearExpectations()
+    public function clearExpectations(): void
     {
         Phake::clearExpectations();
     }
@@ -16,7 +16,7 @@ abstract class TestCase extends BaseTestCase
     /**
      * @after
      */
-    public function verifyExpectations()
+    public function verifyExpectations(): void
     {
         Phake::verifyExpectations();
     }
