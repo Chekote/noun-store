@@ -96,11 +96,11 @@ class Assert
      * @template T
      * @see      Key::build()
      * @see      Key::parseNoun()
-     * @param    string                   $key   The key to check. Supports nth notation.
-     * @param    class-string<T>          $class The expected class instance.
-     * @throws   AssertionFailedException If the key's value is not an instance of the specified class.
-     * @throws   OutOfBoundsException     If a value has not been stored for the specified key.
-     * @return   T                        The key's value.
+     * @param  string                   $key   The key to check. Supports nth notation.
+     * @param  class-string<T>          $class The expected class instance.
+     * @throws AssertionFailedException If the key's value is not an instance of the specified class.
+     * @throws OutOfBoundsException     If a value has not been stored for the specified key.
+     * @return T                        The key's value.
      */
     public function keyIsClass(string $key, string $class): mixed
     {
