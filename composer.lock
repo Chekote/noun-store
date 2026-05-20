@@ -1377,27 +1377,27 @@
         },
         {
             "name": "phake/phake",
-            "version": "v4.5.0",
+            "version": "v4.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phake/phake.git",
-                "reference": "0ec89bb1f780018fd34059409d79b7b49d60cc11"
+                "reference": "338f933754882b0f0a2d564858522a18f3117dbc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phake/phake/zipball/0ec89bb1f780018fd34059409d79b7b49d60cc11",
-                "reference": "0ec89bb1f780018fd34059409d79b7b49d60cc11",
+                "url": "https://api.github.com/repos/phake/phake/zipball/338f933754882b0f0a2d564858522a18f3117dbc",
+                "reference": "338f933754882b0f0a2d564858522a18f3117dbc",
                 "shasum": ""
             },
             "require": {
                 "doctrine/instantiator": "^1.4",
                 "php": "^7.1|^8.0",
-                "sebastian/comparator": "^1.1|^2.0|^3.0|^4.0|^5.0|^6.0"
+                "sebastian/comparator": "^1.1|^2.0|^3.0|^4.0|^5.0|^6.0|^7.0|^8.0"
             },
             "require-dev": {
                 "doctrine/annotations": "^1.13",
                 "hamcrest/hamcrest-php": "^1.1|^2.0",
-                "phpunit/phpunit": "^6.5|^7.0|^8.0|^9.0|^10.0|^11.0",
+                "phpunit/phpunit": "^6.5|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
                 "psalm/phar": "^4.18"
             },
             "suggest": {
@@ -1407,8 +1407,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.0.x-dev",
-                    "dev-4.4": "4.4.x-dev"
+                    "dev-4.4": "4.4.x-dev",
+                    "dev-master": "5.0.x-dev"
                 }
             },
             "autoload": {
@@ -1442,9 +1442,9 @@
             "support": {
                 "docs": "https://phake.github.io/doc/",
                 "issues": "https://github.com/phake/phake/issues",
-                "source": "https://github.com/phake/phake/tree/v4.5.0"
+                "source": "https://github.com/phake/phake/tree/v4.7.0"
             },
-            "time": "2024-03-05T17:41:33+00:00"
+            "time": "2026-02-10T15:03:16+00:00"
         },
         {
             "name": "phar-io/manifest",
