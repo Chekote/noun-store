@@ -30,6 +30,7 @@
     "config": {
         "allow-plugins": {
             "kylekatarnls/update-helper": false
-        }
+        },
+        "lock": false
     }
 }
