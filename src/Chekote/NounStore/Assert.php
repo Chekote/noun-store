@@ -21,7 +21,7 @@ class Assert
      *
      * @codeCoverageIgnore
      */
-    public function __construct(Store $store, Key $keyService = null)
+    public function __construct(Store $store, ?Key $keyService = null)
     {
         $this->store = $store;
         $this->keyService = $keyService ?: Key::getInstance();

@@ -3,7 +3,7 @@ build:
     analysis:
       environment:
         php:
-          version: 5.6.40
+          version: 8.1.31
       project_setup:
         override:
           - 'true'
@@ -12,7 +12,6 @@ build:
           - php-scrutinizer-run
           -
             command: phpcs-run
-            use_website_config: true
 checks:
   php: true
 coding_style:
