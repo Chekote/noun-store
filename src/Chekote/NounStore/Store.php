@@ -7,7 +7,7 @@ class Store
 {
     protected Key $keyService;
 
-    protected array $nouns;
+    protected array $nouns = [];
 
     /**
      * @param Key|null $keyService the key service to use for parsing and building keys

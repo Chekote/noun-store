@@ -29,6 +29,17 @@ class GetTest extends StoreTestCase
         $this->assertEquals(StoreTestCase::$secondValue, $this->store->get($key));
     }
 
+    public function testReturnsNullWhenStoreIsEmpty(): void
+    {
+        /* @noinspection PhpUndefinedMethodInspection */
+        Phake::expect($this->key, 1)->parse(StoreTestCase::KEY)->thenReturn([[StoreTestCase::KEY, null]]);
+
+        /* @noinspection PhpUndefinedFieldInspection */
+        Phake::makeVisible($this->store)->nouns = [];
+
+        $this->assertNull($this->store->get(StoreTestCase::KEY));
+    }
+
     public function testInvalidArgumentExceptionBubblesUpFromParse()
     {
         $exception = new InvalidArgumentException('Key syntax is invalid');
