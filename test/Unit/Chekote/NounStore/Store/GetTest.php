@@ -1,6 +1,8 @@
 <?php namespace Unit\Chekote\NounStore\Store;
 
+use Chekote\NounStore\Store;
 use InvalidArgumentException;
+use Phake\IMock;
 use Unit\Chekote\NounStore\Key\KeyTestCase;
 use Unit\Chekote\Phake\Phake;
 
@@ -27,6 +29,20 @@ class GetTest extends StoreTestCase
         Phake::expect($this->key, 1)->parse($key)->thenReturn([[$parsedKey, $parsedIndex]]);
 
         $this->assertEquals(StoreTestCase::$secondValue, $this->store->get($key));
+    }
+
+    public function testReturnsNullWhenStoreIsEmpty(): void
+    {
+        /** @var IMock|StorePhake $store */
+        $store = Phake::strictMockWithConstructor(Store::class, $this->key);
+
+        /* @noinspection PhpUndefinedMethodInspection */
+        Phake::when($store)->get(Phake::anyParameters())->thenCallParent();
+
+        /* @noinspection PhpUndefinedMethodInspection */
+        Phake::expect($this->key, 1)->parse(StoreTestCase::KEY)->thenReturn([[StoreTestCase::KEY, null]]);
+
+        $this->assertNull($store->get(StoreTestCase::KEY));
     }
 
     public function testInvalidArgumentExceptionBubblesUpFromParse()
